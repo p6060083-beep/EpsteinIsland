@@ -69,27 +69,13 @@
             background-attachment: fixed, fixed, fixed, fixed, fixed, scroll, scroll, fixed !important;
         }
 
-        /* ✅ НОВЫЙ ФОН: Фото двух Тигров */
+        /* ✅ ИСПРАВЛЕННЫЙ ФОН: Фото двух Тигров */
         body.theme-twotigers {
-            background-image: url('https://media.cnn.com/api/v1/images/stellar/prod/c-gettyimages-681946574.jpg?c=original/w_800');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('https://media.cnn.com/api/v1/images/stellar/prod/c-gettyimages-681946574.jpg?c=original/w_800');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             background-repeat: no-repeat;
-        }
-        /* Затемняющий слой, чтобы интерфейс оставался читаемым поверх фото */
-        body.theme-twotigers::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.55);
-            pointer-events: none;
-            z-index: 0;
-        }
-        /* Поднимаем весь контент над затемняющим слоем */
-        body.theme-twotigers > * {
-            position: relative;
-            z-index: 1;
         }
 
         .font-pixel { font-family: 'Press Start 2P', cursive; }
@@ -460,7 +446,6 @@
                         <p id="theme-desc-supergold" class="text-[10px] text-slate-400 my-2">Премиальный многослойный золотой сумеречный фон!</p>
                         <button onclick="buyTheme('supergold', 50000)" id="theme-btn-supergold" class="w-full py-2 bg-gradient-to-r from-yellow-500 via-amber-400 to-red-500 hover:from-yellow-400 hover:to-red-400 text-slate-950 font-black text-xs uppercase rounded-xl btn-bounce shadow-lg">Купить (50,000 🪙)</button>
                     </div>
-                    <!-- ✅ НОВЫЙ ФОН: Фото двух Тигров -->
                     <div class="bg-slate-900 border-2 border-orange-500/70 rounded-2xl p-4 flex flex-col justify-between items-center text-center">
                         <div class="text-4xl mb-2">🐯</div>
                         <h4 id="theme-name-twotigers" class="font-bold text-sm text-orange-300">Фото двух Тигров</h4>
@@ -1536,7 +1521,6 @@
         function openSavesModal() { playSound('click'); renderSavesSlots(); document.getElementById('saves-modal').classList.remove('hidden'); }
         function closeSavesModal() { document.getElementById('saves-modal').classList.add('hidden'); }
 
-        // ✅ ИЗМЕНЕНО: добавлено переименование слота через кнопку ✏️
         function renderSavesSlots() {
             const container = document.getElementById('slots-container');
             container.innerHTML = '';
@@ -1561,12 +1545,10 @@
             });
         }
 
-        // ✅ НОВОЕ: экранирование html для безопасной вставки имён
         function escapeHtml(str) {
             return String(str == null ? '' : str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
         }
 
-        // ✅ НОВОЕ: переименование слота
         function renameSaveSlot(slotKey) {
             playSound('click');
             const slot = savesManifest.slots[slotKey];
@@ -1642,7 +1624,6 @@
             document.getElementById('theme-desc-epstein').innerText = t.themeEpsteinDesc;
             document.getElementById('theme-name-supergold').innerText = t.themeSupergoldName;
             document.getElementById('theme-desc-supergold').innerText = t.themeSupergoldDesc;
-            // ✅ НОВЫЙ ФОН: перевод
             document.getElementById('theme-name-twotigers').innerText = t.themeTwotigersName;
             document.getElementById('theme-desc-twotigers').innerText = t.themeTwotigersDesc;
             document.getElementById('lbl-investigations-title').innerText = t.investigationsTitle;
@@ -1810,7 +1791,6 @@
             gameState.balance -= cost; gameState.ownedThemes.push(themeKey); gameState.currentTheme = themeKey;
             playSound('win'); applyTheme(themeKey); saveGame(); updateUI();
         }
-        // ✅ ИЗМЕНЕНО: добавлена новая тема в список
         function updateShopThemeButtons() {
             const themes = [ 
                 { id: 'default', cost: 0 }, 
@@ -1819,7 +1799,7 @@
                 { id: 'night', cost: 10000 }, 
                 { id: 'epstein', cost: 15000 }, 
                 { id: 'supergold', cost: 50000 },
-                { id: 'twotigers', cost: 100000 } // ✅ НОВЫЙ ФОН
+                { id: 'twotigers', cost: 100000 }
             ];
             themes.forEach(item => {
                 const btn = document.getElementById(`theme-btn-${item.id}`);
