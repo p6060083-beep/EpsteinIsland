@@ -2,7 +2,7 @@
 <html lang="ru" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Epstein Island Collector - Бабл Квас Style</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-family/inter.css" rel="stylesheet">
@@ -17,6 +17,20 @@
             user-select: none;
             overflow-x: hidden;
             transition: background 0.5s ease;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        body.mobile-optimized button, body.mobile-optimized * {
+            touch-action: manipulation;
+        }
+
+        .mobile-optimized #lolita-canvas {
+            touch-action: none;
         }
 
         body.theme-simple { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important; }
@@ -41,9 +55,41 @@
 
         body.theme-supergold {
             background: 
-                radial-gradient(circle at 50% 50%, rgba(253, 224, 71, 0.3) 0%, rgba(133, 77, 14, 0.4) 40%, transparent 80%),
-                radial-gradient(circle at 20% 20%, rgba(234, 179, 8, 0.2) 0%, transparent 50%),
-                linear-gradient(135deg, #451a03 0%, #78350f 30%, #3b0764 70%, #020617 100%) !important;
+                radial-gradient(ellipse 90% 60% at 50% -10%, rgba(253, 224, 71, 0.65) 0%, rgba(245, 158, 11, 0.25) 35%, transparent 70%),
+                radial-gradient(ellipse 80% 50% at 50% 110%, rgba(251, 146, 60, 0.55) 0%, rgba(180, 83, 9, 0.2) 40%, transparent 70%),
+                radial-gradient(circle at 15% 30%, rgba(254, 240, 138, 0.4) 0%, transparent 35%),
+                radial-gradient(circle at 85% 25%, rgba(245, 158, 11, 0.45) 0%, transparent 35%),
+                radial-gradient(circle at 90% 80%, rgba(234, 179, 8, 0.4) 0%, transparent 35%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cg fill='%23fde047'%3E%3Cpath d='M60 10 L63 52 L105 60 L63 68 L60 110 L57 68 L15 60 L57 52 Z' opacity='0.28'/%3E%3Cpath d='M20 20 L21.5 38 L40 40 L21.5 42 L20 60 L18.5 42 L0 40 L18.5 38 Z' opacity='0.38'/%3E%3Cpath d='M100 80 L101 95 L115 100 L101 105 L100 120 L99 105 L85 100 L99 95 Z' opacity='0.32'/%3E%3C/g%3E%3C/svg%3E") repeat,
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='50' cy='50' r='2.5' fill='%23fef08a' opacity='0.7'/%3E%3Ccircle cx='150' cy='30' r='1.5' fill='%23fde047' opacity='0.8'/%3E%3Ccircle cx='30' cy='150' r='2' fill='%23fef08a' opacity='0.6'/%3E%3Ccircle cx='170' cy='170' r='2.5' fill='%23fde047' opacity='0.6'/%3E%3Ccircle cx='100' cy='100' r='1.5' fill='%23fef08a' opacity='0.7'/%3E%3Ccircle cx='75' cy='25' r='1' fill='%23fde047' opacity='0.8'/%3E%3Ccircle cx='125' cy='175' r='1' fill='%23fef08a' opacity='0.7'/%3E%3Ccircle cx='25' cy='90' r='1.2' fill='%23fde047' opacity='0.65'/%3E%3C/svg%3E") repeat,
+                linear-gradient(135deg, #451a03 0%, #78350f 18%, #b45309 38%, #d97706 50%, #b45309 62%, #78350f 82%, #3b0764 100%) !important;
+            background-size: 
+                100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 
+                130px 130px, 220px 220px, 100% 100% !important;
+            background-attachment: fixed, fixed, fixed, fixed, fixed, scroll, scroll, fixed !important;
+        }
+
+        /* ✅ НОВЫЙ ФОН: Фото двух Тигров */
+        body.theme-twotigers {
+            background-image: url('https://media.cnn.com/api/v1/images/stellar/prod/c-gettyimages-681946574.jpg?c=original/w_800');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+        /* Затемняющий слой, чтобы интерфейс оставался читаемым поверх фото */
+        body.theme-twotigers::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            pointer-events: none;
+            z-index: 0;
+        }
+        /* Поднимаем весь контент над затемняющим слоем */
+        body.theme-twotigers > * {
+            position: relative;
+            z-index: 1;
         }
 
         .font-pixel { font-family: 'Press Start 2P', cursive; }
@@ -111,10 +157,14 @@
             transition: transform 4s cubic-bezier(0.15, 0.85, 0.35, 1.005);
         }
 
-        .island-map-container { position: relative; width: 100%; aspect-ratio: 1/1; background: #020617; border-radius: 1.5rem; overflow: hidden; border: 4px solid #1e293b; }
+        .island-map-container { 
+            position: relative; width: 100%; aspect-ratio: 1/1; 
+            background: radial-gradient(circle at 50% 50%, #38bdf8 0%, #0c4a6e 100%); 
+            border-radius: 1.5rem; overflow: hidden; border: 4px solid #1e293b; 
+        }
         .island-zone { position: absolute; transition: all 0.4s; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Rubik', sans-serif; font-size: 11px; font-weight: 900; color: #fff; text-shadow: 1px 1px 3px #000, 0 0 5px #000; line-height: 1.2; text-align: center; }
-        .island-zone.locked { background: rgba(0, 0, 0, 0.8); border: 2px dashed #334155; color: #475569; box-shadow: inset 0 0 15px rgba(0,0,0,0.8); }
-        .island-zone.unlocked { background: rgba(56, 189, 248, 0.15); border: 2px solid #38bdf8; color: #e0f2fe; box-shadow: 0 0 20px rgba(56, 189, 248, 0.6), inset 0 0 15px rgba(56, 189, 248, 0.3); }
+        .island-zone.locked { background: rgba(0, 0, 0, 0.7); border: 2px dashed #334155; color: #475569; box-shadow: inset 0 0 15px rgba(0,0,0,0.8); }
+        .island-zone.unlocked { background: rgba(56, 189, 248, 0.2); border: 2px solid #38bdf8; color: #e0f2fe; box-shadow: 0 0 20px rgba(56, 189, 248, 0.6), inset 0 0 15px rgba(56, 189, 248, 0.3); }
         .map-svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
         .zone-overlay { position: absolute; z-index: 2; }
     </style>
@@ -358,7 +408,7 @@
                     <div class="bg-sky-500/20 text-sky-300 text-[10px] font-black px-3 py-1 rounded-full uppercase border border-sky-400/30">Аркада ✈️</div>
                     <div class="text-6xl my-3">🛩️🌩️</div>
                     <h3 id="lbl-game3-title" class="text-lg font-black mb-1 text-sky-400">Лолита Экспресс</h3>
-                    <p id="lbl-game3-desc" class="text-xs text-slate-300 mb-4">Управляй джетом, уворачивайся от грозовых туч, метеозондов и репортеров ФБР! Собирай монеты. 2 минуты, 5 жизней.</p>
+                    <p id="lbl-game3-desc" class="text-xs text-slate-300 mb-4">Управляй джетом, уворачивайся от грозовых туч, метеозондов и репортеров ФБР! Собирай монеты. 2 минуты, 3 жизни.</p>
                     <div id="lolita-game-unlock-status" class="text-xs font-bold text-amber-400 bg-amber-500/10 border border-amber-500/20 p-2 rounded-xl mb-4 w-full">🔒 Нужно: 5 гостей в коллекции, 15,000 🪙 и 10 ✈️</div>
                     <button id="btn-start-lolita-game" onclick="startLolitaExpressGame()" class="w-full py-3 bg-gradient-to-r from-sky-500 to-cyan-600 hover:from-sky-400 hover:to-cyan-500 rounded-xl font-black text-xs uppercase tracking-wider btn-bounce shadow-md text-slate-950">Разблокировать (15,000 🪙 + 10 ✈️)</button>
                 </div>
@@ -410,6 +460,13 @@
                         <p id="theme-desc-supergold" class="text-[10px] text-slate-400 my-2">Премиальный многослойный золотой сумеречный фон!</p>
                         <button onclick="buyTheme('supergold', 50000)" id="theme-btn-supergold" class="w-full py-2 bg-gradient-to-r from-yellow-500 via-amber-400 to-red-500 hover:from-yellow-400 hover:to-red-400 text-slate-950 font-black text-xs uppercase rounded-xl btn-bounce shadow-lg">Купить (50,000 🪙)</button>
                     </div>
+                    <!-- ✅ НОВЫЙ ФОН: Фото двух Тигров -->
+                    <div class="bg-slate-900 border-2 border-orange-500/70 rounded-2xl p-4 flex flex-col justify-between items-center text-center">
+                        <div class="text-4xl mb-2">🐯</div>
+                        <h4 id="theme-name-twotigers" class="font-bold text-sm text-orange-300">Фото двух Тигров</h4>
+                        <p id="theme-desc-twotigers" class="text-[10px] text-slate-400 my-2">Легендарное фото: Джеффри и Дональд вместе. Максимальный уровень дерзости.</p>
+                        <button onclick="buyTheme('twotigers', 100000)" id="theme-btn-twotigers" class="w-full py-2 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-600 hover:from-orange-400 hover:to-yellow-500 text-slate-950 font-black text-xs uppercase rounded-xl btn-bounce shadow-lg">Купить (100,000 🪙)</button>
+                    </div>
                 </div>
             </div>
 
@@ -438,6 +495,30 @@
             </div>
 
             <div class="space-y-3 pt-4 border-t border-slate-800">
+                <h3 id="lbl-cat-exchange-reverse" class="text-base font-black text-yellow-400 uppercase tracking-wider flex items-center gap-2"><span>🪙 Обмен Джеффриков (За Лолиты)</span></h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="bg-slate-900 border border-yellow-500/40 rounded-2xl p-4 flex flex-col items-center text-center justify-between">
+                        <div class="text-5xl my-2">🪙</div>
+                        <h4 class="font-bold text-sm text-yellow-300">10 000 🪙</h4>
+                        <p class="text-[10px] text-slate-400 my-2">За 10 ✈️ Лолит.</p>
+                        <button onclick="buyJeffreys(10000, 10)" class="w-full py-2.5 bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-400 hover:to-amber-500 text-slate-950 font-black text-xs uppercase rounded-xl btn-bounce">10 ✈️</button>
+                    </div>
+                    <div class="bg-slate-900 border border-yellow-400 rounded-2xl p-4 flex flex-col items-center text-center justify-between">
+                        <div class="text-5xl my-2">💰</div>
+                        <h4 class="font-bold text-sm text-yellow-300">45 000 🪙</h4>
+                        <p class="text-[10px] text-slate-400 my-2">За 30 ✈️ Лолит.</p>
+                        <button onclick="buyJeffreys(45000, 30)" class="w-full py-2.5 bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-600 hover:from-yellow-300 hover:to-yellow-500 text-slate-950 font-black text-xs uppercase rounded-xl btn-bounce shadow-lg">30 ✈️</button>
+                    </div>
+                    <div class="bg-slate-900 border-2 border-yellow-300 rounded-2xl p-4 flex flex-col items-center text-center justify-between glow-legendary">
+                        <div class="text-5xl my-2">💎</div>
+                        <h4 class="font-bold text-sm text-yellow-200">95 000 🪙</h4>
+                        <p class="text-[10px] text-slate-400 my-2">За 60 ✈️ Лолит.</p>
+                        <button onclick="buyJeffreys(95000, 60)" class="w-full py-2.5 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs uppercase rounded-xl btn-bounce shadow-xl">60 ✈️</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-3 pt-4 border-t border-slate-800">
                 <h3 id="lbl-promo-title" class="text-base font-black text-yellow-400 uppercase tracking-wider flex items-center gap-2"><span>🎁 Промокод</span></h3>
                 <div class="bg-slate-900 border border-yellow-500/40 rounded-2xl p-4 flex flex-col sm:flex-row items-center gap-3">
                     <input type="text" id="promo-input" placeholder="Введите промокод..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-yellow-300 font-bold placeholder-slate-600 focus:outline-none focus:border-yellow-400">
@@ -453,19 +534,25 @@
             </div>
             <div class="island-map-container mx-auto max-w-lg">
                 <svg class="map-svg" viewBox="0 0 500 500">
-                    <path d="M 250 60 C 350 60, 420 140, 410 240 C 400 320, 370 380, 310 440 C 250 480, 160 460, 120 380 C 80 300, 90 200, 140 130 C 190 80, 200 60, 250 60 Z" fill="#0f172a" stroke="#334155" stroke-width="4"/>
-                    <path d="M 220 110 C 300 100, 370 170, 360 250 C 350 320, 320 380, 250 410 C 180 440, 130 390, 120 310 C 110 230, 150 140, 220 110 Z" fill="#1e293b" stroke="#475569" stroke-width="2" stroke-dasharray="6 4"/>
+                    <defs>
+                        <pattern id="waves" x="0" y="0" width="100" height="20" patternUnits="userSpaceOnUse">
+                            <path d="M 0 10 Q 25 0, 50 10 T 100 10" stroke="rgba(255,255,255,0.15)" fill="none" stroke-width="2"/>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#waves)"/>
+                    <path d="M 220 80 Q 300 50, 380 100 Q 450 160, 420 260 Q 380 360, 300 400 Q 250 450, 180 430 Q 100 400, 80 300 Q 80 200, 140 120 Q 180 80, 220 80 Z" fill="#fde68a" stroke="#fcd34d" stroke-width="6"/>
+                    <path d="M 230 110 Q 300 100, 360 150 Q 410 200, 390 270 Q 370 330, 300 360 Q 260 390, 200 400 Q 140 410, 120 340 Q 90 280, 120 200 Q 150 140, 200 120 Z" fill="#d97706" stroke="none" opacity="0.15"/>
                 </svg>
-                <div id="zone-mansion" class="zone-overlay locked" style="top:12%; left:55%; width:26%; height:26%; border-radius:50%;">
+                <div id="zone-mansion" class="zone-overlay locked" style="top:18%; left:58%; width:26%; height:26%; border-radius:50%;">
                     <span>🏛️</span><span>Особняк</span>
                 </div>
-                <div id="zone-beach" class="zone-overlay locked" style="top:60%; left:55%; width:26%; height:26%; border-radius:50%;">
+                <div id="zone-beach" class="zone-overlay locked" style="top:62%; left:52%; width:26%; height:26%; border-radius:50%;">
                     <span>🏖️</span><span>Пляж</span>
                 </div>
-                <div id="zone-helipad" class="zone-overlay locked" style="top:22%; left:18%; width:26%; height:26%; border-radius:50%;">
+                <div id="zone-helipad" class="zone-overlay locked" style="top:28%; left:25%; width:26%; height:26%; border-radius:50%;">
                     <span>🚁</span><span>Верт. площадка</span>
                 </div>
-                <div id="zone-temple" class="zone-overlay locked" style="top:55%; left:15%; width:26%; height:26%; border-radius:50%;">
+                <div id="zone-temple" class="zone-overlay locked" style="top:58%; left:20%; width:26%; height:26%; border-radius:50%;">
                     <span>⛪</span><span>Храм-павильон</span>
                 </div>
             </div>
@@ -532,6 +619,12 @@
             <h3 id="settings-modal-title" class="text-xl font-black uppercase text-purple-300 mb-6">⚙️ Настройки</h3>
             <div class="w-full space-y-4">
                 <button onclick="togglePause()" id="btn-pause-toggle" class="w-full py-3.5 bg-purple-600 hover:bg-purple-500 rounded-2xl font-black uppercase text-xs btn-bounce text-white shadow-lg border border-purple-400/30 flex items-center justify-center gap-2"><span>⏸️ Поставить на паузу</span></button>
+                
+                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 flex items-center justify-between">
+                    <span id="lbl-mobile-setting" class="text-xs font-bold text-slate-300">Оптимизация под мобилки:</span>
+                    <button onclick="toggleMobileOptimization()" id="mobile-opt-btn" class="bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-xl text-xs font-black btn-bounce text-white">Выкл</button>
+                </div>
+
                 <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 flex items-center justify-between">
                     <span id="lbl-lang-setting" class="text-xs font-bold text-slate-300">Язык / Language:</span>
                     <button onclick="toggleLanguage()" id="lang-btn" class="bg-purple-600 hover:bg-purple-500 px-3 py-1.5 rounded-xl text-xs font-black btn-bounce text-white">🇷🇺 Русский</button>
@@ -618,11 +711,23 @@
                 </div>
                 <div class="text-right">
                     <div id="lolita-game-timer" class="text-xl font-pixel text-yellow-400">02:00</div>
-                    <div id="lolita-game-lives" class="text-sm font-bold text-red-400">❤️❤️❤️❤️❤️</div>
+                    <div id="lolita-game-lives" class="text-sm font-bold text-red-400">❤️❤️❤️</div>
                 </div>
             </div>
             <div class="relative w-full bg-slate-950 rounded-2xl border-2 border-slate-700 overflow-hidden" style="aspect-ratio: 4/3;">
                 <canvas id="lolita-canvas" class="w-full h-full block"></canvas>
+                
+                <div id="mobile-controls" class="absolute bottom-4 left-0 right-0 flex justify-between px-4 pointer-events-none z-20 hidden">
+                    <div class="grid grid-cols-3 gap-1 pointer-events-auto">
+                        <div></div>
+                        <button class="w-12 h-12 bg-slate-800/80 rounded-lg text-white font-bold flex items-center justify-center text-xl active:bg-slate-700" onpointerdown="handleMobileMove('ArrowUp', true)" onpointerup="handleMobileMove('ArrowUp', false)" onpointerleave="handleMobileMove('ArrowUp', false)">▲</button>
+                        <div></div>
+                        <button class="w-12 h-12 bg-slate-800/80 rounded-lg text-white font-bold flex items-center justify-center text-xl active:bg-slate-700" onpointerdown="handleMobileMove('ArrowLeft', true)" onpointerup="handleMobileMove('ArrowLeft', false)" onpointerleave="handleMobileMove('ArrowLeft', false)">◀</button>
+                        <button class="w-12 h-12 bg-slate-800/80 rounded-lg text-white font-bold flex items-center justify-center text-xl active:bg-slate-700" onpointerdown="handleMobileMove('ArrowDown', true)" onpointerup="handleMobileMove('ArrowDown', false)" onpointerleave="handleMobileMove('ArrowDown', false)">▼</button>
+                        <button class="w-12 h-12 bg-slate-800/80 rounded-lg text-white font-bold flex items-center justify-center text-xl active:bg-slate-700" onpointerdown="handleMobileMove('ArrowRight', true)" onpointerup="handleMobileMove('ArrowRight', false)" onpointerleave="handleMobileMove('ArrowRight', false)">▶</button>
+                    </div>
+                </div>
+
                 <div id="lolita-game-overlay" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/80 z-10 hidden">
                     <h4 id="lolita-end-title" class="text-2xl font-black text-sky-400 mb-2">Игра окончена</h4>
                     <p id="lolita-end-score" class="text-sm text-yellow-400 font-bold mb-4">Монет собрано: 0</p>
@@ -805,19 +910,21 @@
                 minigamesTitle: '🎮 Мини-Игры Острова', minigamesSub: 'Играй и получай дополнительный капитал!',
                 game1Title: 'Найти Гостей', game1Desc: 'Освободи остров от прячущихся випов! Обыскивай кусты, посадки и заборы за 60 секунд.',
                 game2Title: 'Судебный процесс', game2Desc: 'Сделай ставку от 1,000 до 1,000,000 🪙 и крути Колесо Фортуны!',
-                game3Title: 'Лолита Экспресс', game3Desc: 'Управляй джетом, уворачивайся от грозовых туч, метеозондов и репортеров ФБР! Собирай монеты. 2 минуты, 5 жизней.',
+                game3Title: 'Лолита Экспресс', game3Desc: 'Управляй джетом, уворачивайся от грозовых туч, метеозондов и репортеров ФБР! Собирай монеты. 2 минуты, 3 жизни.',
                 courtReq: '🔒 Требуется: 10,000 🪙 и 1 ✈️ Лолита Э.', courtUnlocked: '✅ Казино разблокировано! Нажмите «Играть».', play: 'Играть 🎮',
                 shopTitle: '🛒 Магазин Острова', shopSub: 'Покупай кастомные темы оформления и обменивай монеты на Лолита Э.!',
-                catThemes: '🎨 Игровые Фоны', catExchange: '✈️ Обмен Валюты (Лолита Экспресс)',
+                catThemes: '🎨 Игровые Фоны', catExchange: '✈️ Обмен Валюты (Лолита Экспресс)', catExchangeReverse: '🪙 Обмен Джеффриков (За Лолиты)',
                 themeDefaultName: 'Стандартный Тёмный', themeDefaultDesc: 'Классический стиль острова.',
                 themeSimpleName: 'Простой фон', themeSimpleDesc: 'Минималистичный сине-серый градиент.',
                 themeCoolName: 'Прикольный фон', themeCoolDesc: 'Яркий стильный карибский градиент.',
                 themeNightName: 'Ночной Карибский', themeNightDesc: 'Многослойный градиент тропической воды, неба и глубин. 🥥',
                 themeEpsteinName: 'Остров Эпштейна', themeEpsteinDesc: 'Размытый силуэт здания с куполом слева и пальмой справа.',
                 themeSupergoldName: 'Супер-Золотой Остров', themeSupergoldDesc: 'Премиальный многослойный золотой сумеречный фон!',
+                themeTwotigersName: 'Фото двух Тигров', themeTwotigersDesc: 'Легендарное фото: Джеффри и Дональд вместе. Максимальный уровень дерзости.',
                 navCases: 'Кейсы', navClicker: 'Фарм', navCollection: 'Гости', navInvestigations: 'Следствие', navMinigames: 'Игры', navShop: 'Магазин', navIsland: 'Остров',
                 settingsTitle: '⚙️ Настройки', pauseBtn: '⏸️ Поставить на паузу', unpauseBtn: '▶️ Снять с паузы', pauseTitle: 'ИГРА НА ПАУЗЕ', pauseDesc: 'Авто-фарм приостановлен. Нажмите ниже, чтобы продолжить.',
                 langLabel: 'Язык / Language:', langBtn: '🇷🇺 Русский', resetLabel: 'Сброс Игры:', resetBtn: '🗑️ Сбросить', close: 'Закрыть',
+                mobileOptLabel: 'Оптимизация под мобилки:', mobileOptOn: 'Вкл', mobileOptOff: 'Выкл',
                 spin: '🎰 Крутить!', spinStatus: 'Жми «Крутить!»', spinningStatus: 'Крутим рулетку...', claim: '📁 Забрать', closeDoc: 'Закрыть Досье',
                 inStock: 'В коллекции:', duplicateSell: 'Повторка! Продано за', coinRefund: 'Денежная компенсация', emptyDrop: 'В кейсе ничего не оказалось... Не повезло!',
                 notEnough: 'Не хватает средств!', resetConfirm: 'Вы уверены, что хотите сбросить весь прогресс и начать сначала?',
@@ -851,19 +958,21 @@
                 minigamesTitle: '🎮 Island Mini-Games', minigamesSub: 'Play and earn extra capital!',
                 game1Title: 'Find Guests', game1Desc: 'Clear the island of hiding VIPs! Search bushes and fences in 60 seconds.',
                 game2Title: 'Court Trial', game2Desc: 'Place a bet from 1,000 to 1,000,000 🪙 and spin the Wheel of Fortune!',
-                game3Title: 'Lolita Express', game3Desc: 'Pilot the jet, dodge storm clouds, weather balloons and FBI reporters! Collect coins. 2 minutes, 5 lives.',
+                game3Title: 'Lolita Express', game3Desc: 'Pilot the jet, dodge storm clouds, weather balloons and FBI reporters! Collect coins. 2 minutes, 3 lives.',
                 courtReq: '🔒 Requires: 10,000 🪙 and 1 ✈️ Lolita E.', courtUnlocked: '✅ Casino unlocked! Click "Play".', play: 'Play 🎮',
                 shopTitle: '🛒 Island Shop', shopSub: 'Buy custom themes and exchange coins for Lolita E.!',
-                catThemes: '🎨 Background Themes', catExchange: '✈️ Currency Exchange (Lolita Express)',
+                catThemes: '🎨 Background Themes', catExchange: '✈️ Currency Exchange (Lolita Express)', catExchangeReverse: '🪙 Jeffreys Exchange (For Lolitas)',
                 themeDefaultName: 'Standard Dark', themeDefaultDesc: 'Classic island style.',
                 themeSimpleName: 'Simple Background', themeSimpleDesc: 'Minimalistic blue-gray gradient.',
                 themeCoolName: 'Cool Background', themeCoolDesc: 'Vibrant and stylish Caribbean gradient.',
                 themeNightName: 'Night Caribbean', themeNightDesc: 'Multi-layered gradient of tropical waters, night sky & depths. 🥥',
                 themeEpsteinName: 'Epstein Island', themeEpsteinDesc: 'Mansion silhouette with dome on the left & palm tree on the right.',
                 themeSupergoldName: 'Super Gold Island', themeSupergoldDesc: 'Premium multi-layered golden twilight theme!',
+                themeTwotigersName: 'Two Tigers Photo', themeTwotigersDesc: 'Legendary photo: Jeffrey and Donald together. Maximum level of audacity.',
                 navCases: 'Cases', navClicker: 'Farm', navCollection: 'Guests', navInvestigations: 'Quests', navMinigames: 'Games', navShop: 'Shop', navIsland: 'Island',
                 settingsTitle: '⚙️ Settings', pauseBtn: '⏸️ Pause Game', unpauseBtn: '▶️ Unpause', pauseTitle: 'GAME PAUSED', pauseDesc: 'Auto-farming is paused. Click below to continue.',
                 langLabel: 'Language / Язык:', langBtn: '🇬🇧 English', resetLabel: 'Reset Game:', resetBtn: '🗑️ Reset', close: 'Close',
+                mobileOptLabel: 'Mobile Optimization:', mobileOptOn: 'ON', mobileOptOff: 'OFF',
                 spin: '🎰 Spin!', spinStatus: 'Press "Spin!"', spinningStatus: 'Spinning roulette...', claim: '📁 Claim', closeDoc: 'Close File',
                 inStock: 'Owned:', duplicateSell: 'Duplicate! Sold for', coinRefund: 'Cash Compensation', emptyDrop: 'The case was empty... Bad luck!',
                 notEnough: 'Not enough currency!', resetConfirm: 'Are you sure you want to reset all progress and start over?',
@@ -957,7 +1066,8 @@
                 islandParts: [],
                 achievements: {},
                 promoUsed: false,
-                lolitaGameHighScore: 0
+                lolitaGameHighScore: 0,
+                mobileOptimized: false
             };
         }
 
@@ -965,6 +1075,33 @@
         let savesManifest = { currentSlot: 'slot_1', slots: { 'slot_1': { name: 'Основное сохранение', updatedAt: Date.now() } } };
         let gameState = createDefaultState();
         let fastOpenCount = 5;
+
+        function toggleMobileOptimization() {
+            playSound('click');
+            gameState.mobileOptimized = !gameState.mobileOptimized;
+            saveGame();
+            updateMobileUI();
+            updateUI();
+        }
+
+        function updateMobileUI() {
+            const btn = document.getElementById('mobile-opt-btn');
+            if (gameState.mobileOptimized) {
+                document.body.classList.add('mobile-optimized');
+                btn.innerText = TRANSLATIONS[currentLang].mobileOptOn || 'Вкл';
+                btn.className = 'bg-emerald-600 hover:bg-emerald-500 px-3 py-1.5 rounded-xl text-xs font-black btn-bounce text-white';
+            } else {
+                document.body.classList.remove('mobile-optimized');
+                btn.innerText = TRANSLATIONS[currentLang].mobileOptOff || 'Выкл';
+                btn.className = 'bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-xl text-xs font-black btn-bounce text-white';
+            }
+        }
+
+        function handleMobileMove(dir, isDown) {
+            if (window.gameKeys) {
+                window.gameKeys[dir] = isDown;
+            }
+        }
 
         const ACHIEVEMENTS_DEF = [
             { id: 'first_case', ruName: 'Первый кейс', enName: 'First Case', ruDesc: 'Открой свой первый кейс', enDesc: 'Open your first case', icon: '📦', check: s => s.casesOpened >= 1 },
@@ -1172,6 +1309,13 @@
 
             document.getElementById('lolita-game-modal').classList.remove('hidden');
             document.getElementById('lolita-game-overlay').classList.add('hidden');
+            
+            if (gameState.mobileOptimized) {
+                document.getElementById('mobile-controls').classList.remove('hidden');
+            } else {
+                document.getElementById('mobile-controls').classList.add('hidden');
+            }
+
             runLolitaGame();
         }
 
@@ -1182,16 +1326,21 @@
 
             let plane = { x: 400, y: 500, w: 40, h: 40, speed: 7 };
             let keys = {};
+            window.gameKeys = keys;
+
             let obstacles = [];
             let coins = [];
             let score = 0;
-            let lives = 5;
+            let lives = 3;
             let timeLeft = 120;
             let lastSpawn = 0;
             let lastCoinTime = 0;
             let frame = 0;
             let gameOver = false;
+            let speedMultiplier = 1;
             lolitaGameActive = true;
+
+            document.getElementById('lolita-game-lives').innerText = '❤️❤️❤️';
 
             const timerInterval = setInterval(() => {
                 if (isPaused || gameOver) return;
@@ -1199,6 +1348,11 @@
                 const mins = String(Math.floor(timeLeft / 60)).padStart(2, '0');
                 const secs = String(timeLeft % 60).padStart(2, '0');
                 document.getElementById('lolita-game-timer').innerText = `${mins}:${secs}`;
+                
+                if (timeLeft > 0 && timeLeft % 20 === 0) {
+                    speedMultiplier += 0.15;
+                }
+
                 if (timeLeft <= 0) { endLolitaGame(true); clearInterval(timerInterval); }
             }, 1000);
 
@@ -1240,26 +1394,30 @@
                 }
 
                 if (frame - lastCoinTime > 550) {
-                    const vals = [10, 100, 200, 500];
-                    const amount = vals[Math.floor(Math.random() * vals.length)];
+                    let amount;
+                    if (Math.random() < 0.05) {
+                        amount = [1000, 2000, 5000][Math.floor(Math.random() * 3)];
+                    } else {
+                        amount = [10, 100, 200, 500][Math.floor(Math.random() * 4)];
+                    }
                     coins.push({ x: Math.random() * canvas.width, y: -20, r: 15, amount, speed: 2.5 });
                     lastCoinTime = frame;
                 }
 
-                obstacles.forEach(o => o.y += o.speed);
+                obstacles.forEach(o => o.y += o.speed * speedMultiplier);
                 obstacles = obstacles.filter(o => {
                     if (o.y > canvas.height + 50) return false;
                     const dx = plane.x - o.x, dy = plane.y - o.y;
                     if (Math.sqrt(dx*dx + dy*dy) < plane.w/2 + o.r) {
                         lives--; playSound('trap');
-                        document.getElementById('lolita-game-lives').innerText = '❤️'.repeat(Math.max(0, lives)) + '🖤'.repeat(5 - Math.max(0, lives));
+                        document.getElementById('lolita-game-lives').innerText = '❤️'.repeat(Math.max(0, lives)) + '🖤'.repeat(3 - Math.max(0, lives));
                         if (lives <= 0) endLolitaGame(false);
                         return false;
                     }
                     return true;
                 });
 
-                coins.forEach(c => c.y += c.speed);
+                coins.forEach(c => c.y += c.speed * speedMultiplier);
                 coins = coins.filter(c => {
                     if (c.y > canvas.height + 50) return false;
                     const dx = plane.x - c.x, dy = plane.y - c.y;
@@ -1319,13 +1477,14 @@
             lolitaGameActive = false;
             if (lolitaGameAnimId) cancelAnimationFrame(lolitaGameAnimId);
             document.getElementById('lolita-game-modal').classList.add('hidden');
+            document.getElementById('mobile-controls').classList.add('hidden');
         }
 
         function redeemPromo() {
             const input = document.getElementById('promo-input');
             const code = input.value.trim();
             playSound('click');
-            if (code === 'JeEpstein_Island.19' && !gameState.promoUsed) {
+            if (code === 'JeEpstein_Island.53-19' && !gameState.promoUsed) {
                 gameState.balance += 1000000;
                 gameState.lolitaBalance += 1000;
                 gameState.promoUsed = true;
@@ -1350,8 +1509,19 @@
             if (!gameState.currentTheme) gameState.currentTheme = 'default';
             if (!gameState.islandParts) gameState.islandParts = [];
             if (!gameState.achievements) gameState.achievements = {};
+            if (gameState.mobileOptimized === undefined) gameState.mobileOptimized = false;
+            
             currentLang = gameState.lang || 'ru';
-            applyTheme(gameState.currentTheme); applyLanguageUI(); updateUI(); checkFastOpenCooldown(); initQuests(); checkQuestAlertBadge(); renderInvestigationsTab(); updateIslandMapUI(); renderAchievements();
+            applyTheme(gameState.currentTheme); 
+            applyLanguageUI(); 
+            updateMobileUI(); 
+            updateUI(); 
+            checkFastOpenCooldown(); 
+            initQuests(); 
+            checkQuestAlertBadge(); 
+            renderInvestigationsTab(); 
+            updateIslandMapUI(); 
+            renderAchievements();
         }
 
         function saveGame() {
@@ -1366,6 +1536,7 @@
         function openSavesModal() { playSound('click'); renderSavesSlots(); document.getElementById('saves-modal').classList.remove('hidden'); }
         function closeSavesModal() { document.getElementById('saves-modal').classList.add('hidden'); }
 
+        // ✅ ИЗМЕНЕНО: добавлено переименование слота через кнопку ✏️
         function renderSavesSlots() {
             const container = document.getElementById('slots-container');
             container.innerHTML = '';
@@ -1375,12 +1546,40 @@
                 const div = document.createElement('div');
                 div.className = `p-3.5 rounded-2xl border ${isActive ? 'border-purple-400 bg-purple-950/40' : 'border-slate-800 bg-slate-950'} flex items-center justify-between gap-3 shadow`;
                 const dateStr = new Date(info.updatedAt).toLocaleDateString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+                const safeName = escapeHtml(info.name);
+                const renameTitle = currentLang === 'en' ? 'Rename slot' : 'Переименовать слот';
                 div.innerHTML = `
-                    <div class="text-left"><div class="text-xs font-black ${isActive ? 'text-purple-300' : 'text-white'}">${info.name} ${isActive ? '⭐' : ''}</div>
-                    <div class="text-[10px] text-slate-400 font-mono mt-0.5">${currentLang === 'en' ? 'Saved:' : 'Сохранено:'} ${dateStr}</div></div>
+                    <div class="text-left flex-1 min-w-0">
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-xs font-black ${isActive ? 'text-purple-300' : 'text-white'} truncate">${safeName}${isActive ? ' ⭐' : ''}</span>
+                            <button onclick="renameSaveSlot('${slotKey}')" class="text-slate-500 hover:text-yellow-400 text-[11px] p-1 rounded hover:bg-slate-800 transition shrink-0" title="${renameTitle}">✏️</button>
+                        </div>
+                        <div class="text-[10px] text-slate-400 font-mono mt-0.5">${currentLang === 'en' ? 'Saved:' : 'Сохранено:'} ${dateStr}</div>
+                    </div>
                     <div class="flex items-center gap-2">${!isActive ? `<button onclick="switchSaveSlot('${slotKey}')" class="px-3 py-1.5 bg-purple-600 hover:bg-purple-500 text-white text-[10px] font-bold rounded-xl btn-bounce">${currentLang === 'en' ? 'Load' : 'Загрузить'}</button>${Object.keys(savesManifest.slots).length > 1 ? `<button onclick="deleteSaveSlot('${slotKey}')" class="px-2.5 py-1.5 bg-red-600/30 hover:bg-red-600 text-red-300 hover:text-white text-[10px] font-bold rounded-xl border border-red-500/30 btn-bounce">🗑️</button>` : ''}` : `<span class="px-2.5 py-1 bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-[10px] font-bold rounded-xl">${currentLang === 'en' ? 'Active' : 'Используется'}</span>`}</div>`;
                 container.appendChild(div);
             });
+        }
+
+        // ✅ НОВОЕ: экранирование html для безопасной вставки имён
+        function escapeHtml(str) {
+            return String(str == null ? '' : str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        }
+
+        // ✅ НОВОЕ: переименование слота
+        function renameSaveSlot(slotKey) {
+            playSound('click');
+            const slot = savesManifest.slots[slotKey];
+            if (!slot) return;
+            const promptText = currentLang === 'en' ? 'Enter new slot name (max 40 chars):' : 'Введите новое название слота (макс. 40 символов):';
+            const newName = prompt(promptText, slot.name);
+            if (newName === null) return;
+            const trimmed = newName.trim().slice(0, 40);
+            if (!trimmed) return;
+            slot.name = trimmed;
+            localStorage.setItem('epstein_collector_manifest', JSON.stringify(savesManifest));
+            playSound('win');
+            renderSavesSlots();
         }
 
         function switchSaveSlot(slotKey) { playSound('click'); saveGame(); currentSlotId = slotKey; savesManifest.currentSlot = slotKey; localStorage.setItem('epstein_collector_manifest', JSON.stringify(savesManifest)); loadGame(); closeSavesModal(); }
@@ -1443,6 +1642,9 @@
             document.getElementById('theme-desc-epstein').innerText = t.themeEpsteinDesc;
             document.getElementById('theme-name-supergold').innerText = t.themeSupergoldName;
             document.getElementById('theme-desc-supergold').innerText = t.themeSupergoldDesc;
+            // ✅ НОВЫЙ ФОН: перевод
+            document.getElementById('theme-name-twotigers').innerText = t.themeTwotigersName;
+            document.getElementById('theme-desc-twotigers').innerText = t.themeTwotigersDesc;
             document.getElementById('lbl-investigations-title').innerText = t.investigationsTitle;
             document.getElementById('lbl-investigations-subtitle').innerText = t.investigationsSub;
             document.getElementById('lbl-minigames-title').innerText = t.minigamesTitle;
@@ -1457,6 +1659,7 @@
             document.getElementById('lbl-shop-subtitle').innerText = t.shopSub;
             document.getElementById('lbl-cat-themes').innerText = t.catThemes;
             document.getElementById('lbl-cat-exchange').innerText = t.catExchange;
+            document.getElementById('lbl-cat-exchange-reverse').innerText = t.catExchangeReverse;
             document.getElementById('lbl-promo-title').innerText = t.promoTitle;
             document.getElementById('promo-input').placeholder = t.promoPlaceholder;
             document.getElementById('nav-cases-lbl').innerText = t.navCases;
@@ -1476,6 +1679,10 @@
             document.getElementById('lbl-reset-setting').innerText = t.resetLabel;
             document.getElementById('reset-btn').innerText = t.resetBtn;
             document.getElementById('btn-settings-close').innerText = t.close;
+            
+            document.getElementById('lbl-mobile-setting').innerText = t.mobileOptLabel;
+            updateMobileUI();
+
             document.getElementById('saves-modal-title').innerText = t.savesTitle;
             document.getElementById('saves-modal-desc').innerText = t.savesDesc;
             document.getElementById('btn-create-slot').innerText = t.createSlot;
@@ -1592,6 +1799,7 @@
         function applyTheme(themeKey) {
             document.body.className = "text-white flex flex-col justify-between min-h-screen relative";
             if (themeKey !== 'default') document.body.classList.add(`theme-${themeKey}`);
+            if (gameState.mobileOptimized) document.body.classList.add('mobile-optimized');
         }
         function selectTheme(themeKey) { playSound('click'); gameState.currentTheme = themeKey; applyTheme(themeKey); saveGame(); updateShopThemeButtons(); }
         function buyTheme(themeKey, cost) {
@@ -1602,8 +1810,17 @@
             gameState.balance -= cost; gameState.ownedThemes.push(themeKey); gameState.currentTheme = themeKey;
             playSound('win'); applyTheme(themeKey); saveGame(); updateUI();
         }
+        // ✅ ИЗМЕНЕНО: добавлена новая тема в список
         function updateShopThemeButtons() {
-            const themes = [ { id: 'default', cost: 0 }, { id: 'simple', cost: 1000 }, { id: 'cool', cost: 5000 }, { id: 'night', cost: 10000 }, { id: 'epstein', cost: 15000 }, { id: 'supergold', cost: 50000 } ];
+            const themes = [ 
+                { id: 'default', cost: 0 }, 
+                { id: 'simple', cost: 1000 }, 
+                { id: 'cool', cost: 5000 }, 
+                { id: 'night', cost: 10000 }, 
+                { id: 'epstein', cost: 15000 }, 
+                { id: 'supergold', cost: 50000 },
+                { id: 'twotigers', cost: 100000 } // ✅ НОВЫЙ ФОН
+            ];
             themes.forEach(item => {
                 const btn = document.getElementById(`theme-btn-${item.id}`);
                 if (!btn) return;
@@ -1619,6 +1836,13 @@
             const t = TRANSLATIONS[currentLang];
             if (gameState.balance < cost) { alert(t.notEnough); return; }
             gameState.balance -= cost; gameState.lolitaBalance += amount;
+            playSound('win'); saveGame(); updateUI();
+        }
+        function buyJeffreys(amount, cost) {
+            playSound('click');
+            const t = TRANSLATIONS[currentLang];
+            if ((gameState.lolitaBalance || 0) < cost) { alert(t.notEnough); return; }
+            gameState.lolitaBalance -= cost; gameState.balance += amount;
             playSound('win'); saveGame(); updateUI();
         }
 
@@ -1739,8 +1963,13 @@
             resBox.innerText = currentLang === 'en' ? 'Spinning justice wheel...' : 'Правосудие вершится... Колесо вращается!';
             const rand = Math.random() * 100;
             let outcomeType = ''; let targetAngleOnWheel = 0;
-            if (rand < 45) { if (Math.random() < 0.35) { outcomeType = 'sensational'; targetAngleOnWheel = 45; } else { outcomeType = 'acquitted'; targetAngleOnWheel = 135; } }
-            else { if (Math.random() < 0.6) { outcomeType = 'bribe'; targetAngleOnWheel = 225; } else { outcomeType = 'jail'; targetAngleOnWheel = 315; } }
+            if (rand < 35) {
+                if (Math.random() < 0.35) { outcomeType = 'sensational'; targetAngleOnWheel = 45; }
+                else { outcomeType = 'acquitted'; targetAngleOnWheel = 135; }
+            } else {
+                if (Math.random() < 0.6) { outcomeType = 'bribe'; targetAngleOnWheel = 225; }
+                else { outcomeType = 'jail'; targetAngleOnWheel = 315; }
+            }
             const requiredRotation = (360 - targetAngleOnWheel) % 360;
             const fullTurns = 360 * 5;
             currentWheelRotation += fullTurns + requiredRotation + (360 - (currentWheelRotation % 360));
@@ -1848,7 +2077,7 @@
             if (isArch) {
                 const ownedParts = gameState.islandParts || [];
                 if (ownedParts.length < 4) {
-                    const legendaryChance = caseType === 'boeing' ? 6.0 : 3.0;
+                    const legendaryChance = caseType === 'boeing' ? 4.2 : 2.1;
                     if (rand < legendaryChance) {
                         const avail = ISLAND_PARTS.filter(p => !ownedParts.includes(p.id));
                         if (avail.length > 0) {
@@ -1862,43 +2091,43 @@
 
             if (caseType === 'basic') {
                 if (rand < 15) rarity = 'empty';
-                else if (rand < 17.22) targetId = 'lolita_1';
-                else if (rand < 96) rarity = 'coin';
-                else if (rand < 99.2) rarity = 'rare';
-                else if (rand < 99.92) rarity = 'superrare';
-                else if (rand < 99.9812) rarity = 'epic';
-                else if (rand < 99.988) rarity = 'legendary';
+                else if (rand < 16.887) targetId = 'lolita_1';
+                else if (rand < 96.12) rarity = 'coin';
+                else if (rand < 99.0) rarity = 'rare';
+                else if (rand < 99.648) rarity = 'superrare';
+                else if (rand < 99.69084) rarity = 'epic';
+                else if (rand < 99.6956) rarity = 'legendary';
                 else rarity = 'coin';
             } else if (caseType === 'epic') {
                 if (rand < 12) rarity = 'empty';
-                else if (rand < 12.32) targetId = 'lolita_1';
-                else if (rand < 12.79) targetId = 'lolita_3';
-                else if (rand < 84) rarity = 'coin';
-                else if (rand < 93) rarity = 'rare';
-                else if (rand < 97.2) rarity = 'superrare';
-                else if (rand < 98.9) rarity = 'epic';
-                else if (rand < 99.325) rarity = 'mythic';
-                else if (rand < 99.58) rarity = 'legendary';
+                else if (rand < 12.272) targetId = 'lolita_1';
+                else if (rand < 12.6715) targetId = 'lolita_3';
+                else if (rand < 86.454) rarity = 'coin';
+                else if (rand < 94.554) rarity = 'rare';
+                else if (rand < 98.334) rarity = 'superrare';
+                else if (rand < 99.524) rarity = 'epic';
+                else if (rand < 99.8215) rarity = 'mythic';
+                else if (rand < 100) rarity = 'legendary';
                 else rarity = 'coin';
             } else if (caseType === 'legendary') {
                 if (rand < 11) rarity = 'empty';
-                else if (rand < 16.66) targetId = 'lolita_1';
-                else if (rand < 21.66) targetId = 'lolita_3';
-                else if (rand < 29.66) targetId = 'lolita_5';
-                else if (rand < 79.56) rarity = 'coin';
-                else if (rand < 89.56) rarity = 'superrare';
-                else if (rand < 94.66) rarity = 'epic';
-                else if (rand < 97.21) rarity = 'mythic';
-                else if (rand < 98.4) rarity = 'legendary';
+                else if (rand < 15.811) targetId = 'lolita_1';
+                else if (rand < 20.061) targetId = 'lolita_3';
+                else if (rand < 26.861) targetId = 'lolita_5';
+                else if (rand < 84.812) rarity = 'coin';
+                else if (rand < 93.812) rarity = 'superrare';
+                else if (rand < 97.382) rarity = 'epic';
+                else if (rand < 99.167) rarity = 'mythic';
+                else if (rand < 100) rarity = 'legendary';
                 else rarity = 'coin';
             } else if (caseType === 'boeing') {
                 if (rand < 9) rarity = 'empty';
-                else if (rand < 29.6) rarity = 'coin';
-                else if (rand < 45.6) rarity = 'rare';
-                else if (rand < 65.6) rarity = 'superrare';
-                else if (rand < 79.2) rarity = 'epic';
-                else if (rand < 86.85) rarity = 'mythic';
-                else if (rand < 94.84) rarity = 'legendary';
+                else if (rand < 47.532) rarity = 'coin';
+                else if (rand < 61.932) rarity = 'rare';
+                else if (rand < 79.932) rarity = 'superrare';
+                else if (rand < 89.452) rarity = 'epic';
+                else if (rand < 94.807) rarity = 'mythic';
+                else if (rand < 100) rarity = 'legendary';
                 else rarity = 'coin';
             }
 
