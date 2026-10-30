@@ -25,13 +25,8 @@
             user-select: none;
         }
 
-        body.mobile-optimized button, body.mobile-optimized * {
-            touch-action: manipulation;
-        }
-
-        .mobile-optimized #lolita-canvas {
-            touch-action: none;
-        }
+        body.mobile-optimized button, body.mobile-optimized * { touch-action: manipulation; }
+        .mobile-optimized #lolita-canvas { touch-action: none; }
 
         body.theme-simple { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important; }
         body.theme-cool { background: linear-gradient(135deg, #0284c7 0%, #1e1b4b 50%, #311042 100%) !important; }
@@ -63,26 +58,18 @@
                 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cg fill='%23fde047'%3E%3Cpath d='M60 10 L63 52 L105 60 L63 68 L60 110 L57 68 L15 60 L57 52 Z' opacity='0.28'/%3E%3Cpath d='M20 20 L21.5 38 L40 40 L21.5 42 L20 60 L18.5 42 L0 40 L18.5 38 Z' opacity='0.38'/%3E%3Cpath d='M100 80 L101 95 L115 100 L101 105 L100 120 L99 105 L85 100 L99 95 Z' opacity='0.32'/%3E%3C/g%3E%3C/svg%3E") repeat,
                 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='50' cy='50' r='2.5' fill='%23fef08a' opacity='0.7'/%3E%3Ccircle cx='150' cy='30' r='1.5' fill='%23fde047' opacity='0.8'/%3E%3Ccircle cx='30' cy='150' r='2' fill='%23fef08a' opacity='0.6'/%3E%3Ccircle cx='170' cy='170' r='2.5' fill='%23fde047' opacity='0.6'/%3E%3Ccircle cx='100' cy='100' r='1.5' fill='%23fef08a' opacity='0.7'/%3E%3Ccircle cx='75' cy='25' r='1' fill='%23fde047' opacity='0.8'/%3E%3Ccircle cx='125' cy='175' r='1' fill='%23fef08a' opacity='0.7'/%3E%3Ccircle cx='25' cy='90' r='1.2' fill='%23fde047' opacity='0.65'/%3E%3C/svg%3E") repeat,
                 linear-gradient(135deg, #451a03 0%, #78350f 18%, #b45309 38%, #d97706 50%, #b45309 62%, #78350f 82%, #3b0764 100%) !important;
-            background-size: 
-                100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 
-                130px 130px, 220px 220px, 100% 100% !important;
+            background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 130px 130px, 220px 220px, 100% 100% !important;
             background-attachment: fixed, fixed, fixed, fixed, fixed, scroll, scroll, fixed !important;
         }
 
         body.theme-twotigers {
             background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('https://media.cnn.com/api/v1/images/stellar/prod/c-gettyimages-681946574.jpg?c=original/w_800');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
+            background-size: cover; background-position: center; background-attachment: fixed; background-repeat: no-repeat;
         }
 
         body.theme-temple {
             background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('images/temple_bg.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
+            background-size: cover; background-position: center; background-attachment: fixed; background-repeat: no-repeat;
         }
 
         .font-pixel { font-family: 'Press Start 2P', cursive; }
@@ -92,50 +79,26 @@
         ::-webkit-scrollbar-thumb { background: #8b5cf6; border-radius: 4px; }
 
         .glow-legendary { box-shadow: 0 0 25px #facc15, inset 0 0 15px #fef08a; animation: pulse-legendary 1.2s infinite alternate; border-color: #facc15; }
-        @keyframes pulse-legendary {
-            0% { box-shadow: 0 0 15px #facc15, inset 0 0 10px #fef08a; border-color: #facc15; }
-            100% { box-shadow: 0 0 35px #eab308, inset 0 0 20px #fef08a; border-color: #fef08a; }
-        }
+        @keyframes pulse-legendary { 0% { box-shadow: 0 0 15px #facc15, inset 0 0 10px #fef08a; border-color: #facc15; } 100% { box-shadow: 0 0 35px #eab308, inset 0 0 20px #fef08a; border-color: #fef08a; } }
         .glow-mythic { box-shadow: 0 0 22px #ef4444; }
         .glow-epic { box-shadow: 0 0 18px #ec4899; }
         .glow-superrare { box-shadow: 0 0 14px #a855f7; }
         .glow-rare { box-shadow: 0 0 10px #3b82f6; }
         .glow-lolita { box-shadow: 0 0 20px #38bdf8, inset 0 0 10px #e0f2fe; animation: pulse-lolita 1.5s infinite alternate; border-color: #38bdf8; }
-        @keyframes pulse-lolita {
-            0% { box-shadow: 0 0 15px #38bdf8, inset 0 0 10px #e0f2fe; border-color: #38bdf8; }
-            100% { box-shadow: 0 0 30px #0ea5e9, inset 0 0 20px #e0f2fe; border-color: #e0f2fe; }
-        }
+        @keyframes pulse-lolita { 0% { box-shadow: 0 0 15px #38bdf8, inset 0 0 10px #e0f2fe; border-color: #38bdf8; } 100% { box-shadow: 0 0 30px #0ea5e9, inset 0 0 20px #e0f2fe; border-color: #e0f2fe; } }
 
-        .holo-card {
-            position: relative;
-            background: linear-gradient(135deg, #1e1b4b, #0f172a);
-            overflow: hidden;
-        }
-        .holo-card::before {
-            content: '';
-            position: absolute;
-            inset: -50%;
-            background: conic-gradient(from 0deg, #facc15, #fef08a, #eab308, #fef08a, #facc15);
-            animation: holo-spin 4s linear infinite;
-            opacity: 0.55;
-            z-index: 0;
-        }
-        .holo-card::after {
-            content: '';
-            position: absolute;
-            inset: 2px;
-            background: linear-gradient(135deg, #111827, #1e1b4b);
-            border-radius: inherit;
-            z-index: 1;
-        }
+        .holo-card { position: relative; background: linear-gradient(135deg, #1e1b4b, #0f172a); overflow: hidden; }
+        .holo-card::before { content: ''; position: absolute; inset: -50%; background: conic-gradient(from 0deg, #facc15, #fef08a, #eab308, #fef08a, #facc15); animation: holo-spin 4s linear infinite; opacity: 0.55; z-index: 0; }
+        .holo-card::after { content: ''; position: absolute; inset: 2px; background: linear-gradient(135deg, #111827, #1e1b4b); border-radius: inherit; z-index: 1; }
         .holo-card > * { position: relative; z-index: 2; }
         @keyframes holo-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         .roulette-container { overflow: hidden; position: relative; }
         .roulette-track { display: flex; transition: transform 5s cubic-bezier(0.1, 1, 0.1, 1); }
 
+        /* Исправление: добавлен z-index: 50, чтобы цифры были поверх острова */
         @keyframes float-up { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-75px) scale(1.3); } }
-        .coin-pop { position: absolute; animation: float-up 0.8s ease-out forwards; pointer-events: none; font-weight: 900; color: #facc15; text-shadow: 0 2px 5px rgba(0,0,0,0.9); }
+        .coin-pop { position: absolute; animation: float-up 0.8s ease-out forwards; pointer-events: none; font-weight: 900; color: #facc15; text-shadow: 0 2px 5px rgba(0,0,0,0.9); z-index: 50; }
 
         .btn-bounce:active { transform: scale(0.92); }
         .card-bg-pattern { background-color: #111827; background-image: radial-gradient(#1f2937 1.5px, transparent 1.5px); background-size: 14px 14px; }
@@ -144,57 +107,44 @@
         .hide-grid-item:active { transform: scale(0.85); }
 
         .court-wheel-container {
-            position: relative; width: 230px; height: 230px; border-radius: 50%;
-            border: 4px solid #38bdf8; box-shadow: 0 0 25px rgba(56, 189, 248, 0.4); overflow: hidden;
+            position: relative; width: 230px; height: 230px; border-radius: 50%; border: 4px solid #38bdf8; box-shadow: 0 0 25px rgba(56, 189, 248, 0.4); overflow: hidden;
             background: conic-gradient(#2563eb 0deg 90deg, #0284c7 90deg 180deg, #dc2626 180deg 270deg, #991b1b 270deg 360deg);
             transition: transform 4s cubic-bezier(0.15, 0.85, 0.35, 1.005);
         }
 
-        .island-map-container { 
-            position: relative; width: 100%; aspect-ratio: 1/1; 
-            background: radial-gradient(circle at 50% 50%, #38bdf8 0%, #0c4a6e 100%); 
-            border-radius: 1.5rem; overflow: hidden; border: 4px solid #1e293b; 
-        }
+        .island-map-container { position: relative; width: 100%; aspect-ratio: 1/1; background: radial-gradient(circle at 50% 50%, #38bdf8 0%, #0c4a6e 100%); border-radius: 1.5rem; overflow: hidden; border: 4px solid #1e293b; }
+        
         .island-zone { position: absolute; transition: all 0.4s; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Rubik', sans-serif; font-size: 11px; font-weight: 900; color: #fff; text-shadow: 1px 1px 3px #000, 0 0 5px #000; line-height: 1.2; text-align: center; }
-        .island-zone.locked { background: rgba(0, 0, 0, 0.7); border: 2px dashed #334155; color: #475569; box-shadow: inset 0 0 15px rgba(0,0,0,0.8); }
-        .island-zone.unlocked { background: rgba(56, 189, 248, 0.2); border: 2px solid #38bdf8; color: #e0f2fe; box-shadow: 0 0 20px rgba(56, 189, 248, 0.6), inset 0 0 15px rgba(56, 189, 248, 0.3); }
+        .island-zone.locked { background: rgba(30, 30, 30, 0.8); border: 2px dashed #444; color: #555; box-shadow: inset 0 0 15px rgba(0,0,0,0.8); }
+        .island-zone.unlocked { background: rgba(253, 230, 138, 0.2); border: 2px solid #fcd34d; color: #fde047; box-shadow: 0 0 20px rgba(253, 230, 138, 0.4), inset 0 0 15px rgba(253, 230, 138, 0.2); }
+
         .map-svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
         .zone-overlay { position: absolute; z-index: 2; }
 
-        .zoomable {
-            cursor: zoom-in;
-            transition: transform 0.3s ease;
-            transform-origin: center center;
-        }
-        .zoomable.zoomed {
-            transform: scale(2.5);
-            cursor: zoom-out;
-        }
+        .zoomable { cursor: zoom-in; transition: transform 0.3s ease; transform-origin: center center; }
+        .zoomable.zoomed { transform: scale(2.5); cursor: zoom-out; }
         
-        #goldstein-statue {
-            filter: drop-shadow(0px 0px 10px gold);
-            animation: float 3s ease-in-out infinite;
-        }
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+        #goldstein-statue { filter: drop-shadow(0px 0px 10px gold); animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+
+        .clicker-bg-golden {
+            background: 
+                radial-gradient(circle at 50% 50%, rgba(253, 224, 71, 0.8) 0%, rgba(245, 158, 11, 0.6) 40%, rgba(120, 53, 15, 0.9) 100%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cg fill='%23fde047'%3E%3Cpath d='M60 10 L63 52 L105 60 L63 68 L60 110 L57 68 L15 60 L57 52 Z' opacity='0.4'/%3E%3C/g%3E%3C/svg%3E") repeat;
+            background-size: cover, 60px 60px;
         }
     </style>
 </head>
 <body class="text-white flex flex-col justify-between min-h-screen relative">
 
-    <!-- Jumpscare Overlay -->
     <div id="jumpscare-overlay" class="fixed inset-0 z-[999] bg-black hidden items-center justify-center">
         <img src="images/jumpscare.jpg" class="w-full h-full object-contain animate-pulse" onerror="this.src='https://via.placeholder.com/800x600?text=Jumpscare+Image+Missing'">
     </div>
 
-    <!-- Mini Epstein Easter Egg -->
-    <div id="mini-epstein" class="fixed hidden w-20 h-20 z-50 cursor-pointer animate-pulse rounded-xl overflow-hidden border-2 border-yellow-500 shadow-[0_0_20px_#facc15]">
+    <div id="mini-epstein" class="fixed hidden w-20 h-20 z-[9999] cursor-pointer animate-pulse rounded-xl overflow-hidden border-2 border-yellow-500 shadow-[0_0_20px_#facc15]">
         <img id="mini-epstein-img" src="images/egg_1.png" class="w-full h-full object-cover">
     </div>
 
-    <!-- Gold Statue -->
     <div id="goldstein-statue" class="fixed top-24 left-6 w-28 h-28 z-40 hidden cursor-pointer" onclick="playStatueSound()">
         <img src="images/goldstein.png" class="w-full h-full object-contain" onerror="this.src='https://via.placeholder.com/150?text=Goldstein'">
     </div>
@@ -258,7 +208,6 @@
     </header>
 
     <main class="max-w-4xl w-full mx-auto p-4 flex-grow flex flex-col justify-center">
-
         <section id="tab-cases" class="space-y-6">
             <div class="text-center">
                 <h2 id="lbl-cases-title" class="text-2xl sm:text-3xl font-black uppercase tracking-wide bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-400 bg-clip-text text-transparent">🏝️ Кейсы Гостей Острова</h2>
@@ -356,8 +305,8 @@
                 <p id="lbl-clicker-subtitle" class="text-slate-400 text-xs sm:text-sm mt-1">Жми на остров и копи капитал для открытия кейсов!</p>
             </div>
             <div class="relative flex items-center justify-center py-4">
-                <button id="clicker-btn" class="w-56 h-56 sm:w-64 sm:h-64 rounded-full bg-gradient-to-tr from-yellow-600 via-amber-400 to-yellow-200 p-2 shadow-[0_0_60px_rgba(245,158,11,0.35)] border-4 border-yellow-300 active:scale-95 transition-transform duration-75 flex items-center justify-center relative group">
-                    <div class="w-full h-full rounded-full bg-slate-950 flex flex-col items-center justify-center border-2 border-yellow-500/50 p-4 relative overflow-hidden">
+                <button id="clicker-btn" class="w-56 h-56 sm:w-64 sm:h-64 rounded-full bg-gradient-to-tr from-yellow-600 via-amber-400 to-yellow-200 p-2 shadow-[0_0_60px_rgba(245,158,11,0.35)] border-4 border-yellow-300 active:scale-95 transition-transform duration-75 flex items-center justify-center relative group overflow-hidden">
+                    <div id="clicker-bg-container" class="w-full h-full rounded-full bg-slate-950 flex flex-col items-center justify-center border-2 border-yellow-500/50 p-4 relative overflow-hidden transition-all duration-500">
                         <img id="clicker-bg-img" src="images/clicker_bg.jpg" class="hidden absolute inset-0 w-full h-full object-cover opacity-60 z-0" onerror="this.style.display='none'">
                         <span id="clicker-emoji" class="text-7xl sm:text-8xl select-none group-hover:scale-110 transition z-10">🏝️</span>
                         <span id="lbl-tap-btn" class="text-[10px] font-black text-yellow-400 mt-2 font-pixel z-10 drop-shadow-md">ТАПАЙ!</span>
@@ -505,12 +454,19 @@
                         <p id="theme-desc-temple" class="text-[10px] text-slate-400 my-2">Сине-белый храм-павильон с золотым куполом. Очень атмосферно.</p>
                         <button onclick="buyTheme('temple', 25000, 5)" id="theme-btn-temple" class="w-full py-2 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 text-white font-black text-xs uppercase rounded-xl btn-bounce shadow-lg">Купить (25,000 🪙 + 5 ✈️)</button>
                     </div>
-                    <!-- Clicker Background Item -->
+                    
                     <div class="bg-slate-900 border-2 border-blue-500 rounded-2xl p-4 flex flex-col justify-between items-center text-center">
                         <div class="text-4xl mb-2">📸</div>
-                        <h4 id="theme-name-clicker" class="font-bold text-sm text-blue-300">Фон для Фарма</h4>
-                        <p id="theme-desc-clicker" class="text-[10px] text-slate-400 my-2">Смените вид острова по которому тапать.</p>
-                        <button onclick="buyClickerBg(25000)" id="theme-btn-clicker" class="w-full py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-xs uppercase rounded-xl btn-bounce">Купить (25,000 🪙)</button>
+                        <h4 class="font-bold text-sm text-blue-300">Фон для Фарма (Стандарт)</h4>
+                        <p class="text-[10px] text-slate-400 my-2">Смените вид острова по которому тапать.</p>
+                        <button onclick="buyClickerBg(25000, 'standard')" id="theme-btn-clicker-standard" class="w-full py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-xs uppercase rounded-xl btn-bounce">Купить (25,000 🪙)</button>
+                    </div>
+
+                    <div class="bg-slate-900 border-2 border-yellow-400 rounded-2xl p-4 flex flex-col justify-between items-center text-center glow-legendary">
+                        <div class="text-4xl mb-2">🌅</div>
+                        <h4 class="font-bold text-sm text-yellow-300">Фон для Фарма (Золотой)</h4>
+                        <p class="text-[10px] text-slate-400 my-2">Роскошный золотой остров для фарма.</p>
+                        <button onclick="buyClickerBg(50000, 'golden')" id="theme-btn-clicker-golden" class="w-full py-2 bg-gradient-to-r from-yellow-500 to-amber-600 text-slate-950 font-bold text-xs uppercase rounded-xl btn-bounce">Купить (50,000 🪙)</button>
                     </div>
                 </div>
             </div>
@@ -578,6 +534,7 @@
                 <p id="lbl-archives-subtitle" class="text-slate-400 text-xs sm:text-sm mt-1">Изучай карту острова и собирай секретные материалы.</p>
             </div>
 
+            <!-- Исправление: изменена сетка на 4 колонки, чтобы карточки были шире -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
                 <div class="card-bg-pattern border-2 border-emerald-500/50 rounded-2xl p-5 flex flex-col items-center justify-between text-center relative overflow-hidden shadow-xl">
                     <div class="bg-emerald-500/20 text-emerald-300 text-[10px] font-black px-3 py-1 rounded-full uppercase border border-emerald-500/30">Раздел 1</div>
@@ -609,7 +566,6 @@
                 </div>
             </div>
         </section>
-
     </main>
 
     <nav class="sticky bottom-0 z-40 bg-slate-950/95 border-t border-slate-800 p-2 shadow-2xl">
@@ -702,7 +658,7 @@
             
             <div class="w-full text-center bg-slate-950 border border-indigo-500/40 rounded-2xl p-4 mt-4">
                 <p class="text-sm font-bold text-slate-300">Прогресс: <span id="secret-photos-2-count">0 / 10</span></p>
-                <p class="text-xs text-slate-400 mt-1">Награда не предусмотрена. Это продолжение для настоящих коллекционеров.</p>
+                <p class="text-xs text-slate-400 mt-1">Награда за все 10 фото: Разблокировка Трека 1 (управление в ⚙️ Настройках).</p>
             </div>
         </div>
     </div>
@@ -769,6 +725,15 @@
                     <span id="lbl-lang-setting" class="text-xs font-bold text-slate-300">Язык / Language:</span>
                     <button onclick="toggleLanguage()" id="lang-btn" class="bg-purple-600 hover:bg-purple-500 px-3 py-1.5 rounded-xl text-xs font-black btn-bounce text-white">🇷🇺 Русский</button>
                 </div>
+
+                <div id="track1-settings-box" class="bg-slate-950 p-4 rounded-2xl border border-slate-800 flex flex-col gap-2 hidden">
+                    <span class="text-xs font-bold text-slate-300">Трек 1 (Фон):</span>
+                    <div class="flex gap-2">
+                        <button onclick="toggleTrack1()" id="track1-btn" class="flex-1 bg-emerald-600 hover:bg-emerald-500 px-3 py-1.5 rounded-xl text-xs font-black btn-bounce text-white">▶️ Вкл</button>
+                        <button onclick="toggleTrack1Loop()" id="track1-loop-btn" class="flex-1 bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-xl text-xs font-black btn-bounce text-white">🔁 Повтор: Вкл</button>
+                    </div>
+                </div>
+
                 <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 flex items-center justify-between">
                     <span id="lbl-reset-setting" class="text-xs font-bold text-slate-300">Сброс Игры:</span>
                     <button onclick="resetProgress()" id="reset-btn" class="bg-red-600 hover:bg-red-500 px-3 py-1.5 rounded-xl text-xs font-black btn-bounce text-white">🗑️ Сбросить</button>
@@ -949,13 +914,20 @@
     <audio id="michael-sound" src="audio/michael.mp3" preload="auto"></audio>
     <audio id="bannon-sound" src="audio/bannon.mp3" preload="auto"></audio>
     <audio id="statue-sound" src="audio/statue_sound.mp3" preload="auto"></audio>
+    <audio id="track1-audio" src="audio/track1.mp3" loop></audio>
 
     <script>
+        // === СЕКРЕТНЫЕ ПРОМОКОДЫ (Base64) ===
+        const PROMO_1 = atob('SmVFcHN0ZWluX0lzbGFuZC41My0xOQ=='); // JeEpstein_Island.53-19
+        const PROMO_2 = atob('R01heGVsbF8yNV82MQ=='); // GMaxell_25_61
+        const PROMO_3 = atob('SkVfNzVfRkxJR0hU'); // JE_75_FLIGHT
+
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
         let audioCtx = null;
         let soundEnabled = true;
         let epsteinSoundToggle = 0;
         let trumpSoundToggle = 0;
+        let lastActionTime = 0;
 
         function toggleAudio() {
             soundEnabled = !soundEnabled;
@@ -1117,7 +1089,7 @@
                 secretPhotosTitle: '📸 Тайные Фотографии 1', secretPhotosDesc: 'Собери 10 секретных снимков с острова. Выпадают из Архива Острова и Частного Боинга.',
                 secretPhotosProgress: 'Прогресс:', secretPhotosRewardDesc: 'Награда за все 10 фото: 35,000 🪙 + 10 ✈️ + Секретный промокод',
                 secretPhotos2Title: '📷 Тайные Фотографии 2', secretPhotos2Desc: 'Собери 10 секретных снимков 2-й части. Выпадают из Архива Острова и Частного Боинга.',
-                secretPhotos2Progress: 'Прогресс:', secretPhotos2RewardDesc: 'Награда не предусмотрена. Это продолжение для настоящих коллекционеров.',
+                secretPhotos2Progress: 'Прогресс:', secretPhotos2RewardDesc: 'Награда за все 10 фото: Разблокировка Трека 1 (управление в ⚙️ Настройках).',
                 secretVideosTitle: '🎥 Тайные Видео', secretVideosDesc: 'Собери 10 секретных видеозаписей. Выпадают из Архива Острова и Частного Боинга.',
                 secretVideosProgress: 'Прогресс:', secretVideosRewardDesc: 'Награда за все 10 видео: Секретный промокод и Золотая статуэтка!'
             },
@@ -1178,7 +1150,7 @@
                 secretPhotosTitle: '📸 Secret Photos 1', secretPhotosDesc: 'Collect 10 secret snapshots. Drops from Island Archives and Private Boeing.',
                 secretPhotosProgress: 'Progress:', secretPhotosRewardDesc: 'Reward for all 10 photos: 35,000 🪙 + 10 ✈️ + Secret Promo Code',
                 secretPhotos2Title: '📷 Secret Photos 2', secretPhotos2Desc: 'Collect 10 secret snapshots of the 2nd part. Drops from Island Archives and Private Boeing.',
-                secretPhotos2Progress: 'Progress:', secretPhotos2RewardDesc: 'No reward provided. This is an extension for true collectors.',
+                secretPhotos2Progress: 'Progress:', secretPhotos2RewardDesc: 'Reward for all 10 photos: Unlock Track 1 (controls in ⚙️ Settings).',
                 secretVideosTitle: '🎥 Secret Videos', secretVideosDesc: 'Collect 10 secret videos. Drops from Island Archives and Private Boeing.',
                 secretVideosProgress: 'Progress:', secretVideosRewardDesc: 'Reward for all 10 videos: Secret Promo Code and Gold Statue!'
             }
@@ -1243,15 +1215,14 @@
             { id: 'v9', ruName: 'Видео #9', enName: 'Video #9', video: 'videos/secret_video_9.mp4', desc: 'Секретная видеозапись.' },
             { id: 'v10', ruName: 'Видео #10', enName: 'Video #10', video: 'videos/secret_video_10.mp4', desc: 'Секретная видеозапись.' }
         ];
-
         const ITEMS_DB = [
             { id: 'empty_slot', isEmpty: true, ruName: 'Ничего', enName: 'Nothing', rarity: 'empty', avatar: '💨', ruDesc: 'В этот раз чемодан оказался абсолютно пустым!', enDesc: 'This briefcase turned out to be completely empty!' },
             { id: 'coin_50', isCoin: true, amount: 50, ruName: '+50 Джеффриков', enName: '+50 Jeffreys', rarity: 'coin', avatar: '🪙', ruDesc: 'Малый конверт с наличными.', enDesc: 'Small cash envelope.' },
-            { id: 'coin_100', isCoin: true, amount: 100, ruName: '+100 Джеффриков', enName: '+100 Jeffreys', rarity: 'coin', avatar: '💰', ruDesc: 'Средний конверт с наличными.', enDesc: 'Medium cash envelope.' },
-            { id: 'coin_200', isCoin: true, amount: 200, ruName: '+200 Джеффриков', enName: '+200 Jeffreys', rarity: 'coin', avatar: '💰', ruDesc: 'Хорошая пачка наличных.', enDesc: 'Good stack of cash.' },
-            { id: 'coin_300', isCoin: true, amount: 300, ruName: '+300 Джеффриков', enName: '+300 Jeffreys', rarity: 'coin', avatar: '💵', ruDesc: 'Чемодан наличных денег.', enDesc: 'Briefcase full of cash.' },
-            { id: 'coin_500', isCoin: true, amount: 500, ruName: '+500 Джеффриков', enName: '+500 Jeffreys', rarity: 'coin', avatar: '💸', ruDesc: 'Крупный куш наличными.', enDesc: 'Large cash haul.' },
-            { id: 'coin_600', isCoin: true, amount: 600, ruName: '+600 Джеффриков', enName: '+600 Jeffreys', rarity: 'coin', avatar: '💎', ruDesc: 'Крупная компенсация с острова!', enDesc: 'Huge compensation payout!' },
+            { id: 'coin_100', isCoin: true, amount: 100, ruName: '+100 Джеффриков', enName: '+100 Jeffreys', rarity: 'coin', avatar: '🪙', ruDesc: 'Средний конверт с наличными.', enDesc: 'Medium cash envelope.' },
+            { id: 'coin_200', isCoin: true, amount: 200, ruName: '+200 Джеффриков', enName: '+200 Jeffreys', rarity: 'coin', avatar: '🪙', ruDesc: 'Хорошая пачка наличных.', enDesc: 'Good stack of cash.' },
+            { id: 'coin_300', isCoin: true, amount: 300, ruName: '+300 Джеффриков', enName: '+300 Jeffreys', rarity: 'coin', avatar: '🪙', ruDesc: 'Чемодан наличных денег.', enDesc: 'Briefcase full of cash.' },
+            { id: 'coin_500', isCoin: true, amount: 500, ruName: '+500 Джеффриков', enName: '+500 Jeffreys', rarity: 'coin', avatar: '🪙', ruDesc: 'Крупный куш наличными.', enDesc: 'Large cash haul.' },
+            { id: 'coin_600', isCoin: true, amount: 600, ruName: '+600 Джеффриков', enName: '+600 Jeffreys', rarity: 'coin', avatar: '🪙', ruDesc: 'Крупная компенсация с острова!', enDesc: 'Huge compensation payout!' },
 
             { id: 'lolita_1', isLolita: true, amount: 1, ruName: '+1 Лолита Э.', enName: '+1 Lolita E.', rarity: 'lolita', avatar: '✈️', ruDesc: 'Билет на один рейс джета Лолита Экспресс!', enDesc: 'Flight ticket for Lolita Express jet!' },
             { id: 'lolita_3', isLolita: true, amount: 3, ruName: '+3 Лолита Э.', enName: '+3 Lolita E.', rarity: 'lolita', avatar: '🛫', ruDesc: 'Пакет VIP-перелетов над Карибским морем.', enDesc: 'VIP flight package over the Caribbean.' },
@@ -1290,7 +1261,7 @@
             { id: 'g9', ruName: 'Билл Гейтс', enName: 'Bill Gates', ruRole: 'Основатель Microsoft', enRole: 'Microsoft Founder', rarity: 'mythic', avatar: '💻', ruDesc: 'Встречался по вопросам филантропии.', enDesc: 'Met regarding philanthropy projects.', photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Bill_Gates_2018.jpg?width=400' },
             { id: 'g10', ruName: 'Стивен Хокинг', enName: 'Stephen Hawking', ruRole: 'Физик-теоретик', enRole: 'Theoretical Physicist', rarity: 'mythic', avatar: '🌌', ruDesc: 'Посещал научную конференцию на острове.', enDesc: 'Attended science conference on island.', photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Stephen_Hawking.StarChild.jpg?width=400' },
             { id: 'g15', ruName: 'Илон Маск', enName: 'Elon Musk', ruRole: 'Техно-миллиардер', enRole: 'Tech Billionaire', rarity: 'mythic', avatar: '⚡', ruDesc: 'Фигурировал в обсуждениях финансового сектора.', enDesc: 'Appeared in financial sector discussions.', photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Elon_Musk_Royal_Society.jpg?width=400' },
-            { id: 'g25', ruName: 'Дети', enName: 'Children', ruRole: 'Фигуранты расследования', enRole: 'Case Subjects', rarity: 'mythic', avatar: '🎈', ruDesc: 'Главный и наиболее темный объект расследования материалов острова.', enDesc: 'Key and central topic of island case materials.', photo: null },
+            { id: 'g25', ruName: 'Модели', enName: 'Models', ruRole: 'Фигуранты расследования', enRole: 'Case Subjects', rarity: 'mythic', avatar: '👗', ruDesc: 'Главный и наиболее темный объект расследования материалов острова.', enDesc: 'Key and central topic of island case materials.', photo: null },
 
             { id: 'g11', ruName: 'Гилейн Максвелл', enName: 'Ghislaine Maxwell', ruRole: 'Главный Организатор', enRole: 'Chief Organizer', rarity: 'legendary', avatar: '🎩', ruDesc: 'Правая рука Эпштейна и светская львица.', enDesc: 'Epsteins right hand and socialite.', photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Ghislaine_Maxwell_(cropped).jpg?width=400' },
             { id: 'g12', ruName: 'Джеффри Эпштейн', enName: 'Jeffrey Epstein', ruRole: 'Хозяин Острова', enRole: 'Island Owner', rarity: 'legendary', avatar: '🏝️', ruDesc: 'Сверхсекретный финансист с острова Литл-Сент-Джеймс!', enDesc: 'Financier from Little Saint James island!', photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Jeffrey_epstein_2008_mugshot.jpg?width=400' }
@@ -1319,8 +1290,13 @@
                 secretVideos10RewardClaimed: false,
                 allGuestsRewardClaimed: false,
                 clickerBgUnlocked: false,
+                clickerBgGolden: false,
+                currentClickerBg: 'standard',
                 jumpscareSeen: false,
-                hasGoldstein: false
+                hasGoldstein: false,
+                track1Unlocked: false,
+                track1Playing: false,
+                track1Loop: true
             };
         }
 
@@ -1329,110 +1305,55 @@
         let gameState = createDefaultState();
         let fastOpenCount = 5;
 
-        function toggleMobileOptimization() {
-            playSound('click');
-            gameState.mobileOptimized = !gameState.mobileOptimized;
-            saveGame();
-            updateMobileUI();
-            updateUI();
-        }
-
-        function updateMobileUI() {
-            const btn = document.getElementById('mobile-opt-btn');
-            if (gameState.mobileOptimized) {
-                document.body.classList.add('mobile-optimized');
-                btn.innerText = TRANSLATIONS[currentLang].mobileOptOn || 'Вкл';
-                btn.className = 'bg-emerald-600 hover:bg-emerald-500 px-3 py-1.5 rounded-xl text-xs font-black btn-bounce text-white';
+        // --- НОВЫЕ ФУНКЦИИ ТРЕКА 1 ---
+        function updateTrack1UI() {
+            const box = document.getElementById('track1-settings-box');
+            const btn = document.getElementById('track1-btn');
+            const loopBtn = document.getElementById('track1-loop-btn');
+            
+            if (!box) return;
+            
+            if (gameState.track1Unlocked) {
+                box.classList.remove('hidden');
+                if (gameState.track1Playing) {
+                    btn.innerText = '⏸️ Выкл';
+                    btn.className = 'flex-1 bg-red-600 hover:bg-red-500 px-3 py-1.5 rounded-xl text-xs font-black btn-bounce text-white';
+                } else {
+                    btn.innerText = '▶️ Вкл';
+                    btn.className = 'flex-1 bg-emerald-600 hover:bg-emerald-500 px-3 py-1.5 rounded-xl text-xs font-black btn-bounce text-white';
+                }
+                loopBtn.innerText = gameState.track1Loop ? '🔁 Повтор: Вкл' : '🔁 Повтор: Выкл';
+                loopBtn.className = gameState.track1Loop ? 'flex-1 bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-xl text-xs font-black btn-bounce text-white' : 'flex-1 bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-xl text-xs font-black btn-bounce text-slate-400';
             } else {
-                document.body.classList.remove('mobile-optimized');
-                btn.innerText = TRANSLATIONS[currentLang].mobileOptOff || 'Выкл';
-                btn.className = 'bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-xl text-xs font-black btn-bounce text-white';
+                box.classList.add('hidden');
             }
         }
 
-        function handleMobileMove(dir, isDown) {
-            if (window.gameKeys) {
-                window.gameKeys[dir] = isDown;
-            }
-        }
-
-        const ACHIEVEMENTS_DEF = [
-            { id: 'first_case', ruName: 'Первый кейс', enName: 'First Case', ruDesc: 'Открой свой первый кейс', enDesc: 'Open your first case', icon: '📦', check: s => s.casesOpened >= 1 },
-            { id: 'all_minigames', ruName: 'Все мини-игры', enName: 'All Mini-Games', ruDesc: 'Разблокируй все мини-игры', enDesc: 'Unlock all mini-games', icon: '🎮', check: s => s.findGameUnlocked && s.courtUnlocked && s.lolitaGameUnlocked },
-            { id: 'first_legendary', ruName: 'Первая легенда', enName: 'First Legend', ruDesc: 'Получи первого легендарного гостя', enDesc: 'Get your first legendary guest', icon: '👑', check: s => Object.keys(s.inventory).some(id => ITEMS_DB.find(i => i.id === id && i.rarity === 'legendary')) },
-            { id: 'island_parts_2', ruName: '2 части острова', enName: '2 Island Parts', ruDesc: 'Собери 2 части острова', enDesc: 'Collect 2 island parts', icon: '🧩', check: s => (s.islandParts || []).length >= 2 },
-            { id: 'island_complete', ruName: 'Остров собран', enName: 'Island Complete', ruDesc: 'Собери все 4 части острова', enDesc: 'Collect all 4 island parts', icon: '🏝️', check: s => (s.islandParts || []).length >= 4 },
-            { id: 'court_win', ruName: 'Сенсация!', enName: 'Sensational!', ruDesc: 'Выиграй в суде x2 или x1.4', enDesc: 'Win in court x2 or x1.4', icon: '⚖️', check: s => (s.courtWinCount || 0) >= 1 },
-            { id: 'fast_open_unlock', ruName: 'Скорость', enName: 'Speed', ruDesc: 'Разблокируй быстрое открытие', enDesc: 'Unlock fast open', icon: '⚡', check: s => s.fastOpenUnlocked },
-            { id: 'rich_100k', ruName: 'Богач', enName: 'Rich', ruDesc: 'Накопи 100,000 🪙', enDesc: 'Accumulate 100,000 🪙', icon: '💰', check: s => s.balance >= 100000 },
-            { id: 'lolita_100', ruName: 'Авиапарк', enName: 'Air Fleet', ruDesc: 'Накопи 100 Лолита Э.', enDesc: 'Accumulate 100 Lolita E.', icon: '✈️', check: s => (s.lolitaBalance || 0) >= 100 },
-            { id: 'lolita_game_win', ruName: 'Пилот', enName: 'Pilot', ruDesc: 'Набери 1000+ монет в Лолита Экспресс', enDesc: 'Score 1000+ coins in Lolita Express', icon: '🛩️', check: s => (s.lolitaGameHighScore || 0) >= 1000 },
-            { id: 'jumpscare_seen', ruName: '???', enName: '???', ruDesc: '...', enDesc: '...', icon: '💀', check: s => s.jumpscareSeen }
-        ];
-
-        function checkAchievements() {
-            let newUnlocked = [];
-            ACHIEVEMENTS_DEF.forEach(a => {
-                if (!gameState.achievements[a.id] && a.check(gameState)) {
-                    gameState.achievements[a.id] = true;
-                    newUnlocked.push(a);
-                }
-            });
-            if (newUnlocked.length > 0) {
-                playSound('win');
-                newUnlocked.forEach(a => {
-                    console.log('Achievement unlocked:', a.id);
-                });
-            }
-        }
-
-        function getUnlockedAchCount() {
-            return Object.keys(gameState.achievements || {}).length;
-        }
-
-        function openAchievementsModal() {
+        function toggleTrack1() {
             playSound('click');
-            renderAchievements();
-            document.getElementById('achievements-modal').classList.remove('hidden');
-        }
-        function closeAchievementsModal() {
-            document.getElementById('achievements-modal').classList.add('hidden');
-        }
-        function renderAchievements() {
-            const container = document.getElementById('achievements-list');
-            container.innerHTML = '';
-            ACHIEVEMENTS_DEF.forEach(a => {
-                const unlocked = gameState.achievements[a.id] || false;
-                const div = document.createElement('div');
-                div.className = `p-3 rounded-xl border ${unlocked ? 'border-yellow-500/60 bg-yellow-950/20' : 'border-slate-800 bg-slate-950'} flex items-center gap-3`;
-                
-                let displayName = currentLang === 'en' ? a.enName : a.ruName;
-                let displayDesc = currentLang === 'en' ? a.enDesc : a.ruDesc;
-                
-                if (a.id === 'jumpscare_seen') {
-                    if (unlocked) {
-                        displayName = currentLang === 'en' ? 'Deceased' : 'Умерший';
-                    } else {
-                        displayName = '???';
-                        displayDesc = '...';
-                    }
-                }
-                
-                div.innerHTML = `<span class="text-2xl">${a.icon}</span>
-                    <div class="text-left">
-                        <div class="text-xs font-black ${unlocked ? 'text-yellow-300' : 'text-slate-500'}">${displayName}</div>
-                        <div class="text-[10px] ${unlocked ? 'text-slate-300' : 'text-slate-600'}">${displayDesc}</div>
-                    </div>
-                    <span class="ml-auto text-lg">${unlocked ? '✅' : '🔒'}</span>`;
-                container.appendChild(div);
-            });
-            document.getElementById('ach-modal-title').innerText = TRANSLATIONS[currentLang].achTitle;
-            document.getElementById('ach-count').innerText = `${getUnlockedAchCount()}/${ACHIEVEMENTS_DEF.length}`;
+            gameState.track1Playing = !gameState.track1Playing;
+            const audio = document.getElementById('track1-audio');
+            if (audio) {
+                if (gameState.track1Playing) audio.play().catch(e => console.log(e));
+                else audio.pause();
+            }
+            updateTrack1UI();
+            saveGame();
         }
 
+        function toggleTrack1Loop() {
+            playSound('click');
+            gameState.track1Loop = !gameState.track1Loop;
+            const audio = document.getElementById('track1-audio');
+            if (audio) audio.loop = gameState.track1Loop;
+            updateTrack1UI();
+            saveGame();
+        }
+
+        // --- УМНЫЕ КВЕСТЫ (ИИ) ---
         function generateRandomQuestPool() {
             const batchNum = (gameState.questBatchCompleted || 0) + 1;
-            return [
+            let pool = [
                 { id: 0, type: 'clicks', target: 1000 * Math.min(batchNum, 3), title: { ru: `Сделать ${1000 * Math.min(batchNum, 3)} кликов по острову`, en: `Make ${1000 * Math.min(batchNum, 3)} clicks` }, progress: 0, completed: false, rewardType: 'coins', amount: Math.floor(4500 * 0.67) },
                 { id: 1, type: 'cases_basic', target: 40 + batchNum * 10, title: { ru: `Открыть ${40 + batchNum * 10} обычных чемоданов`, en: `Open ${40 + batchNum * 10} basic cases` }, progress: 0, completed: false, rewardType: 'lolita', amount: Math.floor(3 * 0.67) },
                 { id: 2, type: 'cases_epic', target: 60 + batchNum * 15, title: { ru: `Открыть ${60 + batchNum * 15} кейсов VIP-Ложа`, en: `Open ${60 + batchNum * 15} VIP cases` }, progress: 0, completed: false, rewardType: 'lolita', amount: Math.floor(6 * 0.67) },
@@ -1444,11 +1365,18 @@
                 { id: 8, type: 'clicks', target: 5000, title: { ru: 'Сделать 5000 кликов', en: 'Make 5000 clicks' }, progress: 0, completed: false, rewardType: 'mega', lolitaAmount: Math.floor(50 * 0.67), coinAmount: Math.floor(50000 * 0.67) },
                 { id: 9, type: 'cases_epic', target: 120 + batchNum * 25, title: { ru: `Открыть ${120 + batchNum * 25} кейсов VIP-Ложа`, en: `Open ${120 + batchNum * 25} VIP cases` }, progress: 0, completed: false, rewardType: 'coins', amount: Math.floor(33750 * 0.67) },
                 { id: 10, type: 'cases_boeing', target: 5 + batchNum * 2, title: { ru: `Открыть ${5 + batchNum * 2} кейсов «Частный Боинг»`, en: `Open ${5 + batchNum * 2} Boeing cases` }, progress: 0, completed: false, rewardType: 'coins', amount: Math.floor(20000 * 0.67) },
-                { id: 11, type: 'island_parts', target: 1, title: { ru: 'Собрать 1 часть Острова', en: 'Collect 1 Island Part' }, progress: 0, completed: false, rewardType: 'lolita', amount: Math.floor(5 * 0.67) },
-                { id: 12, type: 'lolita_game', target: 1, title: { ru: 'Сыграть в «Лолита Экспресс»', en: 'Play Lolita Express' }, progress: 0, completed: false, rewardType: 'coins', amount: Math.floor(12000 * 0.67) }
+                { id: 11, type: 'lolita_game', target: 1, title: { ru: 'Сыграть в «Лолита Экспресс»', en: 'Play Lolita Express' }, progress: 0, completed: false, rewardType: 'coins', amount: Math.floor(12000 * 0.67) }
             ];
-        }
 
+            // Убираем квест на части острова, если все собраны
+            if (!hasAllIslandParts()) {
+                pool.push({ id: 12, type: 'island_parts', target: 1, title: { ru: 'Собрать 1 часть Острова', en: 'Collect 1 Island Part' }, progress: 0, completed: false, rewardType: 'lolita', amount: Math.floor(5 * 0.67) });
+            }
+
+            // Перемешиваем и берем 10
+            pool = pool.sort(() => Math.random() - 0.5);
+            return pool.slice(0, 10).map((q, idx) => ({ ...q, id: idx }));
+        }
         function initQuests() {
             if (!gameState.quests || gameState.quests.length === 0) generateNewQuestBatch();
         }
@@ -1594,6 +1522,7 @@
         }
         function renderSecretPhotos() {
             const grid = document.getElementById('secret-photos-grid');
+            if(!grid) return;
             grid.innerHTML = '';
             const found = gameState.foundSecretPhotos || [];
             
@@ -1617,7 +1546,8 @@
                 grid.appendChild(card);
             });
             
-            document.getElementById('secret-photos-count').innerText = `${found.length} / 10`;
+            const countEl = document.getElementById('secret-photos-count');
+            if (countEl) countEl.innerText = `${found.length} / 10`;
         }
 
         function openSecretPhotos2Modal() {
@@ -1634,6 +1564,7 @@
         }
         function renderSecretPhotos2() {
             const grid = document.getElementById('secret-photos-2-grid');
+            if(!grid) return;
             grid.innerHTML = '';
             const found = gameState.foundSecretPhotos2 || [];
             
@@ -1657,7 +1588,8 @@
                 grid.appendChild(card);
             });
             
-            document.getElementById('secret-photos-2-count').innerText = `${found.length} / 10`;
+            const countEl = document.getElementById('secret-photos-2-count');
+            if (countEl) countEl.innerText = `${found.length} / 10`;
         }
 
         function openSecretVideosModal() {
@@ -1683,6 +1615,7 @@
         }
         function renderSecretVideos() {
             const grid = document.getElementById('secret-videos-grid');
+            if(!grid) return;
             grid.innerHTML = '';
             const found = gameState.foundSecretVideos || [];
             
@@ -1711,11 +1644,14 @@
                 grid.appendChild(card);
             });
             
-            document.getElementById('secret-videos-count').innerText = `${found.length} / 10`;
+            const countEl = document.getElementById('secret-videos-count');
+            if (countEl) countEl.innerText = `${found.length} / 10`;
         }
 
+        // --- LOLITA EXPRESS GAME ---
         let lolitaGameAnimId = null;
         let lolitaGameActive = false;
+        let lolitaTimerInterval = null;
 
         function startLolitaExpressGame() {
             playSound('click');
@@ -1733,6 +1669,10 @@
                 saveGame(); updateUI();
                 playSound('win');
             }
+
+            if (lolitaTimerInterval) clearInterval(lolitaTimerInterval);
+            if (lolitaGameAnimId) cancelAnimationFrame(lolitaGameAnimId);
+            lolitaGameActive = false;
 
             document.getElementById('lolita-game-modal').classList.remove('hidden');
             document.getElementById('lolita-game-overlay').classList.add('hidden');
@@ -1768,12 +1708,15 @@
             lolitaGameActive = true;
 
             const useEpsteinBg = Math.random() < 0.02;
+            if (useEpsteinBg) unlockEasterEgg('bg_lolita');
+            
             const bgImage = new Image();
             bgImage.src = 'images/lolita_bg.jpg';
 
             document.getElementById('lolita-game-lives').innerText = '❤️❤️❤️';
+            document.getElementById('lolita-game-timer').innerText = '02:00';
 
-            const timerInterval = setInterval(() => {
+            lolitaTimerInterval = setInterval(() => {
                 if (isPaused || gameOver) return;
                 timeLeft--;
                 const mins = String(Math.floor(timeLeft / 60)).padStart(2, '0');
@@ -1784,15 +1727,17 @@
                     speedMultiplier += 0.15;
                 }
 
-                if (timeLeft <= 0) { endLolitaGame(true); clearInterval(timerInterval); }
+                if (timeLeft <= 0) { endLolitaGame(true); }
             }, 1000);
 
+            window.onkeydown = null;
+            window.onkeyup = null;
             window.addEventListener('keydown', e => { keys[e.key] = true; });
             window.addEventListener('keyup', e => { keys[e.key] = false; });
 
             function endLolitaGame(won) {
                 gameOver = true; lolitaGameActive = false;
-                clearInterval(timerInterval);
+                if (lolitaTimerInterval) clearInterval(lolitaTimerInterval);
                 if (lolitaGameAnimId) cancelAnimationFrame(lolitaGameAnimId);
 
                 const t = TRANSLATIONS[currentLang];
@@ -1934,6 +1879,7 @@
 
         function closeLolitaGameModal() {
             lolitaGameActive = false;
+            if (lolitaTimerInterval) clearInterval(lolitaTimerInterval);
             if (lolitaGameAnimId) cancelAnimationFrame(lolitaGameAnimId);
             document.getElementById('lolita-game-modal').classList.add('hidden');
             document.getElementById('mobile-controls').classList.add('hidden');
@@ -1944,7 +1890,7 @@
             const code = input.value.trim();
             playSound('click');
             
-            if (code === 'JeEpstein_Island.53-19' && !gameState.promoUsed) {
+            if (code === PROMO_1 && !gameState.promoUsed) {
                 gameState.balance += 1000000;
                 gameState.lolitaBalance += 1000;
                 gameState.promoUsed = true;
@@ -1952,7 +1898,7 @@
                 confetti({ particleCount: 300, spread: 120, origin: { y: 0.6 } });
                 saveGame(); updateUI();
                 alert(currentLang === 'en' ? 'Promo activated! +1,000,000 🪙 and +1,000 ✈️' : 'Промокод активирован! +1,000,000 🪙 и +1,000 ✈️');
-            } else if (code === 'GMaxell_25_61' && !gameState.promo2Used) {
+            } else if (code === PROMO_2 && !gameState.promo2Used) {
                 gameState.promo2Used = true;
                 
                 const r = Math.random();
@@ -1969,7 +1915,7 @@
                 confetti({ particleCount: 300, spread: 120, origin: { y: 0.6 } });
                 saveGame(); updateUI();
                 alert(currentLang === 'en' ? `Promo activated! You got a random guest:\n${randomChar.enName}` : `Промокод активирован! Вам выпал случайный гость:\n${randomChar.ruName}`);
-            } else if (code === 'JE_75_FLIGHT' && !gameState.promo3Used) {
+            } else if (code === PROMO_3 && !gameState.promo3Used) {
                 gameState.promo3Used = true;
                 
                 const r = Math.random();
@@ -2013,9 +1959,14 @@
             if (gameState.promo3Used === undefined) gameState.promo3Used = false;
             if (gameState.allGuestsRewardClaimed === undefined) gameState.allGuestsRewardClaimed = false;
             if (gameState.clickerBgUnlocked === undefined) gameState.clickerBgUnlocked = false;
+            if (gameState.clickerBgGolden === undefined) gameState.clickerBgGolden = false;
+            if (gameState.currentClickerBg === undefined) gameState.currentClickerBg = 'standard';
             if (gameState.jumpscareSeen === undefined) gameState.jumpscareSeen = false;
             if (gameState.hasGoldstein === undefined) gameState.hasGoldstein = false;
             if (gameState.secretVideos10RewardClaimed === undefined) gameState.secretVideos10RewardClaimed = false;
+            if (gameState.track1Unlocked === undefined) gameState.track1Unlocked = false;
+            if (gameState.track1Playing === undefined) gameState.track1Playing = false;
+            if (gameState.track1Loop === undefined) gameState.track1Loop = true;
             
             gameState = JSON.parse(JSON.stringify(gameState));
             
@@ -2031,8 +1982,16 @@
             updateIslandMapUI(); 
             renderAchievements();
             updateClickerBgUI();
+            updateTrack1UI();
+            
             if (gameState.hasGoldstein) {
                 document.getElementById('goldstein-statue').classList.remove('hidden');
+            }
+            
+            const audioTrack = document.getElementById('track1-audio');
+            if (audioTrack) {
+                audioTrack.loop = gameState.track1Loop;
+                if (gameState.track1Playing) audioTrack.play().catch(e=>console.log(e));
             }
         }
 
@@ -2178,8 +2137,9 @@
             document.getElementById('theme-name-temple').innerText = t.themeTempleName;
             document.getElementById('theme-desc-temple').innerText = t.themeTempleDesc;
             
-            document.getElementById('theme-name-clicker').innerText = t.themeClickerName;
-            document.getElementById('theme-desc-clicker').innerText = t.themeClickerDesc;
+            const standardBtn = document.getElementById('theme-btn-clicker-standard');
+            const goldenBtn = document.getElementById('theme-btn-clicker-golden');
+            if(standardBtn) standardBtn.innerText = t.themeClickerName + " (Стандарт)";
             
             document.getElementById('lbl-investigations-title').innerText = t.investigationsTitle;
             document.getElementById('lbl-investigations-subtitle').innerText = t.investigationsSub;
@@ -2256,7 +2216,6 @@
             document.getElementById('btn-reward-claim').innerText = t.claim;
             document.getElementById('btn-detail-close').innerText = t.closeDoc;
             
-            // Архивы
             document.querySelector('#tab-archives h3.text-emerald-400').innerText = t.navIslandTitle;
             document.querySelector('#tab-archives p.text-slate-300').innerText = t.navIslandDesc;
             document.querySelector('#tab-archives button[onclick="openIslandMapModal()"]').innerText = t.navIslandBtn;
@@ -2293,6 +2252,7 @@
             renderInvestigationsTab();
             updateIslandMapUI();
             renderAchievements();
+            updateTrack1UI();
         }
 
         function updateCaseButtons() {
@@ -2319,34 +2279,75 @@
         }
 
         function updateClickerBgUI() {
+            const container = document.getElementById('clicker-bg-container');
             const img = document.getElementById('clicker-bg-img');
             const emoji = document.getElementById('clicker-emoji');
-            const btn = document.getElementById('theme-btn-clicker');
+            const stdBtn = document.getElementById('theme-btn-clicker-standard');
+            const goldBtn = document.getElementById('theme-btn-clicker-golden');
             
-            if (gameState.clickerBgUnlocked) {
-                img.classList.remove('hidden');
-                emoji.classList.add('hidden');
-                if(btn) {
-                    btn.innerText = currentLang === 'en' ? 'Equipped' : 'Одет';
-                    btn.className = 'w-full py-2 bg-emerald-600 text-white font-bold text-xs uppercase rounded-xl border border-emerald-400';
+            if (container) container.classList.remove('clicker-bg-golden');
+            if (img) img.classList.add('hidden');
+            if (emoji) emoji.classList.remove('hidden');
+
+            if (gameState.currentClickerBg === 'golden' && gameState.clickerBgGolden) {
+                if (container) container.classList.add('clicker-bg-golden');
+                if (emoji) emoji.classList.add('hidden');
+            } else if (gameState.currentClickerBg === 'standard' && gameState.clickerBgUnlocked) {
+                if (img) img.classList.remove('hidden');
+                if (emoji) emoji.classList.add('hidden');
+            }
+
+            if (stdBtn) {
+                if (gameState.currentClickerBg === 'standard' && gameState.clickerBgUnlocked) {
+                    stdBtn.innerText = currentLang === 'en' ? 'Equipped ✅' : 'Одет ✅';
+                    stdBtn.className = 'w-full py-2 bg-emerald-600 text-white font-bold text-xs uppercase rounded-xl border border-emerald-400';
+                } else if (gameState.clickerBgUnlocked) {
+                    stdBtn.innerText = currentLang === 'en' ? 'Equip' : 'Надеть';
+                    stdBtn.className = 'w-full py-2 bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs uppercase rounded-xl border border-slate-600 btn-bounce';
+                } else {
+                    stdBtn.innerText = currentLang === 'en' ? 'Buy (25,000 🪙)' : 'Купить (25,000 🪙)';
+                    stdBtn.className = 'w-full py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-xs uppercase rounded-xl btn-bounce';
                 }
-            } else {
-                img.classList.add('hidden');
-                emoji.classList.remove('hidden');
-                if(btn) {
-                    btn.innerText = currentLang === 'en' ? 'Buy (25,000 🪙)' : 'Купить (25,000 🪙)';
-                    btn.className = 'w-full py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-xs uppercase rounded-xl btn-bounce';
+            }
+
+            if (goldBtn) {
+                if (gameState.currentClickerBg === 'golden' && gameState.clickerBgGolden) {
+                    goldBtn.innerText = currentLang === 'en' ? 'Equipped ✅' : 'Одет ✅';
+                    goldBtn.className = 'w-full py-2 bg-emerald-600 text-slate-950 font-bold text-xs uppercase rounded-xl border border-emerald-400';
+                } else if (gameState.clickerBgGolden) {
+                    goldBtn.innerText = currentLang === 'en' ? 'Equip' : 'Надеть';
+                    goldBtn.className = 'w-full py-2 bg-slate-800 hover:bg-slate-700 text-yellow-400 font-bold text-xs uppercase rounded-xl border border-slate-600 btn-bounce';
+                } else {
+                    goldBtn.innerText = currentLang === 'en' ? 'Buy (50,000 🪙)' : 'Купить (50,000 🪙)';
+                    goldBtn.className = 'w-full py-2 bg-gradient-to-r from-yellow-500 to-amber-600 text-slate-950 font-bold text-xs uppercase rounded-xl btn-bounce';
                 }
             }
         }
 
-        function buyClickerBg(cost) {
+        function buyClickerBg(cost, type) {
             playSound('click');
             const t = TRANSLATIONS[currentLang];
-            if (gameState.clickerBgUnlocked) return;
-            if (gameState.balance < cost) { alert(t.notEnough); return; }
-            gameState.balance -= cost;
-            gameState.clickerBgUnlocked = true;
+            
+            if (type === 'standard') {
+                if (gameState.clickerBgUnlocked) {
+                    gameState.currentClickerBg = 'standard';
+                    saveGame(); updateUI(); return;
+                }
+                if (gameState.balance < cost) { alert(t.notEnough); return; }
+                gameState.balance -= cost;
+                gameState.clickerBgUnlocked = true;
+                gameState.currentClickerBg = 'standard';
+            } else if (type === 'golden') {
+                if (gameState.clickerBgGolden) {
+                    gameState.currentClickerBg = 'golden';
+                    saveGame(); updateUI(); return;
+                }
+                if (gameState.balance < cost) { alert(t.notEnough); return; }
+                gameState.balance -= cost;
+                gameState.clickerBgGolden = true;
+                gameState.currentClickerBg = 'golden';
+            }
+            
             playSound('win');
             saveGame(); updateUI();
         }
@@ -2436,6 +2437,7 @@
             updateCaseButtons();
             updateShopThemeButtons();
             updateClickerBgUI();
+            updateTrack1UI();
             renderCollection();
             checkQuestAlertBadge();
             updateIslandMapUI();
@@ -2507,7 +2509,8 @@
             gameState.lolitaBalance -= cost; gameState.balance += amount;
             playSound('win'); saveGame(); updateUI();
         }
-
+        
+        // --- FIND GUESTS MINIGAME ---
         let findGameTimerInterval = null;
         let findGameTimeLeft = 0;
         let findGameTotalGuests = 5;
@@ -2599,6 +2602,7 @@
         }
         function closeFindGameModal() { if (findGameTimerInterval) clearInterval(findGameTimerInterval); document.getElementById('find-game-modal').classList.add('hidden'); }
 
+        // --- COURT MINIGAME ---
         let currentCourtBet = 1000;
         let currentWheelRotation = 0;
         function openCourtModal() {
@@ -2713,6 +2717,7 @@
         clickerBtn.addEventListener('click', (e) => {
             if (isPaused) return;
             playSound('click');
+            lastActionTime = Date.now();
             const power = getCurrentClickPower();
             gameState.balance += power;
             updateQuestProgress('clicks', 1);
@@ -2763,7 +2768,6 @@
             let targetId = null; let rarity = 'coin';
             const isArch = caseType === 'legendary' || caseType === 'boeing';
 
-            // Проверка на Тайное Видео (0.092% из Архива, 0.828% из Боинга -8%)
             const videoRoll = Math.random() * 100;
             if (caseType === 'legendary' && videoRoll < 0.092) {
                 const found = gameState.foundSecretVideos || [];
@@ -2782,8 +2786,6 @@
                 }
             }
 
-            // Проверка на Тайные Фото 2 (Доступно только если собраны все фото 1)
-            // Шанс 0.552% из Архива и 1.0488% из Боинга (-25%)
             if ((gameState.foundSecretPhotos || []).length === 10) {
                 if (caseType === 'legendary' && rand < 0.552) {
                     const found = gameState.foundSecretPhotos2 || [];
@@ -2803,7 +2805,6 @@
                 }
             }
 
-            // Тайное Фото 1: Архив Острова (1.104% - 25%)
             if (caseType === 'legendary' && rand < 1.104) {
                 const found = gameState.foundSecretPhotos || [];
                 const uncollected = SECRET_PHOTOS.filter(p => !found.includes(p.id));
@@ -2813,7 +2814,6 @@
                 }
             }
 
-            // Тайное Фото 1: Частный Боинг (2.0976% - 25%)
             if (caseType === 'boeing' && rand < 2.0976) {
                 const found = gameState.foundSecretPhotos || [];
                 const uncollected = SECRET_PHOTOS.filter(p => !found.includes(p.id));
@@ -2826,7 +2826,6 @@
             if (isArch) {
                 const ownedParts = gameState.islandParts || [];
                 if (ownedParts.length < 4) {
-                    // 1.47% из Архива и 2.94% из Боинга (-30%)
                     const legendaryChance = caseType === 'boeing' ? 2.94 : 1.47;
                     if (rand < legendaryChance) {
                         const avail = ISLAND_PARTS.filter(p => !ownedParts.includes(p.id));
@@ -2883,7 +2882,6 @@
 
             if (targetId) return ITEMS_DB.find(i => i.id === targetId);
 
-            // Шанс заменить гостя на монеты (35%)
             if (['rare', 'superrare', 'epic', 'mythic', 'legendary'].includes(rarity)) {
                 if (Math.random() < 0.35) {
                     rarity = 'coin';
@@ -2999,6 +2997,7 @@
             if (curr === 'coin') gameState.balance -= cost; else gameState.lolitaBalance -= cost;
 
             gameState.casesOpened++;
+            lastActionTime = Date.now();
             if (gameState.activeCaseType === 'basic') updateQuestProgress('cases_basic', 1);
             if (gameState.activeCaseType === 'epic') updateQuestProgress('cases_epic', 1);
             if (gameState.activeCaseType === 'legendary') updateQuestProgress('cases_legendary', 1);
@@ -3094,6 +3093,16 @@
                         gameState.foundSecretPhotos2.push(item.id);
                         playSound('legendary');
                         confetti({ particleCount: 250, spread: 150, origin: { y: 0.6 } });
+                        
+                        if (gameState.foundSecretPhotos2.length === 10 && !gameState.track1Unlocked) {
+                            gameState.track1Unlocked = true;
+                            gameState.track1Playing = false;
+                            gameState.track1Loop = true;
+                            setTimeout(() => {
+                                alert(currentLang === 'en' ? 'CONGRATULATIONS! You collected all 10 photos 2! Reward: Track 1 unlocked (Settings ⚙️).' : 'ПОЗДРАВЛЯЕМ! Вы собрали все 10 фото 2-й части! Награда: Трек 1 разблокирован (в ⚙️ Настройках).');
+                            }, 500);
+                            updateTrack1UI();
+                        }
                     }
                 } else {
                     if (!gameState.foundSecretPhotos.includes(item.id)) {
@@ -3119,14 +3128,9 @@
                     playSound('legendary');
                     confetti({ particleCount: 300, spread: 150, origin: { y: 0.6 } });
                     
-                    if (gameState.foundSecretVideos.length === 5 && !gameState.secretVideosRewardClaimed) {
-                        gameState.secretVideosRewardClaimed = true;
-                        setTimeout(() => {
-                            alert(currentLang === 'en' ? 'CONGRATULATIONS! You collected 5 videos! Promo code: JE_75_FLIGHT' : 'ПОЗДРАВЛЯЕМ! Вы собрали 5 видео! Ваш промокод: JE_75_FLIGHT');
-                        }, 500);
-                    }
                     if (gameState.foundSecretVideos.length === 10 && !gameState.secretVideos10RewardClaimed) {
                         gameState.secretVideos10RewardClaimed = true;
+                        gameState.promo3Used = false;
                         setTimeout(() => {
                             alert(currentLang === 'en' ? 'CONGRATULATIONS! You collected all 10 videos! Click OK to claim your Promo Code and Gold Statue!' : 'ПОЗДРАВЛЯЕМ! Вы собрали все 10 видео! Нажмите ОК, чтобы забрать промокод и золотую статуэтку!');
                             gameState.hasGoldstein = true;
@@ -3235,6 +3239,7 @@
         }
         function renderCollection() {
             const grid = document.getElementById('collection-grid');
+            if (!grid) return;
             grid.innerHTML = '';
             const guests = ITEMS_DB.filter(i => !i.isCoin && !i.isEmpty && !i.isLolita);
             guests.forEach(item => {
@@ -3275,6 +3280,7 @@
             if (isCurrencyLolita) { if ((gameState.lolitaBalance || 0) < totalCost) { alert(t.notEnough); return; } gameState.lolitaBalance -= totalCost; }
             else { if (gameState.balance < totalCost) { alert(t.notEnough); return; } gameState.balance -= totalCost; }
             gameState.casesOpened += fastOpenCount;
+            lastActionTime = Date.now();
             gameState.fastOpenCooldownUntil = Date.now() + 170000;
             if (caseType === 'basic') updateQuestProgress('cases_basic', fastOpenCount);
             if (caseType === 'epic') updateQuestProgress('cases_epic', fastOpenCount);
@@ -3294,6 +3300,11 @@
                     if (item.id.startsWith('p2_')) {
                         if (!gameState.foundSecretPhotos2.includes(item.id)) {
                             gameState.foundSecretPhotos2.push(item.id); isNew = true;
+                            if (gameState.foundSecretPhotos2.length === 10 && !gameState.track1Unlocked) {
+                                gameState.track1Unlocked = true; gameState.track1Playing = false; gameState.track1Loop = true;
+                                setTimeout(() => alert('ПОЗДРАВЛЯЕМ! Вы собрали все 10 фото 2-й части! Награда: Трек 1 разблокирован (в Настройках).'), 500);
+                                updateTrack1UI();
+                            }
                         }
                     } else {
                         if (!gameState.foundSecretPhotos.includes(item.id)) {
@@ -3310,14 +3321,12 @@
                 } else if (item.isSecretVideo) {
                     if (!gameState.foundSecretVideos.includes(item.id)) {
                         gameState.foundSecretVideos.push(item.id); isNew = true;
-                        if (gameState.foundSecretVideos.length === 5 && !gameState.secretVideosRewardClaimed) {
-                            gameState.secretVideosRewardClaimed = true;
-                            setTimeout(() => alert('ПОЗДРАВЛЯЕМ! Вы собрали 5 видео! Ваш промокод: JE_75_FLIGHT'), 500);
-                        }
                         if (gameState.foundSecretVideos.length === 10 && !gameState.secretVideos10RewardClaimed) {
                             gameState.secretVideos10RewardClaimed = true;
-                            gameState.hasGoldstein = true;
+                            gameState.promo3Used = false;
                             setTimeout(() => alert('ПОЗДРАВЛЯЕМ! Вы собрали все 10 видео! Забрали промокод и золотую статуэтку!'), 500);
+                            gameState.hasGoldstein = true;
+                            updateUI();
                         }
                     }
                 } else if (!item.isEmpty) {
@@ -3392,7 +3401,7 @@
             
             const rarityNames = {
                 empty: currentLang === 'en' ? 'Empty' : 'Пусто',
-                coin: currentLang === 'en' ? 'Coins' : 'Монеты',
+                                coin: currentLang === 'en' ? 'Coins' : 'Монеты',
                 lolita: currentLang === 'en' ? 'Lolita' : 'Лолита',
                 rare: currentLang === 'en' ? 'Rare' : 'Редкий',
                 superrare: currentLang === 'en' ? 'Super Rare' : 'Сверхредкий',
@@ -3413,6 +3422,7 @@
                 </div>`;
             };
             
+            // Синхронизированные шансы (с учетом скрытых 35% замены на монеты)
             if (caseType === 'basic') {
                 addRow('text-slate-400', 'empty', '15.000%');
                 addRow('text-orange-400', 'coin', '~80.48%');
@@ -3461,24 +3471,101 @@
         }
         function closeDropRatesModal() { document.getElementById('drop-rates-modal').classList.add('hidden'); }
 
-        // Easter Egg & Jumpscare Timers
+        // --- АЧИВКИ ---
+        const ACHIEVEMENTS_DEF = [
+            { id: 'first_case', ruName: 'Первый кейс', enName: 'First Case', ruDesc: 'Открой свой первый кейс', enDesc: 'Open your first case', icon: '📦', check: s => s.casesOpened >= 1 },
+            { id: 'all_minigames', ruName: 'Все мини-игры', enName: 'All Mini-Games', ruDesc: 'Разблокируй все мини-игры', enDesc: 'Unlock all mini-games', icon: '🎮', check: s => s.findGameUnlocked && s.courtUnlocked && s.lolitaGameUnlocked },
+            { id: 'first_legendary', ruName: 'Первая легенда', enName: 'First Legend', ruDesc: 'Получи первого легендарного гостя', enDesc: 'Get your first legendary guest', icon: '👑', check: s => Object.keys(s.inventory).some(id => ITEMS_DB.find(i => i.id === id && i.rarity === 'legendary')) },
+            { id: 'island_parts_2', ruName: '2 части острова', enName: '2 Island Parts', ruDesc: 'Собери 2 части острова', enDesc: 'Collect 2 island parts', icon: '🧩', check: s => (s.islandParts || []).length >= 2 },
+            { id: 'island_complete', ruName: 'Остров собран', enName: 'Island Complete', ruDesc: 'Собери все 4 части острова', enDesc: 'Collect all 4 island parts', icon: '🏝️', check: s => (s.islandParts || []).length >= 4 },
+            { id: 'court_win', ruName: 'Сенсация!', enName: 'Sensational!', ruDesc: 'Выиграй в суде x2 или x1.4', enDesc: 'Win in court x2 or x1.4', icon: '⚖️', check: s => (s.courtWinCount || 0) >= 1 },
+            { id: 'fast_open_unlock', ruName: 'Скорость', enName: 'Speed', ruDesc: 'Разблокируй быстрое открытие', enDesc: 'Unlock fast open', icon: '⚡', check: s => s.fastOpenUnlocked },
+            { id: 'rich_100k', ruName: 'Богач', enName: 'Rich', ruDesc: 'Накопи 100,000 🪙', enDesc: 'Accumulate 100,000 🪙', icon: '💰', check: s => s.balance >= 100000 },
+            { id: 'lolita_100', ruName: 'Авиапарк', enName: 'Air Fleet', ruDesc: 'Накопи 100 Лолита Э.', enDesc: 'Accumulate 100 Lolita E.', icon: '✈️', check: s => (s.lolitaBalance || 0) >= 100 },
+            { id: 'lolita_game_win', ruName: 'Пилот', enName: 'Pilot', ruDesc: 'Набери 1000+ монет в Лолита Экспресс', enDesc: 'Score 1000+ coins in Lolita Express', icon: '🛩️', check: s => (s.lolitaGameHighScore || 0) >= 1000 },
+            { id: 'jumpscare_seen', ruName: '???', enName: '???', ruDesc: '...', enDesc: '...', icon: '💀', check: s => s.jumpscareSeen }
+        ];
+
+        function checkAchievements() {
+            let newUnlocked = [];
+            ACHIEVEMENTS_DEF.forEach(a => {
+                if (!gameState.achievements[a.id] && a.check(gameState)) {
+                    gameState.achievements[a.id] = true;
+                    newUnlocked.push(a);
+                }
+            });
+            if (newUnlocked.length > 0) {
+                playSound('win');
+                newUnlocked.forEach(a => {
+                    console.log('Achievement unlocked:', a.id);
+                });
+            }
+        }
+
+        function getUnlockedAchCount() {
+            return Object.keys(gameState.achievements || {}).length;
+        }
+
+        function openAchievementsModal() {
+            playSound('click');
+            renderAchievements();
+            document.getElementById('achievements-modal').classList.remove('hidden');
+        }
+        function closeAchievementsModal() {
+            document.getElementById('achievements-modal').classList.add('hidden');
+        }
+        function renderAchievements() {
+            const container = document.getElementById('achievements-list');
+            if(!container) return;
+            container.innerHTML = '';
+            ACHIEVEMENTS_DEF.forEach(a => {
+                const unlocked = gameState.achievements[a.id] || false;
+                const div = document.createElement('div');
+                div.className = `p-3 rounded-xl border ${unlocked ? 'border-yellow-500/60 bg-yellow-950/20' : 'border-slate-800 bg-slate-950'} flex items-center gap-3`;
+                
+                let displayName = currentLang === 'en' ? a.enName : a.ruName;
+                let displayDesc = currentLang === 'en' ? a.enDesc : a.ruDesc;
+                
+                if (a.id === 'jumpscare_seen') {
+                    if (unlocked) {
+                        displayName = currentLang === 'en' ? 'Deceased' : 'Умерший';
+                    } else {
+                        displayName = '???';
+                        displayDesc = '...';
+                    }
+                }
+                
+                div.innerHTML = `<span class="text-2xl">${a.icon}</span>
+                    <div class="text-left">
+                        <div class="text-xs font-black ${unlocked ? 'text-yellow-300' : 'text-slate-500'}">${displayName}</div>
+                        <div class="text-[10px] ${unlocked ? 'text-slate-300' : 'text-slate-600'}">${displayDesc}</div>
+                    </div>
+                    <span class="ml-auto text-lg">${unlocked ? '✅' : '🔒'}</span>`;
+                container.appendChild(div);
+            });
+            document.getElementById('ach-modal-title').innerText = TRANSLATIONS[currentLang].achTitle;
+            document.getElementById('ach-count').innerText = `${getUnlockedAchCount()}/${ACHIEVEMENTS_DEF.length}`;
+        }
+
+        // === ТАЙМЕРЫ ПАСХАЛОК И ДЖАМПСКЕЙРА ===
         setInterval(() => {
             if (isPaused) return;
             
-            // Mini Epstein
+            // Мини-Эпштейн (Пасхалки)
             const realGuestsCount = ITEMS_DB.filter(i => !i.isCoin && !i.isEmpty && !i.isLolita && (gameState.inventory[i.id] || 0) > 0).length;
-            if (realGuestsCount >= 5) {
-                if (Math.random() < 0.0005) { // ~1 per 30-60s
+            if (realGuestsCount >= 7) {
+                if (Math.random() < 0.001) { // 0.1% шанс каждую секунду
                     const mini = document.getElementById('mini-epstein');
                     const img = document.getElementById('mini-epstein-img');
-                    img.src = Math.random() < 0.5 ? 'images/egg_1.png' : 'images/egg_2.png';
-                    
+                    const isEgg1 = Math.random() < 0.5;
+                    img.src = isEgg1 ? 'images/egg_1.png' : 'images/egg_2.png';
+
                     const positions = ['top-20 left-4', 'top-20 right-4', 'bottom-24 left-4', 'bottom-24 right-4'];
-                    mini.className = `fixed ${positions[Math.floor(Math.random() * positions.length)]} w-16 h-16 z-50 cursor-pointer animate-pulse rounded-xl overflow-hidden border-2 border-yellow-500 shadow-[0_0_20px_#facc15]`;
+                    mini.className = `fixed ${positions[Math.floor(Math.random() * positions.length)]} w-16 h-16 z-[9999] cursor-pointer animate-pulse rounded-xl overflow-hidden border-2 border-yellow-500 shadow-[0_0_20px_#facc15]`;
                     
                     mini.onclick = () => {
                         mini.classList.add('hidden');
-                        const reward = Math.floor(Math.random() * 4900) + 100;
+                        const reward = Math.floor(Math.random() * 4900) + 100; // от 100 до 5000
                         gameState.balance += reward;
                         playSound('cash');
                         updateUI(); saveGame();
@@ -3487,17 +3574,20 @@
                 }
             }
 
-            // Jumpscare
-            if (!gameState.jumpscareSeen && Math.random() < 0.0001) { // 0.01%
-                gameState.jumpscareSeen = true;
-                const js = document.getElementById('jumpscare-overlay');
-                js.classList.remove('hidden');
-                playSound('trap');
-                setTimeout(() => js.classList.add('hidden'), 3000);
-                saveGame(); updateUI();
+            // Джампскейр (0.05% шанс и только при активности)
+            if (!gameState.jumpscareSeen && Math.random() < 0.0005) { 
+                if (Date.now() - lastActionTime < 5000) { // Только если игрок что-то делал за последние 5 секунд
+                    gameState.jumpscareSeen = true;
+                    const js = document.getElementById('jumpscare-overlay');
+                    js.classList.remove('hidden');
+                    playSound('trap');
+                    setTimeout(() => js.classList.add('hidden'), 3000);
+                    saveGame(); updateUI();
+                }
             }
         }, 1000);
 
+        // Инициализация при загрузке
         window.onload = function() { loadGame(); };
     </script>
 </body>
