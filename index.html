@@ -96,7 +96,6 @@
         .roulette-container { overflow: hidden; position: relative; }
         .roulette-track { display: flex; transition: transform 5s cubic-bezier(0.1, 1, 0.1, 1); }
 
-        /* Исправление: добавлен z-index: 50, чтобы цифры были поверх острова */
         @keyframes float-up { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-75px) scale(1.3); } }
         .coin-pop { position: absolute; animation: float-up 0.8s ease-out forwards; pointer-events: none; font-weight: 900; color: #facc15; text-shadow: 0 2px 5px rgba(0,0,0,0.9); z-index: 50; }
 
@@ -468,6 +467,14 @@
                         <p class="text-[10px] text-slate-400 my-2">Роскошный золотой остров для фарма.</p>
                         <button onclick="buyClickerBg(50000, 'golden')" id="theme-btn-clicker-golden" class="w-full py-2 bg-gradient-to-r from-yellow-500 to-amber-600 text-slate-950 font-bold text-xs uppercase rounded-xl btn-bounce">Купить (50,000 🪙)</button>
                     </div>
+
+                    <!-- ТРЕК 2 -->
+                    <div class="bg-slate-900 border-2 border-cyan-400 rounded-2xl p-4 flex flex-col justify-between items-center text-center glow-legendary">
+                        <div class="text-4xl mb-2">🎵</div>
+                        <h4 class="font-bold text-sm text-cyan-300">Трек 2 (Фон)</h4>
+                        <p class="text-[10px] text-slate-400 my-2">Второй секретный трек для игры.</p>
+                        <button onclick="buyTrack2()" id="btn-buy-track2" class="w-full py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-bold text-xs uppercase rounded-xl btn-bounce">Купить (45,000 🪙 + 5 ✈️)</button>
+                    </div>
                 </div>
             </div>
 
@@ -534,7 +541,6 @@
                 <p id="lbl-archives-subtitle" class="text-slate-400 text-xs sm:text-sm mt-1">Изучай карту острова и собирай секретные материалы.</p>
             </div>
 
-            <!-- Исправление: изменена сетка на 4 колонки, чтобы карточки были шире -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
                 <div class="card-bg-pattern border-2 border-emerald-500/50 rounded-2xl p-5 flex flex-col items-center justify-between text-center relative overflow-hidden shadow-xl">
                     <div class="bg-emerald-500/20 text-emerald-300 text-[10px] font-black px-3 py-1 rounded-full uppercase border border-emerald-500/30">Раздел 1</div>
@@ -734,6 +740,14 @@
                     </div>
                 </div>
 
+                <div id="track2-settings-box" class="bg-slate-950 p-4 rounded-2xl border border-slate-800 flex flex-col gap-2 hidden">
+                    <span class="text-xs font-bold text-slate-300">Трек 2 (Фон):</span>
+                    <div class="flex gap-2">
+                        <button onclick="toggleTrack2()" id="track2-btn" class="flex-1 bg-emerald-600 hover:bg-emerald-500 px-3 py-1.5 rounded-xl text-xs font-black btn-bounce text-white">▶️ Вкл</button>
+                        <button onclick="toggleTrack2Loop()" id="track2-loop-btn" class="flex-1 bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-xl text-xs font-black btn-bounce text-white">🔁 Повтор: Вкл</button>
+                    </div>
+                </div>
+
                 <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 flex items-center justify-between">
                     <span id="lbl-reset-setting" class="text-xs font-bold text-slate-300">Сброс Игры:</span>
                     <button onclick="resetProgress()" id="reset-btn" class="bg-red-600 hover:bg-red-500 px-3 py-1.5 rounded-xl text-xs font-black btn-bounce text-white">🗑️ Сбросить</button>
@@ -914,7 +928,9 @@
     <audio id="michael-sound" src="audio/michael.mp3" preload="auto"></audio>
     <audio id="bannon-sound" src="audio/bannon.mp3" preload="auto"></audio>
     <audio id="statue-sound" src="audio/statue_sound.mp3" preload="auto"></audio>
+    
     <audio id="track1-audio" src="audio/track1.mp3" loop></audio>
+    <audio id="track2-audio" src="audio/track2.mp3" loop></audio>
 
     <script>
         // === СЕКРЕТНЫЕ ПРОМОКОДЫ (Base64) ===
@@ -1091,7 +1107,8 @@
                 secretPhotos2Title: '📷 Тайные Фотографии 2', secretPhotos2Desc: 'Собери 10 секретных снимков 2-й части. Выпадают из Архива Острова и Частного Боинга.',
                 secretPhotos2Progress: 'Прогресс:', secretPhotos2RewardDesc: 'Награда за все 10 фото: Разблокировка Трека 1 (управление в ⚙️ Настройках).',
                 secretVideosTitle: '🎥 Тайные Видео', secretVideosDesc: 'Собери 10 секретных видеозаписей. Выпадают из Архива Острова и Частного Боинга.',
-                secretVideosProgress: 'Прогресс:', secretVideosRewardDesc: 'Награда за все 10 видео: Секретный промокод и Золотая статуэтка!'
+                secretVideosProgress: 'Прогресс:', secretVideosRewardDesc: 'Награда за все 10 видео: Секретный промокод и Золотая статуэтка!',
+                track2BtnBuy: 'Купить (45,000 🪙 + 5 ✈️)', track2BtnOwned: 'Одет ✅', track2BtnEquip: 'Надеть', track2Name: 'Трек 2 (Фон)', track2Desc: 'Второй секретный трек для игры.'
             },
             en: {
                 balance: 'Jeffreys', lolita: 'Lolita E.', guests: 'Guests', archive: 'Archive', slotsBtn: 'Slots',
@@ -1152,7 +1169,8 @@
                 secretPhotos2Title: '📷 Secret Photos 2', secretPhotos2Desc: 'Collect 10 secret snapshots of the 2nd part. Drops from Island Archives and Private Boeing.',
                 secretPhotos2Progress: 'Progress:', secretPhotos2RewardDesc: 'Reward for all 10 photos: Unlock Track 1 (controls in ⚙️ Settings).',
                 secretVideosTitle: '🎥 Secret Videos', secretVideosDesc: 'Collect 10 secret videos. Drops from Island Archives and Private Boeing.',
-                secretVideosProgress: 'Progress:', secretVideosRewardDesc: 'Reward for all 10 videos: Secret Promo Code and Gold Statue!'
+                secretVideosProgress: 'Progress:', secretVideosRewardDesc: 'Reward for all 10 videos: Secret Promo Code and Gold Statue!',
+                track2BtnBuy: 'Buy (45,000 🪙 + 5 ✈️)', track2BtnOwned: 'Equipped ✅', track2BtnEquip: 'Equip', track2Name: 'Track 2 (BGM)', track2Desc: 'Second secret track for the game.'
             }
         };
 
@@ -1215,14 +1233,15 @@
             { id: 'v9', ruName: 'Видео #9', enName: 'Video #9', video: 'videos/secret_video_9.mp4', desc: 'Секретная видеозапись.' },
             { id: 'v10', ruName: 'Видео #10', enName: 'Video #10', video: 'videos/secret_video_10.mp4', desc: 'Секретная видеозапись.' }
         ];
+
         const ITEMS_DB = [
             { id: 'empty_slot', isEmpty: true, ruName: 'Ничего', enName: 'Nothing', rarity: 'empty', avatar: '💨', ruDesc: 'В этот раз чемодан оказался абсолютно пустым!', enDesc: 'This briefcase turned out to be completely empty!' },
             { id: 'coin_50', isCoin: true, amount: 50, ruName: '+50 Джеффриков', enName: '+50 Jeffreys', rarity: 'coin', avatar: '🪙', ruDesc: 'Малый конверт с наличными.', enDesc: 'Small cash envelope.' },
             { id: 'coin_100', isCoin: true, amount: 100, ruName: '+100 Джеффриков', enName: '+100 Jeffreys', rarity: 'coin', avatar: '🪙', ruDesc: 'Средний конверт с наличными.', enDesc: 'Medium cash envelope.' },
-            { id: 'coin_200', isCoin: true, amount: 200, ruName: '+200 Джеффриков', enName: '+200 Jeffreys', rarity: 'coin', avatar: '🪙', ruDesc: 'Хорошая пачка наличных.', enDesc: 'Good stack of cash.' },
-            { id: 'coin_300', isCoin: true, amount: 300, ruName: '+300 Джеффриков', enName: '+300 Jeffreys', rarity: 'coin', avatar: '🪙', ruDesc: 'Чемодан наличных денег.', enDesc: 'Briefcase full of cash.' },
-            { id: 'coin_500', isCoin: true, amount: 500, ruName: '+500 Джеффриков', enName: '+500 Jeffreys', rarity: 'coin', avatar: '🪙', ruDesc: 'Крупный куш наличными.', enDesc: 'Large cash haul.' },
-            { id: 'coin_600', isCoin: true, amount: 600, ruName: '+600 Джеффриков', enName: '+600 Jeffreys', rarity: 'coin', avatar: '🪙', ruDesc: 'Крупная компенсация с острова!', enDesc: 'Huge compensation payout!' },
+            { id: 'coin_200', isCoin: true, amount: 200, ruName: '+200 Джеффриков', enName: '+200 Jeffreys', rarity: 'coin', avatar: '💵', ruDesc: 'Хорошая пачка наличных.', enDesc: 'Good stack of cash.' },
+            { id: 'coin_300', isCoin: true, amount: 300, ruName: '+300 Джеффриков', enName: '+300 Jeffreys', rarity: 'coin', avatar: '💵', ruDesc: 'Чемодан наличных денег.', enDesc: 'Briefcase full of cash.' },
+            { id: 'coin_500', isCoin: true, amount: 500, ruName: '+500 Джеффриков', enName: '+500 Jeffreys', rarity: 'coin', avatar: '💰', ruDesc: 'Крупный куш наличными.', enDesc: 'Large cash haul.' },
+            { id: 'coin_600', isCoin: true, amount: 600, ruName: '+600 Джеффриков', enName: '+600 Jeffreys', rarity: 'coin', avatar: '💰', ruDesc: 'Крупная компенсация с острова!', enDesc: 'Huge compensation payout!' },
 
             { id: 'lolita_1', isLolita: true, amount: 1, ruName: '+1 Лолита Э.', enName: '+1 Lolita E.', rarity: 'lolita', avatar: '✈️', ruDesc: 'Билет на один рейс джета Лолита Экспресс!', enDesc: 'Flight ticket for Lolita Express jet!' },
             { id: 'lolita_3', isLolita: true, amount: 3, ruName: '+3 Лолита Э.', enName: '+3 Lolita E.', rarity: 'lolita', avatar: '🛫', ruDesc: 'Пакет VIP-перелетов над Карибским морем.', enDesc: 'VIP flight package over the Caribbean.' },
@@ -1296,7 +1315,10 @@
                 hasGoldstein: false,
                 track1Unlocked: false,
                 track1Playing: false,
-                track1Loop: true
+                track1Loop: true,
+                track2Unlocked: false,
+                track2Playing: false,
+                track2Loop: true
             };
         }
 
@@ -1305,7 +1327,35 @@
         let gameState = createDefaultState();
         let fastOpenCount = 5;
 
-        // --- НОВЫЕ ФУНКЦИИ ТРЕКА 1 ---
+        function updateMobileUI() {
+            const btn = document.getElementById('mobile-opt-btn');
+            if (!btn) return;
+            if (gameState.mobileOptimized) {
+                document.body.classList.add('mobile-optimized');
+                btn.innerText = TRANSLATIONS[currentLang].mobileOptOn || 'Вкл';
+                btn.className = 'bg-emerald-600 hover:bg-emerald-500 px-3 py-1.5 rounded-xl text-xs font-black btn-bounce text-white';
+            } else {
+                document.body.classList.remove('mobile-optimized');
+                btn.innerText = TRANSLATIONS[currentLang].mobileOptOff || 'Выкл';
+                btn.className = 'bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-xl text-xs font-black btn-bounce text-white';
+            }
+        }
+
+        function toggleMobileOptimization() {
+            playSound('click');
+            gameState.mobileOptimized = !gameState.mobileOptimized;
+            saveGame();
+            updateMobileUI();
+            updateUI();
+        }
+
+        function handleMobileMove(dir, isDown) {
+            if (window.gameKeys) {
+                window.gameKeys[dir] = isDown;
+            }
+        }
+
+        // --- ФУНКЦИИ УПРАВЛЕНИЯ ТРЕКОМ 1 ---
         function updateTrack1UI() {
             const box = document.getElementById('track1-settings-box');
             const btn = document.getElementById('track1-btn');
@@ -1334,8 +1384,12 @@
             gameState.track1Playing = !gameState.track1Playing;
             const audio = document.getElementById('track1-audio');
             if (audio) {
-                if (gameState.track1Playing) audio.play().catch(e => console.log(e));
-                else audio.pause();
+                if (gameState.track1Playing) {
+                    if (gameState.track2Playing) { gameState.track2Playing = false; document.getElementById('track2-audio').pause(); updateTrack2UI(); }
+                    audio.play().catch(e => console.log(e));
+                } else {
+                    audio.pause();
+                }
             }
             updateTrack1UI();
             saveGame();
@@ -1350,6 +1404,86 @@
             saveGame();
         }
 
+        // --- ФУНКЦИИ УПРАВЛЕНИЯ ТРЕКОМ 2 ---
+        function updateTrack2UI() {
+            const box = document.getElementById('track2-settings-box');
+            const btn = document.getElementById('track2-btn');
+            const loopBtn = document.getElementById('track2-loop-btn');
+            const buyBtn = document.getElementById('btn-buy-track2');
+            
+            if (!box) return;
+            
+            if (gameState.track2Unlocked) {
+                box.classList.remove('hidden');
+                if (gameState.track2Playing) {
+                    btn.innerText = '⏸️ Выкл';
+                    btn.className = 'flex-1 bg-red-600 hover:bg-red-500 px-3 py-1.5 rounded-xl text-xs font-black btn-bounce text-white';
+                } else {
+                    btn.innerText = '▶️ Вкл';
+                    btn.className = 'flex-1 bg-emerald-600 hover:bg-emerald-500 px-3 py-1.5 rounded-xl text-xs font-black btn-bounce text-white';
+                }
+                loopBtn.innerText = gameState.track2Loop ? '🔁 Повтор: Вкл' : '🔁 Повтор: Выкл';
+                loopBtn.className = gameState.track2Loop ? 'flex-1 bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-xl text-xs font-black btn-bounce text-white' : 'flex-1 bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-xl text-xs font-black btn-bounce text-slate-400';
+                
+                if (buyBtn) {
+                    buyBtn.innerText = TRANSLATIONS[currentLang].track2BtnOwned;
+                    buyBtn.className = 'w-full py-2 bg-slate-800 hover:bg-slate-700 text-emerald-400 font-bold text-xs uppercase rounded-xl border border-emerald-500/50';
+                    buyBtn.disabled = true;
+                }
+            } else {
+                box.classList.add('hidden');
+                if (buyBtn) {
+                    buyBtn.innerText = TRANSLATIONS[currentLang].track2BtnBuy;
+                    buyBtn.className = 'w-full py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-bold text-xs uppercase rounded-xl btn-bounce';
+                    buyBtn.disabled = false;
+                }
+            }
+        }
+
+        function toggleTrack2() {
+            playSound('click');
+            gameState.track2Playing = !gameState.track2Playing;
+            const audio = document.getElementById('track2-audio');
+            if (audio) {
+                if (gameState.track2Playing) {
+                    if (gameState.track1Playing) { gameState.track1Playing = false; document.getElementById('track1-audio').pause(); updateTrack1UI(); }
+                    audio.play().catch(e => console.log(e));
+                } else {
+                    audio.pause();
+                }
+            }
+            updateTrack2UI();
+            saveGame();
+        }
+
+        function toggleTrack2Loop() {
+            playSound('click');
+            gameState.track2Loop = !gameState.track2Loop;
+            const audio = document.getElementById('track2-audio');
+            if (audio) audio.loop = gameState.track2Loop;
+            updateTrack2UI();
+            saveGame();
+        }
+
+        function buyTrack2() {
+            playSound('click');
+            const t = TRANSLATIONS[currentLang];
+            if (gameState.track2Unlocked) return;
+            
+            if (gameState.balance < 45000 || (gameState.lolitaBalance || 0) < 5) {
+                alert(t.notEnough);
+                return;
+            }
+            
+            gameState.balance -= 45000;
+            gameState.lolitaBalance -= 5;
+            gameState.track2Unlocked = true;
+            playSound('win');
+            updateTrack2UI();
+            updateUI();
+            saveGame();
+            alert(currentLang === 'en' ? 'Track 2 purchased! Controls are in ⚙️ Settings.' : 'Трек 2 куплен! Управление находится в ⚙️ Настройках.');
+        }
         // --- УМНЫЕ КВЕСТЫ (ИИ) ---
         function generateRandomQuestPool() {
             const batchNum = (gameState.questBatchCompleted || 0) + 1;
@@ -1368,12 +1502,10 @@
                 { id: 11, type: 'lolita_game', target: 1, title: { ru: 'Сыграть в «Лолита Экспресс»', en: 'Play Lolita Express' }, progress: 0, completed: false, rewardType: 'coins', amount: Math.floor(12000 * 0.67) }
             ];
 
-            // Убираем квест на части острова, если все собраны
             if (!hasAllIslandParts()) {
                 pool.push({ id: 12, type: 'island_parts', target: 1, title: { ru: 'Собрать 1 часть Острова', en: 'Collect 1 Island Part' }, progress: 0, completed: false, rewardType: 'lolita', amount: Math.floor(5 * 0.67) });
             }
 
-            // Перемешиваем и берем 10
             pool = pool.sort(() => Math.random() - 0.5);
             return pool.slice(0, 10).map((q, idx) => ({ ...q, id: idx }));
         }
@@ -1446,11 +1578,6 @@
 
         function hasAllIslandParts() { return ISLAND_PARTS.every(p => (gameState.islandParts || []).includes(p.id)); }
         function isIslandPartOwned(partId) { return (gameState.islandParts || []).includes(partId); }
-        function getAvailableIslandPart() {
-            const owned = gameState.islandParts || [];
-            const avail = ISLAND_PARTS.filter(p => !owned.includes(p.id));
-            return avail.length > 0 ? avail[Math.floor(Math.random() * avail.length)] : null;
-        }
         function updateIslandMapUI() {
             ISLAND_PARTS.forEach(p => {
                 const el = document.getElementById(p.zoneId);
@@ -1648,296 +1775,7 @@
             if (countEl) countEl.innerText = `${found.length} / 10`;
         }
 
-        // --- LOLITA EXPRESS GAME ---
-        let lolitaGameAnimId = null;
-        let lolitaGameActive = false;
-        let lolitaTimerInterval = null;
-
-        function startLolitaExpressGame() {
-            playSound('click');
-            const realGuests = ITEMS_DB.filter(i => !i.isCoin && !i.isEmpty && !i.isLolita);
-            const collectedCount = realGuests.filter(i => (gameState.inventory[i.id] || 0) > 0).length;
-            const t = TRANSLATIONS[currentLang];
-
-            if (!gameState.lolitaGameUnlocked) {
-                if (collectedCount < 5) { alert(currentLang === 'en' ? 'Need at least 5 guests in collection!' : 'Нужно минимум 5 гостей в коллекции!'); return; }
-                if (gameState.balance < 15000) { alert(t.notEnough); return; }
-                if ((gameState.lolitaBalance || 0) < 10) { alert(t.notEnough); return; }
-                gameState.balance -= 15000;
-                gameState.lolitaBalance -= 10;
-                gameState.lolitaGameUnlocked = true;
-                saveGame(); updateUI();
-                playSound('win');
-            }
-
-            if (lolitaTimerInterval) clearInterval(lolitaTimerInterval);
-            if (lolitaGameAnimId) cancelAnimationFrame(lolitaGameAnimId);
-            lolitaGameActive = false;
-
-            document.getElementById('lolita-game-modal').classList.remove('hidden');
-            document.getElementById('lolita-game-overlay').classList.add('hidden');
-            
-            if (gameState.mobileOptimized) {
-                document.getElementById('mobile-controls').classList.remove('hidden');
-            } else {
-                document.getElementById('mobile-controls').classList.add('hidden');
-            }
-
-            runLolitaGame();
-        }
-
-        function runLolitaGame() {
-            const canvas = document.getElementById('lolita-canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = 800; canvas.height = 600;
-
-            let plane = { x: 400, y: 500, w: 40, h: 40, speed: 7 };
-            let keys = {};
-            window.gameKeys = keys;
-
-            let obstacles = [];
-            let coins = [];
-            let score = 0;
-            let lives = 3;
-            let timeLeft = 120;
-            let lastSpawn = 0;
-            let lastCoinTime = 0;
-            let frame = 0;
-            let gameOver = false;
-            let speedMultiplier = 1;
-            lolitaGameActive = true;
-
-            const useEpsteinBg = Math.random() < 0.02;
-            if (useEpsteinBg) unlockEasterEgg('bg_lolita');
-            
-            const bgImage = new Image();
-            bgImage.src = 'images/lolita_bg.jpg';
-
-            document.getElementById('lolita-game-lives').innerText = '❤️❤️❤️';
-            document.getElementById('lolita-game-timer').innerText = '02:00';
-
-            lolitaTimerInterval = setInterval(() => {
-                if (isPaused || gameOver) return;
-                timeLeft--;
-                const mins = String(Math.floor(timeLeft / 60)).padStart(2, '0');
-                const secs = String(timeLeft % 60).padStart(2, '0');
-                document.getElementById('lolita-game-timer').innerText = `${mins}:${secs}`;
-                
-                if (timeLeft > 0 && timeLeft % 20 === 0) {
-                    speedMultiplier += 0.15;
-                }
-
-                if (timeLeft <= 0) { endLolitaGame(true); }
-            }, 1000);
-
-            window.onkeydown = null;
-            window.onkeyup = null;
-            window.addEventListener('keydown', e => { keys[e.key] = true; });
-            window.addEventListener('keyup', e => { keys[e.key] = false; });
-
-            function endLolitaGame(won) {
-                gameOver = true; lolitaGameActive = false;
-                if (lolitaTimerInterval) clearInterval(lolitaTimerInterval);
-                if (lolitaGameAnimId) cancelAnimationFrame(lolitaGameAnimId);
-
-                const t = TRANSLATIONS[currentLang];
-                if (score > (gameState.lolitaGameHighScore || 0)) gameState.lolitaGameHighScore = score;
-                gameState.balance += score;
-                saveGame(); updateUI(); updateQuestProgress('lolita_game', 1);
-
-                const overlay = document.getElementById('lolita-game-overlay');
-                overlay.classList.remove('hidden');
-                document.getElementById('lolita-end-title').innerText = won ? t.lolitaGameWin : t.lolitaGameOver;
-                document.getElementById('lolita-end-score').innerText = `${t.lolitaGameScore} ${score.toLocaleString()} 🪙`;
-            }
-
-            function update() {
-                if (!lolitaGameActive || isPaused) return;
-
-                if (keys['ArrowLeft'] || keys['a'] || keys['A']) plane.x -= plane.speed;
-                if (keys['ArrowRight'] || keys['d'] || keys['D']) plane.x += plane.speed;
-                if (keys['ArrowUp'] || keys['w'] || keys['W']) plane.y -= plane.speed;
-                if (keys['ArrowDown'] || keys['s'] || keys['S']) plane.y += plane.speed;
-
-                plane.x = Math.max(plane.w/2, Math.min(canvas.width - plane.w/2, plane.x));
-                plane.y = Math.max(plane.h/2, Math.min(canvas.height - plane.h/2, plane.y));
-
-                if (frame - lastSpawn > 80) {
-                    const types = ['storm', 'balloon', 'fbi'];
-                    const type = types[Math.floor(Math.random() * types.length)];
-                    obstacles.push({ x: Math.random() * canvas.width, y: -30, r: 20 + Math.random() * 10, type, speed: 2 + Math.random() * 2 });
-                    lastSpawn = frame;
-                }
-
-                if (frame - lastCoinTime > 550) {
-                    let amount;
-                    if (Math.random() < 0.05) {
-                        amount = [1000, 2000, 5000][Math.floor(Math.random() * 3)];
-                    } else {
-                        amount = [10, 100, 200, 500][Math.floor(Math.random() * 4)];
-                    }
-                    coins.push({ x: Math.random() * canvas.width, y: -20, r: 15, amount, speed: 2.5 });
-                    lastCoinTime = frame;
-                }
-
-                obstacles.forEach(o => o.y += o.speed * speedMultiplier);
-                obstacles = obstacles.filter(o => {
-                    if (o.y > canvas.height + 50) return false;
-                    const dx = plane.x - o.x, dy = plane.y - o.y;
-                    if (Math.sqrt(dx*dx + dy*dy) < plane.w/2 + o.r) {
-                        lives--; playSound('trap');
-                        document.getElementById('lolita-game-lives').innerText = '❤️'.repeat(Math.max(0, lives)) + '🖤'.repeat(3 - Math.max(0, lives));
-                        if (lives <= 0) endLolitaGame(false);
-                        return false;
-                    }
-                    return true;
-                });
-
-                coins.forEach(c => c.y += c.speed * speedMultiplier);
-                coins = coins.filter(c => {
-                    if (c.y > canvas.height + 50) return false;
-                    const dx = plane.x - c.x, dy = plane.y - c.y;
-                    if (Math.sqrt(dx*dx + dy*dy) < plane.w/2 + c.r) {
-                        score += c.amount; playSound('cash');
-                        updateQuestProgress('clicks', 0);
-                        return false;
-                    }
-                    return true;
-                });
-
-                frame++;
-            }
-
-            function draw() {
-                if (!lolitaGameActive && gameOver) return;
-                
-                if (useEpsteinBg && bgImage.complete) {
-                    ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
-                } else {
-                    const g = ctx.createLinearGradient(0, 0, 0, canvas.height);
-                    g.addColorStop(0, '#0c1445'); g.addColorStop(1, '#1e3a8a');
-                    ctx.fillStyle = g; ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                    ctx.fillStyle = 'rgba(255,255,255,0.4)';
-                    for (let i=0; i<40; i++) { const sx = (i*197)%canvas.width; const sy = (i*131)%canvas.height; ctx.fillRect(sx, sy, 2, 2); }
-                }
-
-                ctx.save(); ctx.translate(plane.x, plane.y);
-                ctx.fillStyle = '#38bdf8'; ctx.shadowColor = '#38bdf8'; ctx.shadowBlur = 15;
-                
-                ctx.beginPath();
-                ctx.moveTo(0, -20);
-                ctx.lineTo(6, -5);
-                ctx.lineTo(24, 5);
-                ctx.lineTo(24, 10);
-                ctx.lineTo(6, 10);
-                ctx.lineTo(6, 15);
-                ctx.lineTo(14, 18);
-                ctx.lineTo(0, 15);
-                ctx.lineTo(-14, 18);
-                ctx.lineTo(-6, 15);
-                ctx.lineTo(-6, 10);
-                ctx.lineTo(-24, 10);
-                ctx.lineTo(-24, 5);
-                ctx.lineTo(-6, -5);
-                ctx.closePath();
-                ctx.fill();
-
-                ctx.fillStyle = '#0ea5e9';
-                ctx.beginPath();
-                ctx.ellipse(0, -8, 3, 6, 0, 0, Math.PI * 2);
-                ctx.fill();
-                
-                ctx.restore();
-
-                obstacles.forEach(o => {
-                    ctx.save(); ctx.translate(o.x, o.y);
-                    if (o.type === 'storm') { ctx.fillStyle = '#64748b'; ctx.beginPath(); ctx.arc(0,0,o.r,0,Math.PI*2); ctx.fill(); ctx.fillStyle = '#94a3b8'; ctx.font = '20px sans-serif'; ctx.fillText('⛈️', -10, 7); }
-                    else if (o.type === 'balloon') { ctx.fillStyle = '#ef4444'; ctx.beginPath(); ctx.arc(0,0,o.r,0,Math.PI*2); ctx.fill(); ctx.fillStyle = '#fff'; ctx.font = '18px sans-serif'; ctx.fillText('🎈', -9, 6); }
-                    else { ctx.fillStyle = '#1e293b'; ctx.beginPath(); ctx.arc(0,0,o.r,0,Math.PI*2); ctx.fill(); ctx.fillStyle = '#fbbf24'; ctx.font = '18px sans-serif'; ctx.fillText('🕵️', -9, 6); }
-                    ctx.restore();
-                });
-
-                coins.forEach(c => {
-                    ctx.save(); ctx.translate(c.x, c.y);
-                    ctx.fillStyle = '#fbbf24'; ctx.beginPath(); ctx.arc(0,0,c.r,0,Math.PI*2); ctx.fill();
-                    ctx.fillStyle = '#92400e'; ctx.font = '12px sans-serif'; ctx.fillText(c.amount, -10, 4);
-                    ctx.restore();
-                });
-
-                ctx.fillStyle = '#fff'; ctx.font = 'bold 16px sans-serif';
-                ctx.fillText(`🪙 ${score}`, 20, 30);
-            }
-
-            function loop() {
-                if (gameOver) return;
-                if (!isPaused) { update(); draw(); }
-                if (!gameOver) lolitaGameAnimId = requestAnimationFrame(loop);
-            }
-            loop();
-        }
-
-        function closeLolitaGameModal() {
-            lolitaGameActive = false;
-            if (lolitaTimerInterval) clearInterval(lolitaTimerInterval);
-            if (lolitaGameAnimId) cancelAnimationFrame(lolitaGameAnimId);
-            document.getElementById('lolita-game-modal').classList.add('hidden');
-            document.getElementById('mobile-controls').classList.add('hidden');
-        }
-
-        function redeemPromo() {
-            const input = document.getElementById('promo-input');
-            const code = input.value.trim();
-            playSound('click');
-            
-            if (code === PROMO_1 && !gameState.promoUsed) {
-                gameState.balance += 1000000;
-                gameState.lolitaBalance += 1000;
-                gameState.promoUsed = true;
-                playSound('legendary');
-                confetti({ particleCount: 300, spread: 120, origin: { y: 0.6 } });
-                saveGame(); updateUI();
-                alert(currentLang === 'en' ? 'Promo activated! +1,000,000 🪙 and +1,000 ✈️' : 'Промокод активирован! +1,000,000 🪙 и +1,000 ✈️');
-            } else if (code === PROMO_2 && !gameState.promo2Used) {
-                gameState.promo2Used = true;
-                
-                const r = Math.random();
-                let targetRarity = 'epic';
-                if (r > 0.9) targetRarity = 'legendary';
-                else if (r > 0.6) targetRarity = 'mythic';
-                
-                const pool = ITEMS_DB.filter(i => i.rarity === targetRarity);
-                const randomChar = pool[Math.floor(Math.random() * pool.length)];
-                
-                gameState.inventory[randomChar.id] = (gameState.inventory[randomChar.id] || 0) + 1;
-                
-                playSound('legendary');
-                confetti({ particleCount: 300, spread: 120, origin: { y: 0.6 } });
-                saveGame(); updateUI();
-                alert(currentLang === 'en' ? `Promo activated! You got a random guest:\n${randomChar.enName}` : `Промокод активирован! Вам выпал случайный гость:\n${randomChar.ruName}`);
-            } else if (code === PROMO_3 && !gameState.promo3Used) {
-                gameState.promo3Used = true;
-                
-                const r = Math.random();
-                let targetRarity = 'epic';
-                if (r > 0.9) targetRarity = 'legendary';
-                else if (r > 0.6) targetRarity = 'mythic';
-                
-                const pool = ITEMS_DB.filter(i => i.rarity === targetRarity);
-                const randomChar = pool[Math.floor(Math.random() * pool.length)];
-                
-                gameState.inventory[randomChar.id] = (gameState.inventory[randomChar.id] || 0) + 1;
-                
-                playSound('legendary');
-                confetti({ particleCount: 300, spread: 120, origin: { y: 0.6 } });
-                saveGame(); updateUI();
-                alert(currentLang === 'en' ? `Promo activated! You got a random guest:\n${randomChar.enName}` : `Промокод активирован! Вам выпал случайный гость:\n${randomChar.ruName}`);
-            } else {
-                alert(TRANSLATIONS[currentLang].promoWrong);
-            }
-            input.value = '';
-        }
-
+        // --- СИСТЕМА СОХРАНЕНИЙ ---
         function loadGame() {
             gameState = createDefaultState();
             const manifestRaw = localStorage.getItem('epstein_collector_manifest');
@@ -1967,6 +1805,9 @@
             if (gameState.track1Unlocked === undefined) gameState.track1Unlocked = false;
             if (gameState.track1Playing === undefined) gameState.track1Playing = false;
             if (gameState.track1Loop === undefined) gameState.track1Loop = true;
+            if (gameState.track2Unlocked === undefined) gameState.track2Unlocked = false;
+            if (gameState.track2Playing === undefined) gameState.track2Playing = false;
+            if (gameState.track2Loop === undefined) gameState.track2Loop = true;
             
             gameState = JSON.parse(JSON.stringify(gameState));
             
@@ -1983,15 +1824,21 @@
             renderAchievements();
             updateClickerBgUI();
             updateTrack1UI();
+            updateTrack2UI();
             
             if (gameState.hasGoldstein) {
                 document.getElementById('goldstein-statue').classList.remove('hidden');
             }
             
-            const audioTrack = document.getElementById('track1-audio');
-            if (audioTrack) {
-                audioTrack.loop = gameState.track1Loop;
-                if (gameState.track1Playing) audioTrack.play().catch(e=>console.log(e));
+            const audioTrack1 = document.getElementById('track1-audio');
+            if (audioTrack1) {
+                audioTrack1.loop = gameState.track1Loop;
+                if (gameState.track1Playing) audioTrack1.play().catch(e=>console.log(e));
+            }
+            const audioTrack2 = document.getElementById('track2-audio');
+            if (audioTrack2) {
+                audioTrack2.loop = gameState.track2Loop;
+                if (gameState.track2Playing) audioTrack2.play().catch(e=>console.log(e));
             }
         }
 
@@ -2245,6 +2092,19 @@
             document.querySelector('#secret-videos-modal p.text-slate-400').innerText = t.secretVideosDesc;
             document.querySelector('#secret-videos-modal .text-slate-300').innerText = t.secretVideosProgress + ' ' + document.getElementById('secret-videos-count').innerText;
             document.querySelector('#secret-videos-modal .text-slate-400.mt-1').innerText = t.secretVideosRewardDesc;
+
+            const t2Btn = document.getElementById('btn-buy-track2');
+            if (t2Btn) {
+                if (gameState.track2Unlocked) {
+                    t2Btn.innerText = t.track2BtnOwned;
+                    t2Btn.className = 'w-full py-2 bg-slate-800 hover:bg-slate-700 text-emerald-400 font-bold text-xs uppercase rounded-xl border border-emerald-500/50';
+                    t2Btn.disabled = true;
+                } else {
+                    t2Btn.innerText = t.track2BtnBuy;
+                    t2Btn.className = 'w-full py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-bold text-xs uppercase rounded-xl btn-bounce';
+                    t2Btn.disabled = false;
+                }
+            }
             
             renderSecretPhotos();
             renderSecretPhotos2();
@@ -2253,8 +2113,8 @@
             updateIslandMapUI();
             renderAchievements();
             updateTrack1UI();
+            updateTrack2UI();
         }
-
         function updateCaseButtons() {
             const buttons = {
                 basic: { el: document.getElementById('btn-open-basic'), cost: 100, curr: 'coin' },
@@ -2438,6 +2298,7 @@
             updateShopThemeButtons();
             updateClickerBgUI();
             updateTrack1UI();
+            updateTrack2UI();
             renderCollection();
             checkQuestAlertBadge();
             updateIslandMapUI();
@@ -2736,7 +2597,6 @@
         function upgradeAuto() { const t = TRANSLATIONS[currentLang]; if (gameState.autoLevel >= AUTO_UPGRADES.length) return; const next = AUTO_UPGRADES[gameState.autoLevel]; if (gameState.balance >= next.cost) { playSound('win'); gameState.balance -= next.cost; gameState.autoLevel++; updateUI(); saveGame(); } else alert(t.notEnough); }
 
         setInterval(() => { if (isPaused) return; const autoRate = getCurrentAutoRate(); if (autoRate > 0) { gameState.balance += autoRate; updateUI(); } }, 1000);
-
         function checkAllGuestsCollected() {
             const realGuests = ITEMS_DB.filter(i => !i.isCoin && !i.isEmpty && !i.isLolita);
             const collectedCount = realGuests.filter(i => (gameState.inventory[i.id] || 0) > 0).length;
@@ -3401,7 +3261,7 @@
             
             const rarityNames = {
                 empty: currentLang === 'en' ? 'Empty' : 'Пусто',
-                                coin: currentLang === 'en' ? 'Coins' : 'Монеты',
+                coin: currentLang === 'en' ? 'Coins' : 'Монеты',
                 lolita: currentLang === 'en' ? 'Lolita' : 'Лолита',
                 rare: currentLang === 'en' ? 'Rare' : 'Редкий',
                 superrare: currentLang === 'en' ? 'Super Rare' : 'Сверхредкий',
@@ -3422,7 +3282,6 @@
                 </div>`;
             };
             
-            // Синхронизированные шансы (с учетом скрытых 35% замены на монеты)
             if (caseType === 'basic') {
                 addRow('text-slate-400', 'empty', '15.000%');
                 addRow('text-orange-400', 'coin', '~80.48%');
@@ -3586,6 +3445,301 @@
                 }
             }
         }, 1000);
+
+        // ==========================================
+        // --- LOLITA EXPRESS MINIGAME (ИСПРАВЛЕНО) ---
+        // ==========================================
+        let lolitaGameAnimId = null;
+        let lolitaGameActive = false;
+        let lolitaTimerInterval = null;
+
+        function startLolitaExpressGame() {
+            playSound('click');
+            const realGuests = ITEMS_DB.filter(i => !i.isCoin && !i.isEmpty && !i.isLolita);
+            const collectedCount = realGuests.filter(i => (gameState.inventory[i.id] || 0) > 0).length;
+            const t = TRANSLATIONS[currentLang];
+
+            if (!gameState.lolitaGameUnlocked) {
+                if (collectedCount < 5) { alert(currentLang === 'en' ? 'Need at least 5 guests in collection!' : 'Нужно минимум 5 гостей в коллекции!'); return; }
+                if (gameState.balance < 15000) { alert(t.notEnough); return; }
+                if ((gameState.lolitaBalance || 0) < 10) { alert(t.notEnough); return; }
+                gameState.balance -= 15000;
+                gameState.lolitaBalance -= 10;
+                gameState.lolitaGameUnlocked = true;
+                saveGame(); updateUI();
+                playSound('win');
+            }
+
+            if (lolitaTimerInterval) clearInterval(lolitaTimerInterval);
+            if (lolitaGameAnimId) cancelAnimationFrame(lolitaGameAnimId);
+            lolitaGameActive = false;
+
+            document.getElementById('lolita-game-modal').classList.remove('hidden');
+            document.getElementById('lolita-game-overlay').classList.add('hidden');
+            
+            if (gameState.mobileOptimized) {
+                document.getElementById('mobile-controls').classList.remove('hidden');
+            } else {
+                document.getElementById('mobile-controls').classList.add('hidden');
+            }
+
+            runLolitaGame();
+        }
+
+        function runLolitaGame() {
+            const canvas = document.getElementById('lolita-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 800; canvas.height = 600;
+
+            let plane = { x: 400, y: 500, w: 40, h: 40, speed: 7 };
+            let keys = {};
+            window.gameKeys = keys;
+
+            let obstacles = [];
+            let coins = [];
+            let score = 0;
+            let lives = 3;
+            let timeLeft = 120;
+            let lastSpawn = 0;
+            let lastCoinTime = 0;
+            let frame = 0;
+            let gameOver = false;
+            let speedMultiplier = 1;
+            lolitaGameActive = true;
+
+            // Исправление бага с черным экраном
+            const useEpsteinBg = Math.random() < 0.01;
+            let isBgLoaded = false;
+            
+            const bgImage = new Image();
+            bgImage.src = 'images/lolita_bg.jpg';
+            bgImage.onload = () => { isBgLoaded = true; };
+            bgImage.onerror = () => { isBgLoaded = false; };
+
+            document.getElementById('lolita-game-lives').innerText = '❤️❤️❤️';
+            document.getElementById('lolita-game-timer').innerText = '02:00';
+
+            lolitaTimerInterval = setInterval(() => {
+                if (isPaused || gameOver) return;
+                timeLeft--;
+                const mins = String(Math.floor(timeLeft / 60)).padStart(2, '0');
+                const secs = String(timeLeft % 60).padStart(2, '0');
+                document.getElementById('lolita-game-timer').innerText = `${mins}:${secs}`;
+                
+                if (timeLeft > 0 && timeLeft % 20 === 0) {
+                    speedMultiplier += 0.15;
+                }
+
+                if (timeLeft <= 0) { endLolitaGame(true); }
+            }, 1000);
+
+            window.onkeydown = null;
+            window.onkeyup = null;
+            window.addEventListener('keydown', e => { keys[e.key] = true; });
+            window.addEventListener('keyup', e => { keys[e.key] = false; });
+
+            function endLolitaGame(won) {
+                gameOver = true; lolitaGameActive = false;
+                if (lolitaTimerInterval) clearInterval(lolitaTimerInterval);
+                if (lolitaGameAnimId) cancelAnimationFrame(lolitaGameAnimId);
+
+                const t = TRANSLATIONS[currentLang];
+                if (score > (gameState.lolitaGameHighScore || 0)) gameState.lolitaGameHighScore = score;
+                gameState.balance += score;
+                saveGame(); updateUI(); updateQuestProgress('lolita_game', 1);
+
+                const overlay = document.getElementById('lolita-game-overlay');
+                overlay.classList.remove('hidden');
+                document.getElementById('lolita-end-title').innerText = won ? t.lolitaGameWin : t.lolitaGameOver;
+                document.getElementById('lolita-end-score').innerText = `${t.lolitaGameScore} ${score.toLocaleString()} 🪙`;
+            }
+
+            function update() {
+                if (!lolitaGameActive || isPaused) return;
+
+                if (keys['ArrowLeft'] || keys['a'] || keys['A']) plane.x -= plane.speed;
+                if (keys['ArrowRight'] || keys['d'] || keys['D']) plane.x += plane.speed;
+                if (keys['ArrowUp'] || keys['w'] || keys['W']) plane.y -= plane.speed;
+                if (keys['ArrowDown'] || keys['s'] || keys['S']) plane.y += plane.speed;
+
+                plane.x = Math.max(plane.w/2, Math.min(canvas.width - plane.w/2, plane.x));
+                plane.y = Math.max(plane.h/2, Math.min(canvas.height - plane.h/2, plane.y));
+
+                if (frame - lastSpawn > 80) {
+                    const types = ['storm', 'balloon', 'fbi'];
+                    const type = types[Math.floor(Math.random() * types.length)];
+                    obstacles.push({ x: Math.random() * canvas.width, y: -30, r: 20 + Math.random() * 10, type, speed: 2 + Math.random() * 2 });
+                    lastSpawn = frame;
+                }
+
+                if (frame - lastCoinTime > 550) {
+                    let amount;
+                    if (Math.random() < 0.05) {
+                        amount = [1000, 2000, 5000][Math.floor(Math.random() * 3)];
+                    } else {
+                        amount = [10, 100, 200, 500][Math.floor(Math.random() * 4)];
+                    }
+                    coins.push({ x: Math.random() * canvas.width, y: -20, r: 15, amount, speed: 2.5 });
+                    lastCoinTime = frame;
+                }
+
+                obstacles.forEach(o => o.y += o.speed * speedMultiplier);
+                obstacles = obstacles.filter(o => {
+                    if (o.y > canvas.height + 50) return false;
+                    const dx = plane.x - o.x, dy = plane.y - o.y;
+                    if (Math.sqrt(dx*dx + dy*dy) < plane.w/2 + o.r) {
+                        lives--; playSound('trap');
+                        document.getElementById('lolita-game-lives').innerText = '❤️'.repeat(Math.max(0, lives)) + '🖤'.repeat(3 - Math.max(0, lives));
+                        if (lives <= 0) endLolitaGame(false);
+                        return false;
+                    }
+                    return true;
+                });
+
+                coins.forEach(c => c.y += c.speed * speedMultiplier);
+                coins = coins.filter(c => {
+                    if (c.y > canvas.height + 50) return false;
+                    const dx = plane.x - c.x, dy = plane.y - c.y;
+                    if (Math.sqrt(dx*dx + dy*dy) < plane.w/2 + c.r) {
+                        score += c.amount; playSound('cash');
+                        updateQuestProgress('clicks', 0);
+                        return false;
+                    }
+                    return true;
+                });
+
+                frame++;
+            }
+
+            function draw() {
+                if (!lolitaGameActive && gameOver) return;
+                
+                if (useEpsteinBg && isBgLoaded && bgImage.complete && bgImage.naturalWidth > 0) {
+                    ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
+                } else {
+                    const g = ctx.createLinearGradient(0, 0, 0, canvas.height);
+                    g.addColorStop(0, '#0c1445'); g.addColorStop(1, '#1e3a8a');
+                    ctx.fillStyle = g; ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+                    for (let i=0; i<40; i++) { const sx = (i*197)%canvas.width; const sy = (i*131)%canvas.height; ctx.fillRect(sx, sy, 2, 2); }
+                }
+
+                ctx.save(); ctx.translate(plane.x, plane.y);
+                ctx.fillStyle = '#38bdf8'; ctx.shadowColor = '#38bdf8'; ctx.shadowBlur = 15;
+                
+                ctx.beginPath();
+                ctx.moveTo(0, -20);
+                ctx.lineTo(6, -5);
+                ctx.lineTo(24, 5);
+                ctx.lineTo(24, 10);
+                ctx.lineTo(6, 10);
+                ctx.lineTo(6, 15);
+                ctx.lineTo(14, 18);
+                ctx.lineTo(0, 15);
+                ctx.lineTo(-14, 18);
+                ctx.lineTo(-6, 15);
+                ctx.lineTo(-6, 10);
+                ctx.lineTo(-24, 10);
+                ctx.lineTo(-24, 5);
+                ctx.lineTo(-6, -5);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = '#0ea5e9';
+                ctx.beginPath();
+                ctx.ellipse(0, -8, 3, 6, 0, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.restore();
+
+                obstacles.forEach(o => {
+                    ctx.save(); ctx.translate(o.x, o.y);
+                    if (o.type === 'storm') { ctx.fillStyle = '#64748b'; ctx.beginPath(); ctx.arc(0,0,o.r,0,Math.PI*2); ctx.fill(); ctx.fillStyle = '#94a3b8'; ctx.font = '20px sans-serif'; ctx.fillText('⛈️', -10, 7); }
+                    else if (o.type === 'balloon') { ctx.fillStyle = '#ef4444'; ctx.beginPath(); ctx.arc(0,0,o.r,0,Math.PI*2); ctx.fill(); ctx.fillStyle = '#fff'; ctx.font = '18px sans-serif'; ctx.fillText('🎈', -9, 6); }
+                    else { ctx.fillStyle = '#1e293b'; ctx.beginPath(); ctx.arc(0,0,o.r,0,Math.PI*2); ctx.fill(); ctx.fillStyle = '#fbbf24'; ctx.font = '18px sans-serif'; ctx.fillText('🕵️', -9, 6); }
+                    ctx.restore();
+                });
+
+                coins.forEach(c => {
+                    ctx.save(); ctx.translate(c.x, c.y);
+                    ctx.fillStyle = '#fbbf24'; ctx.beginPath(); ctx.arc(0,0,c.r,0,Math.PI*2); ctx.fill();
+                    ctx.fillStyle = '#92400e'; ctx.font = '12px sans-serif'; ctx.fillText(c.amount, -10, 4);
+                    ctx.restore();
+                });
+
+                ctx.fillStyle = '#fff'; ctx.font = 'bold 16px sans-serif';
+                ctx.fillText(`🪙 ${score}`, 20, 30);
+            }
+
+            function loop() {
+                if (gameOver) return;
+                if (!isPaused) { update(); draw(); }
+                if (!gameOver) lolitaGameAnimId = requestAnimationFrame(loop);
+            }
+            loop();
+        }
+
+        function closeLolitaGameModal() {
+            lolitaGameActive = false;
+            if (lolitaTimerInterval) clearInterval(lolitaTimerInterval);
+            if (lolitaGameAnimId) cancelAnimationFrame(lolitaGameAnimId);
+            document.getElementById('lolita-game-modal').classList.add('hidden');
+            document.getElementById('mobile-controls').classList.add('hidden');
+        }
+
+        function redeemPromo() {
+            const input = document.getElementById('promo-input');
+            const code = input.value.trim();
+            playSound('click');
+            
+            if (code === PROMO_1 && !gameState.promoUsed) {
+                gameState.balance += 1000000;
+                gameState.lolitaBalance += 1000;
+                gameState.promoUsed = true;
+                playSound('legendary');
+                confetti({ particleCount: 300, spread: 120, origin: { y: 0.6 } });
+                saveGame(); updateUI();
+                alert(currentLang === 'en' ? 'Promo activated! +1,000,000 🪙 and +1,000 ✈️' : 'Промокод активирован! +1,000,000 🪙 и +1,000 ✈️');
+            } else if (code === PROMO_2 && !gameState.promo2Used) {
+                gameState.promo2Used = true;
+                
+                const r = Math.random();
+                let targetRarity = 'epic';
+                if (r > 0.9) targetRarity = 'legendary';
+                else if (r > 0.6) targetRarity = 'mythic';
+                
+                const pool = ITEMS_DB.filter(i => i.rarity === targetRarity);
+                const randomChar = pool[Math.floor(Math.random() * pool.length)];
+                
+                gameState.inventory[randomChar.id] = (gameState.inventory[randomChar.id] || 0) + 1;
+                
+                playSound('legendary');
+                confetti({ particleCount: 300, spread: 120, origin: { y: 0.6 } });
+                saveGame(); updateUI();
+                alert(currentLang === 'en' ? `Promo activated! You got a random guest:\n${randomChar.enName}` : `Промокод активирован! Вам выпал случайный гость:\n${randomChar.ruName}`);
+            } else if (code === PROMO_3 && !gameState.promo3Used) {
+                gameState.promo3Used = true;
+                
+                const r = Math.random();
+                let targetRarity = 'epic';
+                if (r > 0.9) targetRarity = 'legendary';
+                else if (r > 0.6) targetRarity = 'mythic';
+                
+                const pool = ITEMS_DB.filter(i => i.rarity === targetRarity);
+                const randomChar = pool[Math.floor(Math.random() * pool.length)];
+                
+                gameState.inventory[randomChar.id] = (gameState.inventory[randomChar.id] || 0) + 1;
+                
+                playSound('legendary');
+                confetti({ particleCount: 300, spread: 120, origin: { y: 0.6 } });
+                saveGame(); updateUI();
+                alert(currentLang === 'en' ? `Promo activated! You got a random guest:\n${randomChar.enName}` : `Промокод активирован! Вам выпал случайный гость:\n${randomChar.ruName}`);
+            } else {
+                alert(TRANSLATIONS[currentLang].promoWrong);
+            }
+            input.value = '';
+        }
 
         // Инициализация при загрузке
         window.onload = function() { loadGame(); };
