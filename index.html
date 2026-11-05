@@ -72,6 +72,22 @@
             background-size: cover; background-position: center; background-attachment: fixed; background-repeat: no-repeat;
         }
 
+        body.theme-video-bg {
+            background: #000 !important;
+        }
+
+        #video-bg-element {
+            display: none;
+        }
+
+        body.theme-video-bg #video-bg-element {
+            display: block;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
         .font-pixel { font-family: 'Press Start 2P', cursive; }
 
         ::-webkit-scrollbar { width: 8px; }
@@ -132,9 +148,46 @@
                 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cg fill='%23fde047'%3E%3Cpath d='M60 10 L63 52 L105 60 L63 68 L60 110 L57 68 L15 60 L57 52 Z' opacity='0.4'/%3E%3C/g%3E%3C/svg%3E") repeat;
             background-size: cover, 60px 60px;
         }
+
+        /* Стили для мини-игры Пресса */
+        .reporter-target {
+            position: absolute;
+            font-size: 40px;
+            cursor: crosshair;
+            user-select: none;
+            transition: transform 0.1s, opacity 0.2s, filter 0.1s;
+            z-index: 10;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+        }
+        .reporter-target:active { transform: scale(0.8); }
+        .reporter-target.vip { 
+            cursor: not-allowed; 
+            filter: drop-shadow(0 0 12px #facc15) drop-shadow(0 0 20px #facc15) !important; 
+        }
+        .reporter-target.vip:active { transform: none; }
+        .reporter-target img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #facc15;
+            background-color: #000;
+        }
+        .fake-move { animation: fakeMove 0.3s ease; }
+        @keyframes fakeMove { 0% { transform: translateY(0); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0); } }
     </style>
 </head>
 <body class="text-white flex flex-col justify-between min-h-screen relative">
+
+    <!-- Видео-фон -->
+    <video id="video-bg-element" autoplay muted loop playsinline>
+        <source src="images/video_bg.mp4" type="video/mp4">
+    </video>
 
     <div id="jumpscare-overlay" class="fixed inset-0 z-[999] bg-black hidden items-center justify-center">
         <img src="images/jumpscare.jpg" class="w-full h-full object-contain animate-pulse" onerror="this.src='https://via.placeholder.com/800x600?text=Jumpscare+Image+Missing'">
@@ -385,13 +438,23 @@
                     <div id="court-game-unlock-status" class="text-xs font-bold text-amber-400 bg-amber-500/10 border border-amber-500/20 p-2 rounded-xl mb-4 w-full">🔒 Требуется: 10,000 🪙 и 1 ✈️ Лолита Э.</div>
                     <button id="btn-open-court-game" onclick="openCourtModal()" class="w-full py-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 rounded-xl font-black text-xs uppercase tracking-wider btn-bounce shadow-md text-white">Открыть казино 🏛️</button>
                 </div>
-                <div class="card-bg-pattern border-2 border-sky-400/60 rounded-2xl p-5 flex flex-col items-center justify-between text-center relative overflow-hidden shadow-xl md:col-span-2">
+                
+                <div class="card-bg-pattern border-2 border-sky-400/60 rounded-2xl p-5 flex flex-col items-center justify-between text-center relative overflow-hidden shadow-xl">
                     <div class="bg-sky-500/20 text-sky-300 text-[10px] font-black px-3 py-1 rounded-full uppercase border border-sky-400/30">Аркада ✈️</div>
                     <div class="text-6xl my-3">🛩️🌩️</div>
                     <h3 id="lbl-game3-title" class="text-lg font-black mb-1 text-sky-400">Лолита Экспресс</h3>
                     <p id="lbl-game3-desc" class="text-xs text-slate-300 mb-4">Управляй джетом, уворачивайся от грозовых туч, метеозондов и репортеров ФБР! Собирай монеты. 2 минуты, 3 жизни.</p>
                     <div id="lolita-game-unlock-status" class="text-xs font-bold text-amber-400 bg-amber-500/10 border border-amber-500/20 p-2 rounded-xl mb-4 w-full">🔒 Нужно: 5 гостей в коллекции, 15,000 🪙 и 10 ✈️</div>
                     <button id="btn-start-lolita-game" onclick="startLolitaExpressGame()" class="w-full py-3 bg-gradient-to-r from-sky-500 to-cyan-600 hover:from-sky-400 hover:to-cyan-500 rounded-xl font-black text-xs uppercase tracking-wider btn-bounce shadow-md text-slate-950">Разблокировать (15,000 🪙 + 10 ✈️)</button>
+                </div>
+                
+                <div class="card-bg-pattern border-2 border-orange-500/60 rounded-2xl p-5 flex flex-col items-center justify-between text-center relative overflow-hidden shadow-xl">
+                    <div class="bg-orange-500/20 text-orange-300 text-[10px] font-black px-3 py-1 rounded-full uppercase border border-orange-400/30">Стелс 🕵️‍♂️</div>
+                    <div class="text-6xl my-3">🌴📸</div>
+                    <h3 id="lbl-game4-title" class="text-lg font-black mb-1 text-orange-400">Утренний обход прессы</h3>
+                    <p id="lbl-game4-desc" class="text-xs text-slate-300 mb-4">Папарацци пытаются сфотографировать особняк! Шлепай репортеров, но случайно не тронь VIP-гостей. 60 секунд, 3 жизни.</p>
+                    <div id="press-game-unlock-status" class="text-xs font-bold text-amber-400 bg-amber-500/10 border border-amber-500/20 p-2 rounded-xl mb-4 w-full">🔒 Нужно: 10 гостей, 25,000 🪙 и 5 ✈️</div>
+                    <button id="btn-start-press-game" onclick="startPressGame()" class="w-full py-3 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-400 hover:to-red-500 rounded-xl font-black text-xs uppercase tracking-wider btn-bounce shadow-md text-slate-950">Разблокировать (25k 🪙 + 5✈️)</button>
                 </div>
             </div>
         </section>
@@ -402,8 +465,9 @@
                 <p id="lbl-shop-subtitle" class="text-slate-400 text-xs sm:text-sm mt-1">Покупай кастомные темы оформления и обменивай монеты на Лолита Э.!</p>
             </div>
 
+            <!-- Игровые фото-фоны -->
             <div class="space-y-3">
-                <h3 id="lbl-cat-themes" class="text-base font-black text-yellow-400 uppercase tracking-wider flex items-center gap-2"><span>🎨 Игровые Фоны и Стили</span></h3>
+                <h3 class="text-base font-black text-yellow-400 uppercase tracking-wider flex items-center gap-2"><span>🎨 Игровые фото-фоны</span></h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div class="bg-slate-900 border-2 border-slate-700 rounded-2xl p-4 flex flex-col justify-between items-center text-center">
                         <div class="text-4xl mb-2">🌌</div>
@@ -453,22 +517,58 @@
                         <p id="theme-desc-temple" class="text-[10px] text-slate-400 my-2">Сине-белый храм-павильон с золотым куполом. Очень атмосферно.</p>
                         <button onclick="buyTheme('temple', 25000, 5)" id="theme-btn-temple" class="w-full py-2 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 text-white font-black text-xs uppercase rounded-xl btn-bounce shadow-lg">Купить (25,000 🪙 + 5 ✈️)</button>
                     </div>
-                    
+                </div>
+            </div>
+
+            <!-- Видео-фоны -->
+            <div class="space-y-3 pt-4 border-t border-slate-800">
+                <h3 class="text-base font-black text-pink-400 uppercase tracking-wider flex items-center gap-2"><span>🎬 Видео-фоны</span></h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="bg-slate-900 border-2 border-pink-500/70 rounded-2xl p-4 flex flex-col justify-between items-center text-center glow-legendary">
+                        <div class="text-4xl mb-2">🎥</div>
+                        <h4 id="theme-name-video_bg" class="font-bold text-sm text-pink-300">Видео-фон</h4>
+                        <p id="theme-desc-video_bg" class="text-[10px] text-slate-400 my-2">Динамичный видео-фон. <span class="text-red-400 font-bold">Не рекомендуется для мобильных устройств!</span></p>
+                        <button onclick="buyVideoBg()" id="theme-btn-video_bg" class="w-full py-2 bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-400 hover:to-rose-500 text-white font-black text-xs uppercase rounded-xl btn-bounce shadow-lg">Купить (50,000 🪙 + 50 ✈️)</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Фоны для фарма -->
+            <div class="space-y-3 pt-4 border-t border-slate-800">
+                <h3 class="text-base font-black text-blue-400 uppercase tracking-wider flex items-center gap-2"><span>⛏️ Фоны для Фарма</span></h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div class="bg-slate-900 border-2 border-blue-500 rounded-2xl p-4 flex flex-col justify-between items-center text-center">
                         <div class="text-4xl mb-2">📸</div>
                         <h4 class="font-bold text-sm text-blue-300">Фон для Фарма (Стандарт)</h4>
                         <p class="text-[10px] text-slate-400 my-2">Смените вид острова по которому тапать.</p>
                         <button onclick="buyClickerBg(25000, 'standard')" id="theme-btn-clicker-standard" class="w-full py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-xs uppercase rounded-xl btn-bounce">Купить (25,000 🪙)</button>
                     </div>
-
                     <div class="bg-slate-900 border-2 border-yellow-400 rounded-2xl p-4 flex flex-col justify-between items-center text-center glow-legendary">
                         <div class="text-4xl mb-2">🌅</div>
                         <h4 class="font-bold text-sm text-yellow-300">Фон для Фарма (Золотой)</h4>
                         <p class="text-[10px] text-slate-400 my-2">Роскошный золотой остров для фарма.</p>
                         <button onclick="buyClickerBg(50000, 'golden')" id="theme-btn-clicker-golden" class="w-full py-2 bg-gradient-to-r from-yellow-500 to-amber-600 text-slate-950 font-bold text-xs uppercase rounded-xl btn-bounce">Купить (50,000 🪙)</button>
                     </div>
+                </div>
+            </div>
 
-                    <!-- ТРЕК 2 -->
+            <!-- Дополнения к мини-играм -->
+            <div class="space-y-3 pt-4 border-t border-slate-800">
+                <h3 class="text-base font-black text-cyan-400 uppercase tracking-wider flex items-center gap-2"><span>✈️ Дополнения к мини-играм</span></h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-slate-900 border-2 border-yellow-500 rounded-2xl p-4 flex flex-col justify-between items-center text-center glow-legendary">
+                        <div class="text-4xl mb-2">🛩️</div>
+                        <h4 class="font-bold text-sm text-yellow-300">Золотой Самолет (Лолита)</h4>
+                        <p class="text-[10px] text-slate-400 my-2">Эксклюзивный золотой скин для самолета в игре «Лолита Экспресс».</p>
+                        <button onclick="buyGoldPlane()" id="btn-buy-gold-plane" class="w-full py-2 bg-gradient-to-r from-yellow-400 to-amber-500 text-slate-950 font-black text-xs uppercase rounded-xl btn-bounce">Купить (10 ✈️)</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Треки -->
+            <div class="space-y-3 pt-4 border-t border-slate-800">
+                <h3 class="text-base font-black text-emerald-400 uppercase tracking-wider flex items-center gap-2"><span>🎵 Треки</span></h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div class="bg-slate-900 border-2 border-cyan-400 rounded-2xl p-4 flex flex-col justify-between items-center text-center glow-legendary">
                         <div class="text-4xl mb-2">🎵</div>
                         <h4 class="font-bold text-sm text-cyan-300">Трек 2 (Фон)</h4>
@@ -478,6 +578,7 @@
                 </div>
             </div>
 
+            <!-- Обмен Валюты -->
             <div class="space-y-3 pt-4 border-t border-slate-800">
                 <h3 id="lbl-cat-exchange" class="text-base font-black text-sky-400 uppercase tracking-wider flex items-center gap-2"><span>✈️ Обмен Валюты (Лолита Экспресс)</span></h3>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -502,11 +603,12 @@
                 </div>
             </div>
 
+            <!-- Обмен Джеффриков -->
             <div class="space-y-3 pt-4 border-t border-slate-800">
-                <h3 id="lbl-cat-exchange-reverse" class="text-base font-black text-yellow-400 uppercase tracking-wider flex items-center gap-2"><span>🪙 Обмен Джеффриков (За Лолиты)</span></h3>
+                <h3 id="lbl-cat-exchange-reverse" class="text-base font-black text-yellow-400 uppercase tracking-wider flex items-center gap-2"><span>💵 Обмен Джеффриков (За Лолиты)</span></h3>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div class="bg-slate-900 border border-yellow-500/40 rounded-2xl p-4 flex flex-col items-center text-center justify-between">
-                        <div class="text-5xl my-2">🪙</div>
+                        <div class="text-5xl my-2">💵</div>
                         <h4 class="font-bold text-sm text-yellow-300">10 000 🪙</h4>
                         <p class="text-[10px] text-slate-400 my-2">За 10 ✈️ Лолит.</p>
                         <button onclick="buyJeffreys(10000, 10)" class="w-full py-2.5 bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-400 hover:to-amber-500 text-slate-950 font-black text-xs uppercase rounded-xl btn-bounce">10 ✈️</button>
@@ -526,6 +628,7 @@
                 </div>
             </div>
 
+            <!-- Промокод -->
             <div class="space-y-3 pt-4 border-t border-slate-800">
                 <h3 id="lbl-promo-title" class="text-base font-black text-yellow-400 uppercase tracking-wider flex items-center gap-2"><span>🎁 Промокод</span></h3>
                 <div class="bg-slate-900 border border-yellow-500/40 rounded-2xl p-4 flex flex-col sm:flex-row items-center gap-3">
@@ -541,34 +644,43 @@
                 <p id="lbl-archives-subtitle" class="text-slate-400 text-xs sm:text-sm mt-1">Изучай карту острова и собирай секретные материалы.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-                <div class="card-bg-pattern border-2 border-emerald-500/50 rounded-2xl p-5 flex flex-col items-center justify-between text-center relative overflow-hidden shadow-xl">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 max-w-6xl mx-auto items-stretch">
+                <div class="card-bg-pattern border-2 border-emerald-500/50 rounded-2xl p-5 flex flex-col items-center justify-between text-center relative overflow-hidden shadow-xl h-full">
                     <div class="bg-emerald-500/20 text-emerald-300 text-[10px] font-black px-3 py-1 rounded-full uppercase border border-emerald-500/30">Раздел 1</div>
                     <div class="text-6xl my-3">🗺️</div>
                     <h3 class="text-lg font-black mb-1 text-emerald-400">Карта Острова</h3>
-                    <p class="text-xs text-slate-300 mb-4">Исследуй Литл-Сент-Джеймс, собирай части острова и получай награды.</p>
-                    <button onclick="openIslandMapModal()" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 rounded-xl font-black text-xs uppercase tracking-wider btn-bounce shadow-md text-slate-950">Открыть Карту</button>
+                    <p class="text-xs text-slate-300 mb-4 flex-grow">Исследуй Литл-Сент-Джеймс, собирай части острова и получай награды.</p>
+                    <button onclick="openIslandMapModal()" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 rounded-xl font-black text-xs uppercase tracking-wider btn-bounce shadow-md text-slate-950 mt-auto">Открыть Карту</button>
                 </div>
-                <div class="card-bg-pattern border-2 border-purple-500/60 rounded-2xl p-5 flex flex-col items-center justify-between text-center relative overflow-hidden shadow-xl">
+                <div class="card-bg-pattern border-2 border-purple-500/60 rounded-2xl p-5 flex flex-col items-center justify-between text-center relative overflow-hidden shadow-xl h-full">
                     <div class="bg-purple-500/20 text-purple-300 text-[10px] font-black px-3 py-1 rounded-full uppercase border border-purple-500/30">Раздел 2</div>
                     <div class="text-6xl my-3">📸</div>
                     <h3 class="text-lg font-black mb-1 text-purple-400">Тайные Фото 1</h3>
-                    <p class="text-xs text-slate-300 mb-4">Собери 10 секретных снимков с острова. Выпадают из Архива Острова и Частного Боинга.</p>
-                    <button onclick="openSecretPhotosModal()" class="w-full py-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 rounded-xl font-black text-xs uppercase tracking-wider btn-bounce shadow-md text-white">Открыть Фотоархив 1</button>
+                    <p class="text-xs text-slate-300 mb-4 flex-grow">Собери 10 секретных снимков с острова. Выпадают из Архива Острова и Частного Боинга.</p>
+                    <button onclick="openSecretPhotosModal()" class="w-full py-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 rounded-xl font-black text-xs uppercase tracking-wider btn-bounce shadow-md text-white mt-auto">Открыть Фотоархив 1</button>
                 </div>
-                <div id="secret-photos-2-card" class="card-bg-pattern border-2 border-indigo-500/60 rounded-2xl p-5 flex flex-col items-center justify-between text-center relative overflow-hidden shadow-xl opacity-50">
+                <div id="secret-photos-2-card" class="card-bg-pattern border-2 border-indigo-500/60 rounded-2xl p-5 flex flex-col items-center justify-between text-center relative overflow-hidden shadow-xl opacity-50 h-full">
                     <div class="bg-indigo-500/20 text-indigo-300 text-[10px] font-black px-3 py-1 rounded-full uppercase border border-indigo-500/30">Раздел 3</div>
                     <div class="text-6xl my-3">📷</div>
                     <h3 class="text-lg font-black mb-1 text-indigo-400">Тайные Фото 2</h3>
-                    <p class="text-xs text-slate-300 mb-4">Собери 10 секретных снимков 2-й части. Требуется собрать все фото из 1-го раздела.</p>
-                    <button onclick="openSecretPhotos2Modal()" id="btn-open-secret-photos-2" class="w-full py-3 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 rounded-xl font-black text-xs uppercase tracking-wider btn-bounce shadow-md text-white">Открыть Фотоархив 2</button>
+                    <p class="text-xs text-slate-300 mb-4 flex-grow">Собери 10 секретных снимков 2-й части. Требуется собрать все фото из 1-го раздела.</p>
+                    <button onclick="openSecretPhotos2Modal()" id="btn-open-secret-photos-2" class="w-full py-3 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 rounded-xl font-black text-xs uppercase tracking-wider btn-bounce shadow-md text-white mt-auto">Открыть Фотоархив 2</button>
                 </div>
-                <div class="card-bg-pattern border-2 border-rose-500/60 rounded-2xl p-5 flex flex-col items-center justify-between text-center relative overflow-hidden shadow-xl">
-                    <div class="bg-rose-500/20 text-rose-300 text-[10px] font-black px-3 py-1 rounded-full uppercase border border-rose-500/30">Раздел 4</div>
+                
+                <div id="secret-photos-3-card" class="card-bg-pattern border-2 border-pink-500/60 rounded-2xl p-5 flex flex-col items-center justify-between text-center relative overflow-hidden shadow-xl opacity-50 h-full">
+                    <div class="bg-pink-500/20 text-pink-300 text-[10px] font-black px-3 py-1 rounded-full uppercase border border-pink-500/30">Раздел 4</div>
+                    <div class="text-6xl my-3">🤫</div>
+                    <h3 class="text-lg font-black mb-1 text-pink-400">Тайные Фото 3</h3>
+                    <p class="text-xs text-slate-300 mb-4 flex-grow">Собери 10 секретных снимков 3-й части. Требуется собрать все фото из 1-го и 2-го разделов.</p>
+                    <button onclick="openSecretPhotos3Modal()" id="btn-open-secret-photos-3" class="w-full py-3 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 rounded-xl font-black text-xs uppercase tracking-wider btn-bounce shadow-md text-white mt-auto">Открыть Фотоархив 3</button>
+                </div>
+
+                <div class="card-bg-pattern border-2 border-rose-500/60 rounded-2xl p-5 flex flex-col items-center justify-between text-center relative overflow-hidden shadow-xl h-full">
+                    <div class="bg-rose-500/20 text-rose-300 text-[10px] font-black px-3 py-1 rounded-full uppercase border border-rose-500/30">Раздел 5</div>
                     <div class="text-6xl my-3">🎥</div>
                     <h3 class="text-lg font-black mb-1 text-rose-400">Тайные Видео</h3>
-                    <p class="text-xs text-slate-300 mb-4">Собери 10 секретных видеозаписей. Выпадают из Архива Острова и Частного Боинга.</p>
-                    <button onclick="openSecretVideosModal()" class="w-full py-3 bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 rounded-xl font-black text-xs uppercase tracking-wider btn-bounce shadow-md text-white">Открыть Видеоархив</button>
+                    <p class="text-xs text-slate-300 mb-4 flex-grow">Собери 10 секретных видеозаписей. Выпадают из Архива Острова и Частного Боинга.</p>
+                    <button onclick="openSecretVideosModal()" class="w-full py-3 bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 rounded-xl font-black text-xs uppercase tracking-wider btn-bounce shadow-md text-white mt-auto">Открыть Видеоархив</button>
                 </div>
             </div>
         </section>
@@ -601,7 +713,6 @@
             </button>
         </div>
     </nav>
-
     <!-- Modals -->
     <div id="island-map-modal" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex items-center justify-center p-4 hidden">
         <div class="bg-slate-900 border-4 border-emerald-500 w-full max-w-lg rounded-3xl p-6 flex flex-col items-center relative shadow-2xl">
@@ -665,6 +776,21 @@
             <div class="w-full text-center bg-slate-950 border border-indigo-500/40 rounded-2xl p-4 mt-4">
                 <p class="text-sm font-bold text-slate-300">Прогресс: <span id="secret-photos-2-count">0 / 10</span></p>
                 <p class="text-xs text-slate-400 mt-1">Награда за все 10 фото: Разблокировка Трека 1 (управление в ⚙️ Настройках).</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="secret-photos-3-modal" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border-4 border-pink-500 w-full max-w-5xl rounded-3xl p-6 flex flex-col items-center relative shadow-2xl">
+            <button onclick="closeSecretPhotos3Modal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-2xl font-bold p-2 z-10">✕</button>
+            <h3 class="text-2xl font-black text-pink-400 mb-2 uppercase">🤫 Тайные Фотографии 3</h3>
+            <p class="text-xs text-slate-400 mb-6 text-center">Собери 10 секретных снимков 3-й части. Выпадают из Архива Острова (0.51%) и Частного Боинга (1%).</p>
+            
+            <div id="secret-photos-3-grid" class="w-full grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-4 max-h-[60vh] overflow-y-auto p-2"></div>
+            
+            <div class="w-full text-center bg-slate-950 border border-pink-500/40 rounded-2xl p-4 mt-4">
+                <p class="text-sm font-bold text-slate-300">Прогресс: <span id="secret-photos-3-count">0 / 10</span></p>
+                <p class="text-xs text-slate-400 mt-1">Награда за все 10 фото: 50,000 🪙 + 20 ✈️ + 2 случайных гостя!</p>
             </div>
         </div>
     </div>
@@ -856,6 +982,30 @@
         </div>
     </div>
 
+    <div id="press-game-modal" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex items-center justify-center p-3 hidden">
+        <div class="bg-slate-900 border-4 border-orange-500 w-full max-w-2xl rounded-3xl p-4 flex flex-col items-center relative shadow-2xl my-auto">
+            <button onclick="closePressGameModal()" class="absolute top-3 right-3 text-slate-400 hover:text-white text-2xl font-bold p-2 z-50">✕</button>
+            <div class="flex items-center justify-between w-full border-b border-slate-800 pb-2 mb-2">
+                <div>
+                    <h3 id="lbl-press-game-title" class="text-lg font-black text-orange-400">📸 Утренний обход прессы</h3>
+                    <p class="text-[10px] text-slate-400">Шлепай репортеров, не трогай гостей!</p>
+                </div>
+                <div class="text-right">
+                    <div id="press-game-timer" class="text-xl font-pixel text-yellow-400">01:00</div>
+                    <div id="press-game-lives" class="text-sm font-bold text-red-400">❤️❤️❤️</div>
+                </div>
+            </div>
+            <div id="press-game-area" class="relative w-full bg-slate-950 rounded-2xl border-2 border-slate-700 overflow-hidden" style="aspect-ratio: 16/9; background-image: url('images/press_bg.jpg'); background-size: cover; background-position: center;">
+                <!-- Спавнятся будут абсолютные дивы тут -->
+                <div id="press-game-overlay" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/80 z-30 hidden">
+                    <h4 id="press-end-title" class="text-2xl font-black text-orange-400 mb-2">Обход завершен</h4>
+                    <p id="press-end-score" class="text-sm text-yellow-400 font-bold mb-4">Очков: 0</p>
+                    <button onclick="closePressGameModal()" id="press-end-claim" class="py-2.5 px-6 bg-orange-500 hover:bg-orange-400 text-slate-950 font-black text-xs uppercase rounded-xl btn-bounce">Забрать</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="fast-results-modal" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex items-center justify-center p-4 hidden">
         <div class="bg-slate-900 border-4 border-yellow-500 w-full max-w-md rounded-3xl p-6 flex flex-col items-center text-center relative shadow-2xl">
             <h3 id="lbl-fast-res-title" class="text-xl font-black text-yellow-400 mb-2 uppercase">⚡ Итоги быстрого открытия</h3>
@@ -928,10 +1078,10 @@
     <audio id="michael-sound" src="audio/michael.mp3" preload="auto"></audio>
     <audio id="bannon-sound" src="audio/bannon.mp3" preload="auto"></audio>
     <audio id="statue-sound" src="audio/statue_sound.mp3" preload="auto"></audio>
+    <audio id="press-angry-sound" src="audio/statue_sound.mp3" preload="auto"></audio>
     
     <audio id="track1-audio" src="audio/track1.mp3" loop></audio>
     <audio id="track2-audio" src="audio/track2.mp3" loop></audio>
-
     <script>
         // === СЕКРЕТНЫЕ ПРОМОКОДЫ (Base64) ===
         const PROMO_1 = atob('SmVFcHN0ZWluX0lzbGFuZC41My0xOQ=='); // JeEpstein_Island.53-19
@@ -1066,9 +1216,10 @@
                 game1Title: 'Найти Гостей', game1Desc: 'Освободи остров от прячущихся випов! Обыскивай кусты, посадки и заборы за 60 секунд.',
                 game2Title: 'Судебный процесс', game2Desc: 'Сделай ставку от 1,000 до 1,000,000 🪙 и крути Колесо Фортуны!',
                 game3Title: 'Лолита Экспресс', game3Desc: 'Управляй джетом, уворачивайся от грозовых туч, метеозондов и репортеров ФБР! Собирай монеты. 2 минуты, 3 жизни.',
+                game4Title: 'Утренний обход прессы', game4Desc: 'Папарацци пытаются сфотографировать особняк! Шлепай репортеров, но случайно не тронь VIP-гостей. 60 секунд, 3 жизни.',
                 courtReq: '🔒 Требуется: 10,000 🪙 и 1 ✈️ Лолита Э.', courtUnlocked: '✅ Казино разблокировано! Нажмите «Играть».', play: 'Играть 🎮',
                 shopTitle: '🛒 Магазин Острова', shopSub: 'Покупай кастомные темы оформления и обменивай монеты на Лолита Э.!',
-                catThemes: '🎨 Игровые Фоны и Стили', catExchange: '✈️ Обмен Валюты (Лолита Экспресс)', catExchangeReverse: '🪙 Обмен Джеффриков (За Лолиты)',
+                catThemes: '🎨 Игровые фото-фоны', catExchange: '✈️ Обмен Валюты (Лолита Экспресс)', catExchangeReverse: '💵 Обмен Джеффриков (За Лолиты)',
                 themeDefaultName: 'Стандартный Тёмный', themeDefaultDesc: 'Классический стиль острова.',
                 themeSimpleName: 'Простой фон', themeSimpleDesc: 'Минималистичный сине-серый градиент.',
                 themeCoolName: 'Прикольный фон', themeCoolDesc: 'Яркий стильный карибский градиент.',
@@ -1077,12 +1228,14 @@
                 themeSupergoldName: 'Супер-Золотой Остров', themeSupergoldDesc: 'Премиальный многослойный золотой сумеречный фон!',
                 themeTwotigersName: 'Два Тигра', themeTwotigersDesc: 'Легендарное фото: Джеффри и Дональд вместе. Максимальный уровень дерзости.',
                 themeTempleName: 'Храм Эпштейна', themeTempleDesc: 'Сине-белый храм-павильон с золотым куполом. Очень атмосферно.',
+                themeVideoName: 'Видео-фон', themeVideoDesc: 'Динамичный видео-фон. Не рекомендуется для мобильных устройств!',
                 themeClickerName: 'Фон для Фарма', themeClickerDesc: 'Смените вид острова по которому тапать.',
                 navCases: 'Кейсы', navClicker: 'Фарм', navCollection: 'Гости', navInvestigations: 'Квесты', navMinigames: 'Игры', navShop: 'Магазин', navArchives: 'Архивы',
                 archivesTitle: '🗂️ Архивы Острова', archivesSub: 'Изучай карту острова и собирай секретные материалы.',
                 navIslandTitle: 'Карта Острова', navIslandDesc: 'Исследуй Литл-Сент-Джеймс, собирай части острова и получай награды.', navIslandBtn: 'Открыть Карту',
                 navPhotosTitle: 'Тайные Фото 1', navPhotosDesc: 'Собери 10 секретных снимков с острова. Выпадают из Архива Острова и Частного Боинга.', navPhotosBtn: 'Открыть Фотоархив 1',
                 navPhotos2Title: 'Тайные Фото 2', navPhotos2Desc: 'Собери 10 секретных снимков 2-й части. Требуется собрать все фото из 1-го раздела.', navPhotos2Btn: 'Открыть Фотоархив 2',
+                navPhotos3Title: 'Тайные Фото 3', navPhotos3Desc: 'Собери 10 секретных снимков 3-й части. Требуется собрать все фото из 1-го и 2-го разделов.', navPhotos3Btn: 'Открыть Фотоархив 3',
                 navVideosTitle: 'Тайные Видео', navVideosDesc: 'Собери 10 секретных видеозаписей. Выпадают из Архива Острова и Частного Боинга.', navVideosBtn: 'Открыть Видеоархив',
                 settingsTitle: '⚙️ Настройки', pauseBtn: '⏸️ Поставить на паузу', unpauseBtn: '▶️ Снять с паузы', pauseTitle: 'ИГРА НА ПАУЗЕ', pauseDesc: 'Авто-фарм приостановлен. Нажмите ниже, чтобы продолжить.',
                 langLabel: 'Язык / Language:', langBtn: '🇷🇺 Русский', resetLabel: 'Сброс Игры:', resetBtn: '🗑️ Сбросить', close: 'Закрыть',
@@ -1106,6 +1259,8 @@
                 secretPhotosProgress: 'Прогресс:', secretPhotosRewardDesc: 'Награда за все 10 фото: 35,000 🪙 + 10 ✈️ + Секретный промокод',
                 secretPhotos2Title: '📷 Тайные Фотографии 2', secretPhotos2Desc: 'Собери 10 секретных снимков 2-й части. Выпадают из Архива Острова и Частного Боинга.',
                 secretPhotos2Progress: 'Прогресс:', secretPhotos2RewardDesc: 'Награда за все 10 фото: Разблокировка Трека 1 (управление в ⚙️ Настройках).',
+                secretPhotos3Title: '🤫 Тайные Фотографии 3', secretPhotos3Desc: 'Собери 10 секретных снимков 3-й части. Выпадают из Архива Острова (0.51%) и Частного Боинга (1%).',
+                secretPhotos3Progress: 'Прогресс:', secretPhotos3RewardDesc: 'Награда за все 10 фото: 50,000 🪙 + 20 ✈️ + 2 случайных гостя!',
                 secretVideosTitle: '🎥 Тайные Видео', secretVideosDesc: 'Собери 10 секретных видеозаписей. Выпадают из Архива Острова и Частного Боинга.',
                 secretVideosProgress: 'Прогресс:', secretVideosRewardDesc: 'Награда за все 10 видео: Секретный промокод и Золотая статуэтка!',
                 track2BtnBuy: 'Купить (45,000 🪙 + 5 ✈️)', track2BtnOwned: 'Одет ✅', track2BtnEquip: 'Надеть', track2Name: 'Трек 2 (Фон)', track2Desc: 'Второй секретный трек для игры.'
@@ -1128,9 +1283,10 @@
                 game1Title: 'Find Guests', game1Desc: 'Clear the island of hiding VIPs! Search bushes and fences in 60 seconds.',
                 game2Title: 'Court Trial', game2Desc: 'Place a bet from 1,000 to 1,000,000 🪙 and spin the Wheel of Fortune!',
                 game3Title: 'Lolita Express', game3Desc: 'Pilot the jet, dodge storm clouds, weather balloons and FBI reporters! Collect coins. 2 minutes, 3 lives.',
+                game4Title: 'Morning Press Tour', game4Desc: 'Paparazzi are trying to photograph the mansion! Slap reporters, but don\'t touch VIPs. 60 seconds, 3 lives.',
                 courtReq: '🔒 Requires: 10,000 🪙 and 1 ✈️ Lolita E.', courtUnlocked: '✅ Casino unlocked! Click "Play".', play: 'Play 🎮',
                 shopTitle: '🛒 Island Shop', shopSub: 'Buy custom themes and exchange coins for Lolita E.!',
-                catThemes: '🎨 Background Themes', catExchange: '✈️ Currency Exchange (Lolita Express)', catExchangeReverse: '🪙 Jeffreys Exchange (For Lolitas)',
+                catThemes: '🎨 Game Photo Backgrounds', catExchange: '✈️ Currency Exchange (Lolita Express)', catExchangeReverse: '💵 Jeffreys Exchange (For Lolitas)',
                 themeDefaultName: 'Standard Dark', themeDefaultDesc: 'Classic island style.',
                 themeSimpleName: 'Simple Background', themeSimpleDesc: 'Minimalistic blue-gray gradient.',
                 themeCoolName: 'Cool Background', themeCoolDesc: 'Vibrant and stylish Caribbean gradient.',
@@ -1139,12 +1295,14 @@
                 themeSupergoldName: 'Super Gold Island', themeSupergoldDesc: 'Premium multi-layered golden twilight theme!',
                 themeTwotigersName: 'Two Tigers', themeTwotigersDesc: 'Legendary photo: Jeffrey and Donald together. Maximum level of audacity.',
                 themeTempleName: 'Epstein Temple', themeTempleDesc: 'Blue-white temple pavilion with a golden dome. Very atmospheric.',
+                themeVideoName: 'Video Background', themeVideoDesc: 'Dynamic video background. Not recommended for mobile devices!',
                 themeClickerName: 'Farm Background', themeClickerDesc: 'Change the island look for clicking.',
                 navCases: 'Cases', navClicker: 'Farm', navCollection: 'Guests', navInvestigations: 'Quests', navMinigames: 'Games', navShop: 'Shop', navArchives: 'Archives',
                 archivesTitle: '🗂️ Island Archives', archivesSub: 'Explore the island map and collect secret materials.',
                 navIslandTitle: 'Island Map', navIslandDesc: 'Explore Little St. James, collect island parts and get rewards.', navIslandBtn: 'Open Map',
                 navPhotosTitle: 'Secret Photos 1', navPhotosDesc: 'Collect 10 secret snapshots. Drops from Island Archives and Private Boeing.', navPhotosBtn: 'Open Photo Archive 1',
                 navPhotos2Title: 'Secret Photos 2', navPhotos2Desc: 'Collect 10 secret snapshots of the 2nd part. Requires completing the 1st section.', navPhotos2Btn: 'Open Photo Archive 2',
+                navPhotos3Title: 'Secret Photos 3', navPhotos3Desc: 'Collect 10 secret snapshots of the 3rd part. Requires completing the 1st and 2nd sections.', navPhotos3Btn: 'Open Photo Archive 3',
                 navVideosTitle: 'Secret Videos', navVideosDesc: 'Collect 10 secret videos. Drops from Island Archives and Private Boeing.', navVideosBtn: 'Open Video Archive',
                 settingsTitle: '⚙️ Settings', pauseBtn: '⏸️ Pause Game', unpauseBtn: '▶️ Unpause', pauseTitle: 'GAME PAUSED', pauseDesc: 'Auto-farming is paused. Click below to continue.',
                 langLabel: 'Language / Язык:', langBtn: '🇬🇧 English', resetLabel: 'Reset Game:', resetBtn: '🗑️ Reset', close: 'Close',
@@ -1168,6 +1326,8 @@
                 secretPhotosProgress: 'Progress:', secretPhotosRewardDesc: 'Reward for all 10 photos: 35,000 🪙 + 10 ✈️ + Secret Promo Code',
                 secretPhotos2Title: '📷 Secret Photos 2', secretPhotos2Desc: 'Collect 10 secret snapshots of the 2nd part. Drops from Island Archives and Private Boeing.',
                 secretPhotos2Progress: 'Progress:', secretPhotos2RewardDesc: 'Reward for all 10 photos: Unlock Track 1 (controls in ⚙️ Settings).',
+                secretPhotos3Title: '🤫 Secret Photos 3', secretPhotos3Desc: 'Collect 10 secret snapshots of the 3rd part. Drops from Island Archives (0.51%) and Private Boeing (1%).',
+                secretPhotos3Progress: 'Progress:', secretPhotos3RewardDesc: 'Reward for all 10 photos: 50,000 🪙 + 20 ✈️ + 2 random guests!',
                 secretVideosTitle: '🎥 Secret Videos', secretVideosDesc: 'Collect 10 secret videos. Drops from Island Archives and Private Boeing.',
                 secretVideosProgress: 'Progress:', secretVideosRewardDesc: 'Reward for all 10 videos: Secret Promo Code and Gold Statue!',
                 track2BtnBuy: 'Buy (45,000 🪙 + 5 ✈️)', track2BtnOwned: 'Equipped ✅', track2BtnEquip: 'Equip', track2Name: 'Track 2 (BGM)', track2Desc: 'Second secret track for the game.'
@@ -1220,6 +1380,21 @@
             { id: 'p2_9', ruName: 'Фото 2 #9', enName: 'Photo 2 #9', image: 'images/secret2_9.jpg', desc: 'Секретный снимок 2.' },
             { id: 'p2_10', ruName: 'Фото 2 #10', enName: 'Photo 2 #10', image: 'images/secret2_10.jpg', desc: 'Секретный снимок 2.' }
         ];
+
+        const SECRET_PHOTOS_3 = [
+            { id: 'p3_1', ruName: 'Фото 3 #1', enName: 'Photo 3 #1', image: 'images/secret3_1.jpg', desc: 'Секретный снимок 3.' },
+            { id: 'p3_2', ruName: 'Фото 3 #2', enName: 'Photo 3 #2', image: 'images/secret3_2.jpg', desc: 'Секретный снимок 3.' },
+            { id: 'p3_3', ruName: 'Фото 3 #3', enName: 'Photo 3 #3', image: 'images/secret3_3.jpg', desc: 'Секретный снимок 3.' },
+            { id: 'p3_4', ruName: 'Фото 3 #4', enName: 'Photo 3 #4', image: 'images/secret3_4.jpg', desc: 'Секретный снимок 3.' },
+            { id: 'p3_5', ruName: 'Фото 3 #5', enName: 'Photo 3 #5', image: 'images/secret3_5.jpg', desc: 'Секретный снимок 3.' },
+            { id: 'p3_6', ruName: 'Фото 3 #6', enName: 'Photo 3 #6', image: 'images/secret3_6.jpg', desc: 'Секретный снимок 3.' },
+            { id: 'p3_7', ruName: 'Фото 3 #7', enName: 'Photo 3 #7', image: 'images/secret3_7.jpg', desc: 'Секретный снимок 3.' },
+            { id: 'p3_8', ruName: 'Фото 3 #8', enName: 'Photo 3 #8', image: 'images/secret3_8.jpg', desc: 'Секретный снимок 3.' },
+            { id: 'p3_9', ruName: 'Фото 3 #9', enName: 'Photo 3 #9', image: 'images/secret3_9.jpg', desc: 'Секретный снимок 3.' },
+            { id: 'p3_10', ruName: 'Фото 3 #10', enName: 'Photo 3 #10', image: 'images/secret3_10.jpg', desc: 'Секретный снимок 3.' }
+        ];
+
+        const EASTER_EGGS = ['images/easter_photo_1.jpg', 'images/easter_photo_2.jpg', 'images/easter_photo_3.jpg'];
 
         const SECRET_VIDEOS = [
             { id: 'v1', ruName: 'Видео #1', enName: 'Video #1', video: 'videos/secret_video_1.mp4', desc: 'Секретная видеозапись.' },
@@ -1291,12 +1466,13 @@
                 balance: 100, lolitaBalance: 0, clickLevel: 0, autoLevel: 0, casesOpened: 0, inventory: {},
                 activeCaseType: null, isSpinning: false, lang: 'ru',
                 fastOpenUnlocked: false, fastOpenCooldownUntil: 0,
-                findGameUnlocked: false, courtUnlocked: false, lolitaGameUnlocked: false,
+                findGameUnlocked: false, courtUnlocked: false, lolitaGameUnlocked: false, pressGameUnlocked: false,
                 ownedThemes: ['default'], currentTheme: 'default',
                 quests: [], questBatchCompleted: 0,
                 islandParts: [],
                 foundSecretPhotos: [],
                 foundSecretPhotos2: [],
+                foundSecretPhotos3: [],
                 foundSecretVideos: [],
                 achievements: {},
                 promoUsed: false,
@@ -1305,6 +1481,8 @@
                 lolitaGameHighScore: 0,
                 mobileOptimized: false,
                 secretPhotosRewardClaimed: false,
+                secretPhotos2RewardClaimed: false,
+                secretPhotos3RewardClaimed: false,
                 secretVideosRewardClaimed: false,
                 secretVideos10RewardClaimed: false,
                 allGuestsRewardClaimed: false,
@@ -1318,7 +1496,12 @@
                 track1Loop: true,
                 track2Unlocked: false,
                 track2Playing: false,
-                track2Loop: true
+                track2Loop: true,
+                lolitaGoldPlane: false,
+                videoBgUnlocked: false,
+                courtWinStreak: 0,
+                pressWinCount: 0,
+                easterEggsSeen: []
             };
         }
 
@@ -1484,6 +1667,57 @@
             saveGame();
             alert(currentLang === 'en' ? 'Track 2 purchased! Controls are in ⚙️ Settings.' : 'Трек 2 куплен! Управление находится в ⚙️ Настройках.');
         }
+
+        function buyGoldPlane() {
+            playSound('click');
+            const t = TRANSLATIONS[currentLang];
+            if (gameState.lolitaGoldPlane) return;
+            
+            if ((gameState.lolitaBalance || 0) < 10) {
+                alert(t.notEnough);
+                return;
+            }
+            
+            gameState.lolitaBalance -= 10;
+            gameState.lolitaGoldPlane = true;
+            playSound('win');
+            
+            const btn = document.getElementById('btn-buy-gold-plane');
+            if (btn) {
+                btn.innerText = currentLang === 'en' ? 'Equipped ✅' : 'Одет ✅';
+                btn.className = 'w-full py-2 bg-emerald-600 text-slate-950 font-black text-xs uppercase rounded-xl border border-emerald-400';
+                btn.disabled = true;
+            }
+            
+            updateUI();
+            saveGame();
+            alert(currentLang === 'en' ? 'Golden plane skin purchased!' : 'Золотой скин самолета куплен!');
+        }
+
+        function buyVideoBg() {
+            playSound('click');
+            const t = TRANSLATIONS[currentLang];
+            if (gameState.videoBgUnlocked) {
+                selectTheme('video-bg');
+                return;
+            }
+            
+            if (gameState.balance < 50000 || (gameState.lolitaBalance || 0) < 50) {
+                alert(t.notEnough);
+                return;
+            }
+            
+            gameState.balance -= 50000;
+            gameState.lolitaBalance -= 50;
+            gameState.videoBgUnlocked = true;
+            gameState.currentTheme = 'video-bg';
+            playSound('win');
+            applyTheme('video-bg');
+            saveGame();
+            updateUI();
+            alert(currentLang === 'en' ? 'Video background purchased!' : 'Видео-фон куплен!');
+        }
+
         // --- УМНЫЕ КВЕСТЫ (ИИ) ---
         function generateRandomQuestPool() {
             const batchNum = (gameState.questBatchCompleted || 0) + 1;
@@ -1499,11 +1733,14 @@
                 { id: 8, type: 'clicks', target: 5000, title: { ru: 'Сделать 5000 кликов', en: 'Make 5000 clicks' }, progress: 0, completed: false, rewardType: 'mega', lolitaAmount: Math.floor(50 * 0.67), coinAmount: Math.floor(50000 * 0.67) },
                 { id: 9, type: 'cases_epic', target: 120 + batchNum * 25, title: { ru: `Открыть ${120 + batchNum * 25} кейсов VIP-Ложа`, en: `Open ${120 + batchNum * 25} VIP cases` }, progress: 0, completed: false, rewardType: 'coins', amount: Math.floor(33750 * 0.67) },
                 { id: 10, type: 'cases_boeing', target: 5 + batchNum * 2, title: { ru: `Открыть ${5 + batchNum * 2} кейсов «Частный Боинг»`, en: `Open ${5 + batchNum * 2} Boeing cases` }, progress: 0, completed: false, rewardType: 'coins', amount: Math.floor(20000 * 0.67) },
-                { id: 11, type: 'lolita_game', target: 1, title: { ru: 'Сыграть в «Лолита Экспресс»', en: 'Play Lolita Express' }, progress: 0, completed: false, rewardType: 'coins', amount: Math.floor(12000 * 0.67) }
+                { id: 11, type: 'lolita_game', target: 1, title: { ru: 'Сыграть в «Лолита Экспресс»', en: 'Play Lolita Express' }, progress: 0, completed: false, rewardType: 'coins', amount: Math.floor(12000 * 0.67) },
+                { id: 12, type: 'court_streak', target: 3, title: { ru: 'Пройти Судебный процесс без проигрыша 3 раза', en: 'Win Court Trial 3 times' }, progress: 0, completed: false, rewardType: 'lolita', amount: Math.floor(5 * 0.67) },
+                { id: 13, type: 'press_win', target: 3, title: { ru: 'Пройти Утренний обход прессы 3 раза', en: 'Win Morning Press Tour 3 times' }, progress: 0, completed: false, rewardType: 'coins', amount: Math.floor(25000 * 0.67) },
+                { id: 14, type: 'press_win', target: 5, title: { ru: 'Пройти Утренний обход прессы 5 раз', en: 'Win Morning Press Tour 5 times' }, progress: 0, completed: false, rewardType: 'mega', lolitaAmount: Math.floor(15 * 0.67), coinAmount: Math.floor(50000 * 0.67) }
             ];
 
             if (!hasAllIslandParts()) {
-                pool.push({ id: 12, type: 'island_parts', target: 1, title: { ru: 'Собрать 1 часть Острова', en: 'Collect 1 Island Part' }, progress: 0, completed: false, rewardType: 'lolita', amount: Math.floor(5 * 0.67) });
+                pool.push({ id: 15, type: 'island_parts', target: 1, title: { ru: 'Собрать 1 часть Острова', en: 'Collect 1 Island Part' }, progress: 0, completed: false, rewardType: 'lolita', amount: Math.floor(5 * 0.67) });
             }
 
             pool = pool.sort(() => Math.random() - 0.5);
@@ -1632,9 +1869,26 @@
         function closeSecretPhotosModal() {
             document.getElementById('secret-photos-modal').classList.add('hidden');
         }
+
         function openPhotoViewer(imgSrc) {
             playSound('click');
             const img = document.getElementById('full-photo-image');
+            
+            const unseenEggs = EASTER_EGGS.filter(egg => !gameState.easterEggsSeen.includes(egg));
+            if (unseenEggs.length > 0 && Math.random() < 0.02) {
+                const egg = unseenEggs[Math.floor(Math.random() * unseenEggs.length)];
+                gameState.easterEggsSeen.push(egg);
+                saveGame();
+                
+                img.src = egg;
+                document.getElementById('photo-viewer-modal').classList.remove('hidden');
+                
+                setTimeout(() => {
+                    img.src = imgSrc;
+                }, 1000); // Ровно 1 секунда
+                return;
+            }
+
             img.src = imgSrc;
             img.classList.remove('zoomed');
             document.getElementById('photo-viewer-modal').classList.remove('hidden');
@@ -1647,6 +1901,7 @@
             playSound('click');
             document.getElementById('full-photo-image').classList.toggle('zoomed');
         }
+
         function renderSecretPhotos() {
             const grid = document.getElementById('secret-photos-grid');
             if(!grid) return;
@@ -1716,6 +1971,48 @@
             });
             
             const countEl = document.getElementById('secret-photos-2-count');
+            if (countEl) countEl.innerText = `${found.length} / 10`;
+        }
+
+        function openSecretPhotos3Modal() {
+            if ((gameState.foundSecretPhotos || []).length < 10 || (gameState.foundSecretPhotos2 || []).length < 10) {
+                alert(currentLang === 'en' ? 'You need to collect all 10 photos from the 1st AND 2nd sections first!' : 'Сначала нужно собрать все 10 фото из 1-го и 2-го разделов!');
+                return;
+            }
+            playSound('click');
+            renderSecretPhotos3();
+            document.getElementById('secret-photos-3-modal').classList.remove('hidden');
+        }
+        function closeSecretPhotos3Modal() {
+            document.getElementById('secret-photos-3-modal').classList.add('hidden');
+        }
+        function renderSecretPhotos3() {
+            const grid = document.getElementById('secret-photos-3-grid');
+            if(!grid) return;
+            grid.innerHTML = '';
+            const found = gameState.foundSecretPhotos3 || [];
+            
+            SECRET_PHOTOS_3.forEach(photo => {
+                const isFound = found.includes(photo.id);
+                const card = document.createElement('div');
+                card.className = `relative rounded-2xl overflow-hidden border-2 flex flex-col items-center justify-center aspect-square transition ${isFound ? 'border-pink-500 bg-slate-900 cursor-pointer hover:scale-105' : 'border-slate-800 bg-slate-950/80'}`;
+                
+                if (isFound) {
+                    card.onclick = () => openPhotoViewer(photo.image);
+                    card.innerHTML = `
+                        <img src="${photo.image}" class="w-full h-full object-cover absolute inset-0 opacity-80" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\\'text-4xl\\'>🤫</span>'">
+                        <div class="absolute bottom-0 w-full bg-black/60 p-1 text-center text-[10px] font-bold text-white z-10">${currentLang === 'en' ? photo.enName : photo.ruName}</div>
+                    `;
+                } else {
+                    card.innerHTML = `
+                        <div class="text-4xl text-slate-700 filter grayscale opacity-50">🔒</div>
+                        <div class="text-[10px] font-bold text-slate-600 mt-2">???</div>
+                    `;
+                }
+                grid.appendChild(card);
+            });
+            
+            const countEl = document.getElementById('secret-photos-3-count');
             if (countEl) countEl.innerText = `${found.length} / 10`;
         }
 
@@ -1789,10 +2086,13 @@
             if (!gameState.islandParts) gameState.islandParts = [];
             if (!gameState.foundSecretPhotos) gameState.foundSecretPhotos = [];
             if (!gameState.foundSecretPhotos2) gameState.foundSecretPhotos2 = [];
+            if (!gameState.foundSecretPhotos3) gameState.foundSecretPhotos3 = [];
             if (!gameState.foundSecretVideos) gameState.foundSecretVideos = [];
             if (!gameState.achievements) gameState.achievements = {};
             if (gameState.mobileOptimized === undefined) gameState.mobileOptimized = false;
             if (gameState.secretPhotosRewardClaimed === undefined) gameState.secretPhotosRewardClaimed = false;
+            if (gameState.secretPhotos2RewardClaimed === undefined) gameState.secretPhotos2RewardClaimed = false;
+            if (gameState.secretPhotos3RewardClaimed === undefined) gameState.secretPhotos3RewardClaimed = false;
             if (gameState.secretVideosRewardClaimed === undefined) gameState.secretVideosRewardClaimed = false;
             if (gameState.promo3Used === undefined) gameState.promo3Used = false;
             if (gameState.allGuestsRewardClaimed === undefined) gameState.allGuestsRewardClaimed = false;
@@ -1808,6 +2108,10 @@
             if (gameState.track2Unlocked === undefined) gameState.track2Unlocked = false;
             if (gameState.track2Playing === undefined) gameState.track2Playing = false;
             if (gameState.track2Loop === undefined) gameState.track2Loop = true;
+            if (gameState.lolitaGoldPlane === undefined) gameState.lolitaGoldPlane = false;
+            if (gameState.pressGameUnlocked === undefined) gameState.pressGameUnlocked = false;
+            if (gameState.easterEggsSeen === undefined) gameState.easterEggsSeen = [];
+            if (gameState.videoBgUnlocked === undefined) gameState.videoBgUnlocked = false;
             
             gameState = JSON.parse(JSON.stringify(gameState));
             
@@ -1984,6 +2288,9 @@
             document.getElementById('theme-name-temple').innerText = t.themeTempleName;
             document.getElementById('theme-desc-temple').innerText = t.themeTempleDesc;
             
+            document.getElementById('theme-name-video_bg').innerText = t.themeVideoName;
+            document.getElementById('theme-desc-video_bg').innerText = t.themeVideoDesc;
+            
             const standardBtn = document.getElementById('theme-btn-clicker-standard');
             const goldenBtn = document.getElementById('theme-btn-clicker-golden');
             if(standardBtn) standardBtn.innerText = t.themeClickerName + " (Стандарт)";
@@ -1998,6 +2305,8 @@
             document.getElementById('lbl-game2-desc').innerText = t.game2Desc;
             document.getElementById('lbl-game3-title').innerText = t.game3Title;
             document.getElementById('lbl-game3-desc').innerText = t.game3Desc;
+            document.getElementById('lbl-game4-title').innerText = t.game4Title;
+            document.getElementById('lbl-game4-desc').innerText = t.game4Desc;
             document.getElementById('lbl-shop-title').innerText = t.shopTitle;
             document.getElementById('lbl-shop-subtitle').innerText = t.shopSub;
             document.getElementById('lbl-cat-themes').innerText = t.catThemes;
@@ -2074,6 +2383,10 @@
             document.querySelector('#tab-archives p.text-indigo-500').innerText = t.navPhotos2Desc;
             document.querySelector('#tab-archives button[onclick="openSecretPhotos2Modal()"]').innerText = t.navPhotos2Btn;
 
+            document.querySelector('#tab-archives h3.text-pink-400').innerText = t.navPhotos3Title;
+            document.querySelector('#tab-archives p.text-pink-500').innerText = t.navPhotos3Desc;
+            document.querySelector('#tab-archives button[onclick="openSecretPhotos3Modal()"]').innerText = t.navPhotos3Btn;
+
             document.querySelector('#tab-archives h3.text-rose-400').innerText = t.navVideosTitle;
             document.querySelector('#tab-archives p.text-rose-500').innerText = t.navVideosDesc;
             document.querySelector('#tab-archives button[onclick="openSecretVideosModal()"]').innerText = t.navVideosBtn;
@@ -2087,6 +2400,11 @@
             document.querySelector('#secret-photos-2-modal p.text-slate-400').innerText = t.secretPhotos2Desc;
             document.querySelector('#secret-photos-2-modal .text-slate-300').innerText = t.secretPhotos2Progress + ' ' + document.getElementById('secret-photos-2-count').innerText;
             document.querySelector('#secret-photos-2-modal .text-slate-400.mt-1').innerText = t.secretPhotos2RewardDesc;
+
+            document.querySelector('#secret-photos-3-modal h3').innerText = t.secretPhotos3Title;
+            document.querySelector('#secret-photos-3-modal p.text-slate-400').innerText = t.secretPhotos3Desc;
+            document.querySelector('#secret-photos-3-modal .text-slate-300').innerText = t.secretPhotos3Progress + ' ' + document.getElementById('secret-photos-3-count').innerText;
+            document.querySelector('#secret-photos-3-modal .text-slate-400.mt-1').innerText = t.secretPhotos3RewardDesc;
 
             document.querySelector('#secret-videos-modal h3').innerText = t.secretVideosTitle;
             document.querySelector('#secret-videos-modal p.text-slate-400').innerText = t.secretVideosDesc;
@@ -2108,6 +2426,7 @@
             
             renderSecretPhotos();
             renderSecretPhotos2();
+            renderSecretPhotos3();
             renderSecretVideos();
             renderInvestigationsTab();
             updateIslandMapUI();
@@ -2282,6 +2601,19 @@
                 lolitaStatus.className = 'text-xs font-bold text-amber-400 bg-amber-500/10 border border-amber-500/20 p-2 rounded-xl mb-4 w-full';
             }
 
+            const pressBtn = document.getElementById('btn-start-press-game');
+            const pressStatus = document.getElementById('press-game-unlock-status');
+            if (gameState.pressGameUnlocked) {
+                pressBtn.innerText = t.play;
+                pressBtn.className = 'w-full py-3 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-400 hover:to-red-500 rounded-xl font-black text-xs uppercase tracking-wider btn-bounce shadow-md text-slate-950';
+                pressStatus.innerText = currentLang === 'en' ? '✅ Game unlocked! Click Play.' : '✅ Игра разблокирована! Нажмите «Играть».';
+                pressStatus.className = 'text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 p-2 rounded-xl mb-4 w-full';
+            } else {
+                pressBtn.innerText = currentLang === 'en' ? 'Unlock (25k + 5✈️)' : 'Разблокировать (25k 🪙 + 5✈️)';
+                pressStatus.innerText = currentLang === 'en' ? '🔒 Requires: 10 guests, 25,000 🪙 and 5 ✈️' : '🔒 Нужно: 10 гостей, 25,000 🪙 и 5 ✈️';
+                pressStatus.className = 'text-xs font-bold text-amber-400 bg-amber-500/10 border border-amber-500/20 p-2 rounded-xl mb-4 w-full';
+            }
+
             const secretPhotos2Card = document.getElementById('secret-photos-2-card');
             const secretPhotos2Btn = document.getElementById('btn-open-secret-photos-2');
             if ((gameState.foundSecretPhotos || []).length >= 10) {
@@ -2292,6 +2624,18 @@
                 secretPhotos2Card.classList.add('opacity-50');
                 secretPhotos2Btn.classList.add('opacity-50');
                 secretPhotos2Btn.disabled = true;
+            }
+
+            const secretPhotos3Card = document.getElementById('secret-photos-3-card');
+            const secretPhotos3Btn = document.getElementById('btn-open-secret-photos-3');
+            if ((gameState.foundSecretPhotos || []).length >= 10 && (gameState.foundSecretPhotos2 || []).length >= 10) {
+                secretPhotos3Card.classList.remove('opacity-50');
+                secretPhotos3Btn.classList.remove('opacity-50');
+                secretPhotos3Btn.disabled = false;
+            } else {
+                secretPhotos3Card.classList.add('opacity-50');
+                secretPhotos3Btn.classList.add('opacity-50');
+                secretPhotos3Btn.disabled = true;
             }
 
             updateCaseButtons();
@@ -2337,13 +2681,15 @@
                 { id: 'epstein', cost: 15000 }, 
                 { id: 'supergold', cost: 50000 },
                 { id: 'twotigers', cost: 100000 },
-                { id: 'temple', cost: 25000, lolitaCost: 5 }
+                { id: 'temple', cost: 25000, lolitaCost: 5 },
+                { id: 'video_bg', cost: 50000, lolitaCost: 50 }
             ];
             themes.forEach(item => {
                 const btn = document.getElementById(`theme-btn-${item.id}`);
                 if (!btn) return;
-                const isOwned = gameState.ownedThemes.includes(item.id);
-                const isCurrent = gameState.currentTheme === item.id;
+                const isOwned = item.id === 'video_bg' ? gameState.videoBgUnlocked : gameState.ownedThemes.includes(item.id);
+                const isCurrent = gameState.currentTheme === (item.id === 'video_bg' ? 'video-bg' : item.id);
+                
                 if (isCurrent) { btn.innerText = currentLang === 'en' ? 'Equipped ✅' : 'Одет ✅'; btn.className = 'w-full py-2 bg-emerald-600 text-white font-bold text-xs uppercase rounded-xl border border-emerald-400'; }
                 else if (isOwned) { btn.innerText = currentLang === 'en' ? 'Equip' : 'Надеть'; btn.className = 'w-full py-2 bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs uppercase rounded-xl border border-slate-600 btn-bounce'; }
                 else { 
@@ -2511,6 +2857,17 @@
             else if (outcomeType === 'acquitted') { const winAmt = Math.floor(currentCourtBet * 1.4); gameState.balance += winAmt; gameState.courtWinCount = (gameState.courtWinCount || 0) + 1; playSound('win'); resBox.innerHTML = `<span class="text-sky-400 font-bold text-sm">⚖️ «Оправдан (+1.4x)»! ${currentLang === 'en' ? 'Won' : 'Вы выиграли'} ${winAmt.toLocaleString()} 🪙!</span>`; }
             else if (outcomeType === 'bribe') { const lossAmt = Math.floor(currentCourtBet * 0.7); gameState.balance += (currentCourtBet - lossAmt); playSound('miss'); resBox.innerHTML = `<span class="text-red-500 font-bold text-sm">💸 «Взятка (-70%)»! ${currentLang === 'en' ? 'Lost 70% of bet' : 'Потеряно 70% ставки'} (${lossAmt.toLocaleString()} 🪙).</span>`; }
             else { playSound('miss'); resBox.innerHTML = `<span class="text-red-600 font-bold text-sm">🚨 «Уголовный срок (-100%)»! ${currentLang === 'en' ? 'Lost entire bet' : 'Потеряна вся ставка'} (${currentCourtBet.toLocaleString()} 🪙).</span>`; }
+
+            if (outcomeType === 'sensational' || outcomeType === 'acquitted') {
+                gameState.courtWinStreak = (gameState.courtWinStreak || 0) + 1;
+                if (gameState.courtWinStreak >= 3) {
+                    updateQuestProgress('court_streak', 1);
+                    gameState.courtWinStreak = 0;
+                }
+            } else {
+                gameState.courtWinStreak = 0;
+            }
+
             updateUI(); saveGame(); updateQuestProgress('minigame', 1);
         }
 
@@ -2549,7 +2906,7 @@
                 }
             });
             if (tabName === 'investigations') renderInvestigationsTab();
-            if (tabName === 'archives') { renderSecretPhotos(); renderSecretPhotos2(); renderSecretVideos(); }
+            if (tabName === 'archives') { renderSecretPhotos(); renderSecretPhotos2(); renderSecretPhotos3(); renderSecretVideos(); }
             if (tabName === 'collection') renderCollection();
         }
 
@@ -2597,6 +2954,7 @@
         function upgradeAuto() { const t = TRANSLATIONS[currentLang]; if (gameState.autoLevel >= AUTO_UPGRADES.length) return; const next = AUTO_UPGRADES[gameState.autoLevel]; if (gameState.balance >= next.cost) { playSound('win'); gameState.balance -= next.cost; gameState.autoLevel++; updateUI(); saveGame(); } else alert(t.notEnough); }
 
         setInterval(() => { if (isPaused) return; const autoRate = getCurrentAutoRate(); if (autoRate > 0) { gameState.balance += autoRate; updateUI(); } }, 1000);
+
         function checkAllGuestsCollected() {
             const realGuests = ITEMS_DB.filter(i => !i.isCoin && !i.isEmpty && !i.isLolita);
             const collectedCount = realGuests.filter(i => (gameState.inventory[i.id] || 0) > 0).length;
@@ -2605,12 +2963,14 @@
                 let pool = [];
                 SECRET_PHOTOS.forEach(p => { if (!(gameState.foundSecretPhotos || []).includes(p.id)) pool.push({ type: 'photo1', data: p }); });
                 SECRET_PHOTOS_2.forEach(p => { if (!(gameState.foundSecretPhotos2 || []).includes(p.id)) pool.push({ type: 'photo2', data: p }); });
+                SECRET_PHOTOS_3.forEach(p => { if (!(gameState.foundSecretPhotos3 || []).includes(p.id)) pool.push({ type: 'photo3', data: p }); });
                 SECRET_VIDEOS.forEach(v => { if (!(gameState.foundSecretVideos || []).includes(v.id)) pool.push({ type: 'video', data: v }); });
 
                 if (pool.length > 0) {
                     const reward = pool[Math.floor(Math.random() * pool.length)];
                     if (reward.type === 'photo1') gameState.foundSecretPhotos.push(reward.data.id);
                     if (reward.type === 'photo2') gameState.foundSecretPhotos2.push(reward.data.id);
+                    if (reward.type === 'photo3') gameState.foundSecretPhotos3.push(reward.data.id);
                     if (reward.type === 'video') gameState.foundSecretVideos.push(reward.data.id);
                     
                     playSound('legendary');
@@ -2618,7 +2978,7 @@
                     setTimeout(() => {
                         alert(currentLang === 'en' ? 'CONGRATULATIONS! You collected all guests! You get 1 random uncollected secret item!' : 'ПОЗДРАВЛЯЕМ! Вы собрали всех гостей! Вам выдан 1 случайный несобранный секретный предмет!');
                     }, 500);
-                    saveGame(); updateUI(); renderSecretPhotos(); renderSecretPhotos2(); renderSecretVideos();
+                    saveGame(); updateUI(); renderSecretPhotos(); renderSecretPhotos2(); renderSecretPhotos3(); renderSecretVideos();
                 }
             }
         }
@@ -2643,6 +3003,25 @@
                 if (uncollected.length > 0) {
                     const vid = uncollected[Math.floor(Math.random() * uncollected.length)];
                     return { id: vid.id, isSecretVideo: true, ruName: 'Тайное Видео', enName: 'Secret Video', rarity: 'secretVideo', avatar: '🎥', video: vid.video, ruDesc: vid.desc, enDesc: vid.desc };
+                }
+            }
+
+            if ((gameState.foundSecretPhotos || []).length >= 10 && (gameState.foundSecretPhotos2 || []).length >= 10) {
+                if (caseType === 'legendary' && Math.random() * 100 < 0.51) {
+                    const found = gameState.foundSecretPhotos3 || [];
+                    const uncollected = SECRET_PHOTOS_3.filter(p => !found.includes(p.id));
+                    if (uncollected.length > 0) {
+                        const photo = uncollected[Math.floor(Math.random() * uncollected.length)];
+                        return { id: photo.id, isSecretPhoto: true, ruName: 'Архив фото 3', enName: 'Photo Archive 3', rarity: 'secret', avatar: '🤫', photo: photo.image, ruDesc: photo.desc, enDesc: photo.desc };
+                    }
+                }
+                if (caseType === 'boeing' && Math.random() * 100 < 1.0) {
+                    const found = gameState.foundSecretPhotos3 || [];
+                    const uncollected = SECRET_PHOTOS_3.filter(p => !found.includes(p.id));
+                    if (uncollected.length > 0) {
+                        const photo = uncollected[Math.floor(Math.random() * uncollected.length)];
+                        return { id: photo.id, isSecretPhoto: true, ruName: 'Архив фото 3', enName: 'Photo Archive 3', rarity: 'secret', avatar: '🤫', photo: photo.image, ruDesc: photo.desc, enDesc: photo.desc };
+                    }
                 }
             }
 
@@ -2762,7 +3141,13 @@
             }
 
             const available = ITEMS_DB.filter(i => i.rarity === rarity);
-            return available[Math.floor(Math.random() * available.length)];
+            let selectedItem = available[Math.floor(Math.random() * available.length)];
+            
+            if (selectedItem.id === 'g12' && Math.random() < 0.2) {
+                selectedItem = ITEMS_DB.find(i => i.id === 'g11') || selectedItem;
+            }
+            
+            return selectedItem;
         }
 
         let rouletteItems = [];
@@ -2777,6 +3162,7 @@
             let videoCount = 0;
             const foundPhotos = gameState.foundSecretPhotos || [];
             const foundPhotos2 = gameState.foundSecretPhotos2 || [];
+            const foundPhotos3 = gameState.foundSecretPhotos3 || [];
             const foundVideos = gameState.foundSecretVideos || [];
             
             for (let i = 0; i < 45; i++) {
@@ -2794,8 +3180,12 @@
                     } 
                     else if ((gameState.activeCaseType === 'boeing' || gameState.activeCaseType === 'legendary') && photoCount < 2 && Math.random() < 0.05) {
                         let uncollected = [];
+                        let isThirdBatch = false;
                         let isSecondBatch = false;
-                        if (foundPhotos.length === 10) {
+                        if (foundPhotos.length === 10 && foundPhotos2.length === 10) {
+                            uncollected = SECRET_PHOTOS_3.filter(p => !foundPhotos3.includes(p.id));
+                            isThirdBatch = true;
+                        } else if (foundPhotos.length === 10) {
                             uncollected = SECRET_PHOTOS_2.filter(p => !foundPhotos2.includes(p.id));
                             isSecondBatch = true;
                         } else {
@@ -2804,7 +3194,7 @@
 
                         if (uncollected.length > 0) {
                             const photo = uncollected[Math.floor(Math.random() * uncollected.length)];
-                            item = { id: photo.id, isSecretPhoto: true, ruName: isSecondBatch ? 'Архив фото 2' : 'Архив фото', enName: isSecondBatch ? 'Photo Archive 2' : 'Photo Archive', rarity: 'secret', avatar: isSecondBatch ? '📷' : '📸', photo: photo.image, ruDesc: photo.desc, enDesc: photo.desc };
+                            item = { id: photo.id, isSecretPhoto: true, ruName: isThirdBatch ? 'Архив фото 3' : (isSecondBatch ? 'Архив фото 2' : 'Архив фото'), enName: isThirdBatch ? 'Photo Archive 3' : (isSecondBatch ? 'Photo Archive 2' : 'Photo Archive'), rarity: 'secret', avatar: isThirdBatch ? '🤫' : (isSecondBatch ? '📷' : '📸'), photo: photo.image, ruDesc: photo.desc, enDesc: photo.desc };
                             photoCount++;
                         } else {
                             item = ITEMS_DB[Math.floor(Math.random() * ITEMS_DB.length)];
@@ -2908,7 +3298,7 @@
             container.className = `bg-slate-900 border-4 ${rarityInfo.color} w-full max-w-md rounded-3xl p-6 flex flex-col items-center text-center relative shadow-2xl ${rarityInfo.glow}`;
             if (item.isIslandPart) container.classList.add('holo-card');
 
-            title.innerText = item.isIslandPart ? (currentLang === 'en' ? 'Island Part' : 'Часть Острова') : (item.isSecretPhoto ? (item.ruName.includes('2') ? 'Тайное Фото 2' : 'Тайное Фото') : (item.isSecretVideo ? (currentLang === 'en' ? 'Secret Video' : 'Тайное Видео') : getItemName(item)));
+            title.innerText = item.isIslandPart ? (currentLang === 'en' ? 'Island Part' : 'Часть Острова') : (item.isSecretPhoto ? (item.ruName.includes('3') ? 'Тайное Фото 3' : (item.ruName.includes('2') ? 'Тайное Фото 2' : 'Тайное Фото')) : (item.isSecretVideo ? (currentLang === 'en' ? 'Secret Video' : 'Тайное Видео') : getItemName(item)));
 
             if (item.isEmpty) role.innerText = t.emptyDrop;
             else if (item.isCoin) role.innerText = t.coinRefund;
@@ -2948,13 +3338,33 @@
                 }
                 dupInfo.classList.add('hidden');
             } else if (item.isSecretPhoto) {
-                if (item.id.startsWith('p2_')) {
+                if (item.id.startsWith('p3_')) {
+                    if (!gameState.foundSecretPhotos3.includes(item.id)) {
+                        gameState.foundSecretPhotos3.push(item.id);
+                        playSound('legendary');
+                        confetti({ particleCount: 250, spread: 150, origin: { y: 0.6 } });
+                        
+                        if (gameState.foundSecretPhotos3.length === 10 && !gameState.secretPhotos3RewardClaimed) {
+                            gameState.secretPhotos3RewardClaimed = true;
+                            gameState.balance += 50000;
+                            gameState.lolitaBalance += 20;
+                            for(let i=0; i<2; i++) {
+                                const randomChar = ITEMS_DB.filter(x => !x.isCoin && !x.isEmpty && !x.isLolita && x.rarity !== 'islandPart' && !x.isSecretPhoto && !x.isSecretVideo)[Math.floor(Math.random() * 30)];
+                                gameState.inventory[randomChar.id] = (gameState.inventory[randomChar.id] || 0) + 1;
+                            }
+                            setTimeout(() => {
+                                alert(currentLang === 'en' ? 'CONGRATULATIONS! You collected all 10 photos 3! Reward: 50,000 🪙, 20 ✈️ and 2 random guests!' : 'ПОЗДРАВЛЯЕМ! Вы собрали все 10 фото 3-й части! Награда: +50,000 🪙, +20 ✈️ и 2 случайных гостя!');
+                            }, 500);
+                        }
+                    }
+                } else if (item.id.startsWith('p2_')) {
                     if (!gameState.foundSecretPhotos2.includes(item.id)) {
                         gameState.foundSecretPhotos2.push(item.id);
                         playSound('legendary');
                         confetti({ particleCount: 250, spread: 150, origin: { y: 0.6 } });
                         
-                        if (gameState.foundSecretPhotos2.length === 10 && !gameState.track1Unlocked) {
+                        if (gameState.foundSecretPhotos2.length === 10 && !gameState.secretPhotos2RewardClaimed) {
+                            gameState.secretPhotos2RewardClaimed = true;
                             gameState.track1Unlocked = true;
                             gameState.track1Playing = false;
                             gameState.track1Loop = true;
@@ -3157,12 +3567,27 @@
                         gameState.islandParts.push(item.id); isNew = true; updateQuestProgress('island_parts', 1);
                     }
                 } else if (item.isSecretPhoto) {
-                    if (item.id.startsWith('p2_')) {
+                    if (item.id.startsWith('p3_')) {
+                        if (!gameState.foundSecretPhotos3.includes(item.id)) {
+                            gameState.foundSecretPhotos3.push(item.id); isNew = true;
+                            if (gameState.foundSecretPhotos3.length === 10 && !gameState.secretPhotos3RewardClaimed) {
+                                gameState.secretPhotos3RewardClaimed = true;
+                                gameState.balance += 50000;
+                                gameState.lolitaBalance += 20;
+                                for(let j=0; j<2; j++) {
+                                    const randomChar = ITEMS_DB.filter(x => !x.isCoin && !x.isEmpty && !x.isLolita && x.rarity !== 'islandPart' && !x.isSecretPhoto && !x.isSecretVideo)[Math.floor(Math.random() * 30)];
+                                    gameState.inventory[randomChar.id] = (gameState.inventory[randomChar.id] || 0) + 1;
+                                }
+                                setTimeout(() => alert('ПОЗДРАВЛЯЕМ! Вы собрали все 10 фото 3-й части! Награда: 50,000 🪙, 20 ✈️ и 2 случайных гостя!'), 500);
+                            }
+                        }
+                    } else if (item.id.startsWith('p2_')) {
                         if (!gameState.foundSecretPhotos2.includes(item.id)) {
                             gameState.foundSecretPhotos2.push(item.id); isNew = true;
-                            if (gameState.foundSecretPhotos2.length === 10 && !gameState.track1Unlocked) {
+                            if (gameState.foundSecretPhotos2.length === 10 && !gameState.secretPhotos2RewardClaimed) {
+                                gameState.secretPhotos2RewardClaimed = true;
                                 gameState.track1Unlocked = true; gameState.track1Playing = false; gameState.track1Loop = true;
-                                setTimeout(() => alert('ПОЗДРАВЛЯЕМ! Вы собрали все 10 фото 2-й части! Награда: Трек 1 разблокирован (в Настройках).'), 500);
+                                setTimeout(() => alert('ПОЗДРАВЛЯЕМ! Вы собрали все 10 фото 2-й части! Награда: Трек 1 разблокирован.'), 500);
                                 updateTrack1UI();
                             }
                         }
@@ -3174,7 +3599,7 @@
                                 gameState.balance += 35000;
                                 gameState.lolitaBalance += 10;
                                 gameState.promo2Used = false;
-                                setTimeout(() => alert('ПОЗДРАВЛЯЕМ! Вы собрали все 10 фото! Награда: +35,000 🪙, +10 ✈️. Ваш промокод: GMaxell_25_61'), 500);
+                                setTimeout(() => alert('ПОЗДРАВЛЯЕМ! Вы собрали все 10 фото! Награда: +35,000 🪙, +10 ✈️. Промокод: GMaxell_25_61'), 500);
                             }
                         }
                     }
@@ -3225,7 +3650,7 @@
                 const div = document.createElement('div');
                 div.className = `bg-slate-950 p-2.5 rounded-xl border ${rarityInfo.color} flex items-center justify-between text-left shadow relative overflow-hidden`;
                 if (item.isIslandPart) div.classList.add('holo-card');
-                const displayName = item.isIslandPart ? (currentLang === 'en' ? 'Island Part' : 'Часть Острова') : (item.isSecretPhoto ? (item.ruName.includes('2') ? 'Тайное Фото 2' : 'Тайное Фото') : (item.isSecretVideo ? (currentLang === 'en' ? 'Secret Video' : 'Тайное Видео') : getItemName(item)));
+                const displayName = item.isIslandPart ? (currentLang === 'en' ? 'Island Part' : 'Часть Острова') : (item.isSecretPhoto ? (item.ruName.includes('3') ? 'Тайное Фото 3' : (item.ruName.includes('2') ? 'Тайное Фото 2' : 'Тайное Фото')) : (item.isSecretVideo ? (currentLang === 'en' ? 'Secret Video' : 'Тайное Видео') : getItemName(item)));
                 div.innerHTML = `
                     <div class="flex items-center gap-3">
                         <span class="text-2xl">${item.isSecretPhoto ? (item.avatar || '📸') : (item.isSecretVideo ? '🎥' : item.avatar)}</span>
@@ -3271,6 +3696,7 @@
                 islandPart: currentLang === 'en' ? 'Island Part' : 'Часть Острова',
                 secretPhoto: currentLang === 'en' ? 'Secret Photo 1' : 'Тайное Фото 1',
                 secretPhoto2: currentLang === 'en' ? 'Secret Photo 2' : 'Тайное Фото 2',
+                secretPhoto3: currentLang === 'en' ? 'Secret Photo 3' : 'Тайное Фото 3',
                 secretVideo: currentLang === 'en' ? 'Secret Video' : 'Тайное Видео'
             };
 
@@ -3310,6 +3736,7 @@
                 addRow('text-emerald-400', 'islandPart', '1.470%');
                 addRow('text-indigo-400', 'secretPhoto', '1.104%'); 
                 addRow('text-indigo-500', 'secretPhoto2', '0.552%'); 
+                addRow('text-pink-500', 'secretPhoto3', '0.510%'); 
                 addRow('text-rose-400', 'secretVideo', '0.080%'); 
             } else if (caseType === 'boeing') {
                 addRow('text-slate-400', 'empty', '9.000%');
@@ -3322,6 +3749,7 @@
                 addRow('text-emerald-400', 'islandPart', '2.940%');
                 addRow('text-indigo-400', 'secretPhoto', '2.098%'); 
                 addRow('text-indigo-500', 'secretPhoto2', '1.049%'); 
+                addRow('text-pink-500', 'secretPhoto3', '1.000%'); 
                 addRow('text-rose-400', 'secretVideo', '0.720%'); 
             }
             
@@ -3333,7 +3761,7 @@
         // --- АЧИВКИ ---
         const ACHIEVEMENTS_DEF = [
             { id: 'first_case', ruName: 'Первый кейс', enName: 'First Case', ruDesc: 'Открой свой первый кейс', enDesc: 'Open your first case', icon: '📦', check: s => s.casesOpened >= 1 },
-            { id: 'all_minigames', ruName: 'Все мини-игры', enName: 'All Mini-Games', ruDesc: 'Разблокируй все мини-игры', enDesc: 'Unlock all mini-games', icon: '🎮', check: s => s.findGameUnlocked && s.courtUnlocked && s.lolitaGameUnlocked },
+            { id: 'all_minigames', ruName: 'Все мини-игры', enName: 'All Mini-Games', ruDesc: 'Разблокируй все мини-игры', enDesc: 'Unlock all mini-games', icon: '🎮', check: s => s.findGameUnlocked && s.courtUnlocked && s.lolitaGameUnlocked && s.pressGameUnlocked },
             { id: 'first_legendary', ruName: 'Первая легенда', enName: 'First Legend', ruDesc: 'Получи первого легендарного гостя', enDesc: 'Get your first legendary guest', icon: '👑', check: s => Object.keys(s.inventory).some(id => ITEMS_DB.find(i => i.id === id && i.rarity === 'legendary')) },
             { id: 'island_parts_2', ruName: '2 части острова', enName: '2 Island Parts', ruDesc: 'Собери 2 части острова', enDesc: 'Collect 2 island parts', icon: '🧩', check: s => (s.islandParts || []).length >= 2 },
             { id: 'island_complete', ruName: 'Остров собран', enName: 'Island Complete', ruDesc: 'Собери все 4 части острова', enDesc: 'Collect all 4 island parts', icon: '🏝️', check: s => (s.islandParts || []).length >= 4 },
@@ -3410,10 +3838,9 @@
         setInterval(() => {
             if (isPaused) return;
             
-            // Мини-Эпштейн (Пасхалки)
             const realGuestsCount = ITEMS_DB.filter(i => !i.isCoin && !i.isEmpty && !i.isLolita && (gameState.inventory[i.id] || 0) > 0).length;
             if (realGuestsCount >= 7) {
-                if (Math.random() < 0.001) { // 0.1% шанс каждую секунду
+                if (Math.random() < 0.001) {
                     const mini = document.getElementById('mini-epstein');
                     const img = document.getElementById('mini-epstein-img');
                     const isEgg1 = Math.random() < 0.5;
@@ -3424,7 +3851,7 @@
                     
                     mini.onclick = () => {
                         mini.classList.add('hidden');
-                        const reward = Math.floor(Math.random() * 4900) + 100; // от 100 до 5000
+                        const reward = Math.floor(Math.random() * 4900) + 100;
                         gameState.balance += reward;
                         playSound('cash');
                         updateUI(); saveGame();
@@ -3433,21 +3860,30 @@
                 }
             }
 
-            // Джампскейр (0.05% шанс и только при активности)
             if (!gameState.jumpscareSeen && Math.random() < 0.0005) { 
-                if (Date.now() - lastActionTime < 5000) { // Только если игрок что-то делал за последние 5 секунд
+                if (Date.now() - lastActionTime < 5000) {
                     gameState.jumpscareSeen = true;
                     const js = document.getElementById('jumpscare-overlay');
                     js.classList.remove('hidden');
+                    
+                    soundEnabled = false;
+                    document.querySelectorAll('audio').forEach(a => a.muted = true);
+                    
                     playSound('trap');
-                    setTimeout(() => js.classList.add('hidden'), 3000);
+                    
+                    setTimeout(() => {
+                        js.classList.add('hidden');
+                        soundEnabled = true;
+                        document.querySelectorAll('audio').forEach(a => a.muted = false);
+                    }, 2500);
+                    
                     saveGame(); updateUI();
                 }
             }
         }, 1000);
 
         // ==========================================
-        // --- LOLITA EXPRESS MINIGAME (ИСПРАВЛЕНО) ---
+        // --- LOLITA EXPRESS MINIGAME ---
         // ==========================================
         let lolitaGameAnimId = null;
         let lolitaGameActive = false;
@@ -3507,7 +3943,6 @@
             let speedMultiplier = 1;
             lolitaGameActive = true;
 
-            // Исправление бага с черным экраном
             const useEpsteinBg = Math.random() < 0.01;
             let isBgLoaded = false;
             
@@ -3626,7 +4061,9 @@
                 }
 
                 ctx.save(); ctx.translate(plane.x, plane.y);
-                ctx.fillStyle = '#38bdf8'; ctx.shadowColor = '#38bdf8'; ctx.shadowBlur = 15;
+                ctx.fillStyle = gameState.lolitaGoldPlane ? '#facc15' : '#38bdf8'; 
+                ctx.shadowColor = gameState.lolitaGoldPlane ? '#facc15' : '#38bdf8'; 
+                ctx.shadowBlur = 15;
                 
                 ctx.beginPath();
                 ctx.moveTo(0, -20);
@@ -3646,7 +4083,7 @@
                 ctx.closePath();
                 ctx.fill();
 
-                ctx.fillStyle = '#0ea5e9';
+                ctx.fillStyle = gameState.lolitaGoldPlane ? '#eab308' : '#0ea5e9';
                 ctx.beginPath();
                 ctx.ellipse(0, -8, 3, 6, 0, 0, Math.PI * 2);
                 ctx.fill();
@@ -3669,7 +4106,7 @@
                 });
 
                 ctx.fillStyle = '#fff'; ctx.font = 'bold 16px sans-serif';
-                ctx.fillText(`🪙 ${score}`, 20, 30);
+                ctx.fillText(`💰 ${score}`, 20, 30);
             }
 
             function loop() {
@@ -3686,6 +4123,217 @@
             if (lolitaGameAnimId) cancelAnimationFrame(lolitaGameAnimId);
             document.getElementById('lolita-game-modal').classList.add('hidden');
             document.getElementById('mobile-controls').classList.add('hidden');
+        }
+
+        // ==========================================
+        // --- УТРЕННИЙ ОБХОД ПРЕССЫ ---
+        // ==========================================
+        let pressGameActive = false;
+        let pressGameTimer = null;
+        let pressSpawnTimer = null;
+        let pressTimeLeft = 0;
+        let pressLives = 3;
+        let pressScore = 0;
+        let pressCurrentSpawnDelay = 1200;
+        let pressTotalReporters = 0;
+        let pressTotalVips = 0;
+
+        const REPORTERS = ['📸', '🎤', '📹', '🤳', '🕵️', '📰', '📷', '👀', '💻', '🎙️'];
+        const VIPS = ['👑', '💼', '🕶️'];
+        const VIP_PHOTOS = ['images/press_vip_1.jpg', 'images/press_vip_2.jpg'];
+
+        function startPressGame() {
+            playSound('click');
+            const realGuests = ITEMS_DB.filter(i => !i.isCoin && !i.isEmpty && !i.isLolita);
+            const collectedCount = realGuests.filter(i => (gameState.inventory[i.id] || 0) > 0).length;
+            const t = TRANSLATIONS[currentLang];
+
+            if (!gameState.pressGameUnlocked) {
+                if (collectedCount < 10) { alert(currentLang === 'en' ? 'Need at least 10 guests!' : 'Нужно минимум 10 гостей в коллекции!'); return; }
+                if (gameState.balance < 25000) { alert(t.notEnough); return; }
+                if ((gameState.lolitaBalance || 0) < 5) { alert(t.notEnough); return; }
+                gameState.balance -= 25000;
+                gameState.lolitaBalance -= 5;
+                gameState.pressGameUnlocked = true;
+                saveGame(); updateUI();
+                playSound('win');
+            }
+
+            if (pressGameTimer) clearInterval(pressGameTimer);
+            if (pressSpawnTimer) clearTimeout(pressSpawnTimer);
+            pressGameActive = true;
+            pressTimeLeft = 60;
+            pressLives = 3;
+            pressScore = 0;
+            pressCurrentSpawnDelay = 1200;
+            pressTotalReporters = 0;
+            pressTotalVips = 0;
+
+            document.getElementById('press-game-modal').classList.remove('hidden');
+            document.getElementById('press-game-overlay').classList.add('hidden');
+            document.getElementById('press-game-lives').innerText = '❤️❤️❤️';
+            document.getElementById('press-game-timer').innerText = '01:00';
+            
+            const area = document.getElementById('press-game-area');
+            const oldTargets = area.querySelectorAll('.reporter-target');
+            oldTargets.forEach(t => t.remove());
+
+            pressGameTimer = setInterval(() => {
+                if (isPaused || !pressGameActive) return;
+                pressTimeLeft--;
+                const mins = String(Math.floor(pressTimeLeft / 60)).padStart(2, '0');
+                const secs = String(pressTimeLeft % 60).padStart(2, '0');
+                document.getElementById('press-game-timer').innerText = `${mins}:${secs}`;
+                
+                if (pressTimeLeft > 40) pressCurrentSpawnDelay = 1200 + Math.random() * 300;
+                else if (pressTimeLeft > 20) pressCurrentSpawnDelay = 800 + Math.random() * 200;
+                else pressCurrentSpawnDelay = 600; // Чуть быстрее, чем в начале, но без безумия
+
+                if (pressTimeLeft <= 0) endPressGame(true);
+            }, 1000);
+
+            function spawnEnemy() {
+                if (!pressGameActive || isPaused) return;
+
+                let spawnCount = 1;
+                if (pressTimeLeft <= 20) {
+                    spawnCount = Math.random() < 0.3 ? 2 : 1; // Теперь не по 3, а по 1-2
+                }
+
+                for (let i = 0; i < spawnCount; i++) {
+                    const isVip = Math.random() < 0.25;
+                    let emoji = isVip ? VIPS[Math.floor(Math.random() * VIPS.length)] : REPORTERS[Math.floor(Math.random() * REPORTERS.length)];
+                    let isPhotoVip = false;
+
+                    if (isVip) {
+                        pressTotalVips++;
+                        if (Math.random() < 0.04) { // 4% шанс на фото
+                            emoji = VIP_PHOTOS[Math.floor(Math.random() * VIP_PHOTOS.length)];
+                            isPhotoVip = true;
+                        }
+                    } else {
+                        pressTotalReporters++;
+                    }
+                    
+                    const el = document.createElement('div');
+                    el.className = `reporter-target ${isVip ? 'vip' : ''}`;
+                    
+                    if (isPhotoVip) {
+                        el.innerHTML = `<img src="${emoji}" alt="VIP">`;
+                    } else {
+                        el.innerText = emoji;
+                    }
+                    
+                    const left = 10 + Math.random() * 80;
+                    el.style.left = `${left}%`;
+                    el.style.bottom = '-60px';
+                    el.style.transition = 'bottom 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    
+                    el.onclick = (e) => {
+                        e.stopPropagation();
+                        if (!pressGameActive || isPaused) return;
+                        
+                        if (isVip) {
+                            playSound('trap');
+                            const sound = document.getElementById('press-angry-sound');
+                            if (sound) { sound.currentTime = 0; sound.play().catch(e => console.log(e)); }
+                            
+                            pressLives--;
+                            document.getElementById('press-game-lives').innerText = '❤️'.repeat(Math.max(0, pressLives)) + '🖤'.repeat(3 - Math.max(0, pressLives));
+                            el.style.backgroundColor = 'rgba(255,0,0,0.5)';
+                            el.style.filter = 'none'; // Убираем свечение при клике
+                            
+                            if (isPhotoVip) {
+                                el.innerHTML = '<span style="font-size:40px; position:absolute; left:0; right:0; top:0; text-align:center;">💥</span>';
+                            } else {
+                                el.innerText = '💥';
+                            }
+                            
+                            setTimeout(() => el.remove(), 200);
+                            
+                            if (pressLives <= 0) endPressGame(false);
+                        } else {
+                            playSound('found');
+                            pressScore += 1;
+                            el.innerText = '💥';
+                            el.style.transform = 'scale(1.5)';
+                            el.style.opacity = '0';
+                            setTimeout(() => el.remove(), 200);
+                        }
+                    };
+                    
+                    area.appendChild(el);
+                    
+                    setTimeout(() => {
+                        if(el.parentNode) el.style.bottom = '10%';
+                    }, 50);
+
+                    if (!isVip && pressTimeLeft <= 40 && Math.random() < 0.3) {
+                        setTimeout(() => {
+                            if (el.parentNode && el.innerText !== '💥') {
+                                el.classList.add('fake-move');
+                                setTimeout(() => {
+                                    if (el.parentNode) el.remove();
+                                }, 300);
+                            }
+                        }, 500);
+                    } else {
+                        setTimeout(() => {
+                            if (el.parentNode) el.remove();
+                        }, 1500);
+                    }
+                }
+
+                pressSpawnTimer = setTimeout(spawnEnemy, pressCurrentSpawnDelay);
+            }
+
+            function endPressGame(won) {
+                pressGameActive = false;
+                if (pressGameTimer) clearInterval(pressGameTimer);
+                if (pressSpawnTimer) clearTimeout(pressSpawnTimer);
+                
+                const area = document.getElementById('press-game-area');
+                const targets = area.querySelectorAll('.reporter-target');
+                targets.forEach(t => t.remove());
+
+                const overlay = document.getElementById('press-game-overlay');
+                overlay.classList.remove('hidden');
+                const title = document.getElementById('press-end-title');
+                const scoreTxt = document.getElementById('press-end-score');
+
+                if (won) {
+                    playSound('legendary');
+                    confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
+                    title.innerText = currentLang === 'en' ? 'Success!' : 'Успех!';
+                    
+                    const hitRatio = pressTotalReporters > 0 ? pressScore / pressTotalReporters : 0;
+                    let rewardAmt = 500;
+                    if (hitRatio >= 0.8) rewardAmt = 5000;
+                    else if (hitRatio >= 0.4) rewardAmt = 2500;
+                    
+                    gameState.balance += rewardAmt;
+                    scoreTxt.innerText = `+${rewardAmt.toLocaleString()} 🪙`;
+                    
+                    gameState.pressWinCount = (gameState.pressWinCount || 0) + 1;
+                    updateQuestProgress('press_win', 1);
+                } else {
+                    playSound('miss');
+                    title.innerText = currentLang === 'en' ? 'Game Over' : 'Провал!';
+                    scoreTxt.innerText = currentLang === 'en' ? 'No reward.' : 'Вы не получили награду.';
+                }
+                
+                updateUI();
+                saveGame();
+            }
+
+            spawnEnemy();
+        }
+
+        function closePressGameModal() {
+            pressGameActive = false;
+            if (pressGameTimer) clearInterval(pressGameTimer);
+            if (pressSpawnTimer) clearTimeout(pressSpawnTimer);
+            document.getElementById('press-game-modal').classList.add('hidden');
         }
 
         function redeemPromo() {
