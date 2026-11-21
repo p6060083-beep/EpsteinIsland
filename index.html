@@ -180,13 +180,95 @@
         }
         .fake-move { animation: fakeMove 0.3s ease; }
         @keyframes fakeMove { 0% { transform: translateY(0); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0); } }
+
+        /* ================= NEW: фоны, документ, мобильная адаптация ================= */
+        body.theme-office {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('images/office_bg.jpg');
+            background-size: cover; background-position: center; background-attachment: fixed; background-repeat: no-repeat;
+        }
+        body.theme-video-bg-2 { background: #000 !important; }
+        #video-bg-element-2 { display: none; }
+        body.theme-video-bg-2 #video-bg-element-2 {
+            display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;
+        }
+
+        /* Рулетка: карточка «Фрагмент документа» */
+        .glow-doc { box-shadow: 0 0 20px #f59e0b, inset 0 0 12px rgba(0,0,0,0.85); animation: pulse-doc 1.6s infinite alternate; border-color: #f59e0b; }
+        @keyframes pulse-doc { 0% { box-shadow: 0 0 12px #f59e0b, inset 0 0 10px rgba(0,0,0,0.85); } 100% { box-shadow: 0 0 28px #fbbf24, inset 0 0 18px rgba(0,0,0,0.9); } }
+        .doc-roulette-card { background: repeating-linear-gradient(135deg, #1c1408 0px, #1c1408 8px, #120d05 8px, #120d05 16px); }
+        .doc-roulette-card .doc-bar { height: 5px; border-radius: 2px; background: #000; margin: 2px auto; box-shadow: 0 0 0 1px rgba(245,158,11,0.35); }
+
+        /* Тайный документ: лист и цензура */
+        .doc-sheet {
+            background: #f4ead0; color: #2b2416; font-family: 'Courier New', Courier, monospace;
+            border-radius: 6px; padding: 18px 16px; width: 100%; line-height: 1.85; font-size: 13px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.55), inset 0 0 40px rgba(120,80,20,0.18); position: relative; text-align: left;
+            border: 1px solid #c9b57e;
+        }
+        .doc-sheet .doc-head { text-align: center; font-weight: 900; letter-spacing: 0.04em; border-bottom: 2px double #7a6a3a; padding-bottom: 8px; margin-bottom: 10px; }
+        .doc-sheet .doc-head small { display: block; font-weight: 700; opacity: 0.75; letter-spacing: 0.08em; }
+        .doc-sheet .doc-stamp { display: table; margin: 0 auto 10px auto; transform: rotate(-2deg); border: 2px solid #9b1c1c; color: #9b1c1c; font-weight: 900; font-size: 9px; padding: 2px 8px; border-radius: 3px; opacity: 0.85; letter-spacing: 0.06em; text-align: center; }
+        .doc-sheet .doc-line { margin: 0 0 4px 0; }
+        .doc-sheet .doc-sign { margin-top: 12px; padding-top: 8px; border-top: 1px dashed #7a6a3a; font-size: 11px; opacity: 0.8; }
+        .censor-word { position: relative; display: inline-block; font-weight: 700; padding: 0 2px; vertical-align: baseline; }
+        .censor-box {
+            position: absolute; left: -1px; right: -1px; top: 1px; bottom: 1px; background: #050505; border-radius: 2px;
+            transition: opacity 1s ease, transform 1s ease; transform-origin: right center; z-index: 2;
+        }
+        .censor-box.revealed { opacity: 0; transform: scaleX(0.05); pointer-events: none; }
+        .doc-chip { display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 9999px; font-size: 10px; font-weight: 800; border: 1px solid #475569; background: #0f172a; color: #64748b; }
+        .doc-chip.found { border-color: #f59e0b; color: #fcd34d; background: rgba(245,158,11,0.12); }
+
+        /* Тост-уведомления */
+        #toast-box { position: fixed; left: 50%; bottom: 5.5rem; transform: translateX(-50%); z-index: 10000; display: flex; flex-direction: column; gap: 6px; align-items: center; pointer-events: none; width: max-content; max-width: 92vw; }
+        .toast-item { background: rgba(15,23,42,0.96); color: #e2e8f0; border: 1px solid rgba(148,163,184,0.4); border-radius: 12px; padding: 8px 14px; font-size: 12px; font-weight: 700; box-shadow: 0 6px 24px rgba(0,0,0,0.5); animation: toast-in 0.25s ease-out; text-align: center; }
+        @keyframes toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Кнопки управления в Лолита Экспресс */
+        .dpad-btn {
+            width: clamp(46px, 13vw, 60px); height: clamp(46px, 13vw, 60px);
+            background: rgba(30,41,59,0.75); border: 1px solid rgba(148,163,184,0.35); border-radius: 14px; color: #fff; font-size: 20px; font-weight: 700;
+            display: flex; align-items: center; justify-content: center; touch-action: none; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none;
+        }
+        .dpad-btn:active { background: rgba(56,189,248,0.5); }
+
+        /* Общее: без случайного скролла и двойного тапа */
+        button, [onclick] { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+        body.modal-open { overflow: hidden; }
+        [id$="-modal"] { overscroll-behavior: contain; }
+        #lolita-canvas, #press-game-area { touch-action: none; -webkit-user-select: none; user-select: none; }
+        main { padding-bottom: 1rem; }
+        nav.sticky { padding-bottom: calc(0.5rem + env(safe-area-inset-bottom, 0px)); }
+
+        @media (max-width: 640px) {
+            header > div { flex-wrap: wrap; row-gap: 6px; justify-content: center; }
+            #goldstein-statue { width: 64px !important; height: 64px !important; top: auto !important; bottom: 86px !important; left: 8px !important; }
+            #lolita-game-modal > div, #press-game-modal > div { max-height: 100dvh; overflow-y: auto; }
+            #toast-box { bottom: 6rem; }
+        }
+        @media (max-width: 420px) { #header-stats { display: none !important; } }
+
+        /* Режим мобильной оптимизации: меньше нагрузки на анимации */
+        body.mobile-optimized { overscroll-behavior-y: none; }
+        body.mobile-optimized .glow-legendary, body.mobile-optimized .glow-lolita, body.mobile-optimized .glow-doc,
+        body.mobile-optimized .animate-pulse, body.mobile-optimized .animate-bounce, body.mobile-optimized .animate-ping,
+        body.mobile-optimized #goldstein-statue { animation: none !important; }
+        body.mobile-optimized .holo-card::before { animation: none !important; }
+        body.mobile-optimized [class*="backdrop-blur"] { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+        body.mobile-optimized .toast-item { animation: none; }
+        body.mobile-optimized.theme-twotigers, body.mobile-optimized.theme-temple, body.mobile-optimized.theme-office,
+        body.mobile-optimized.theme-supergold { background-attachment: scroll !important; }
+        body.mobile-optimized .btn-bounce { transition: none; }
     </style>
 </head>
 <body class="text-white flex flex-col justify-between min-h-screen relative">
 
     <!-- Видео-фон -->
-    <video id="video-bg-element" autoplay muted loop playsinline>
+    <video id="video-bg-element" muted loop playsinline preload="none" disablepictureinpicture>
         <source src="images/video_bg.mp4" type="video/mp4">
+    </video>
+    <video id="video-bg-element-2" muted loop playsinline preload="none" disablepictureinpicture>
+        <source src="images/video_bg_2.mp4" type="video/mp4">
     </video>
 
     <div id="jumpscare-overlay" class="fixed inset-0 z-[999] bg-black hidden items-center justify-center">
@@ -244,7 +326,7 @@
                 </button>
                 <button onclick="toggleAudio()" id="sound-btn" class="bg-slate-800 hover:bg-slate-700 p-2 sm:p-2.5 rounded-xl border border-slate-700 text-base sm:text-lg btn-bounce">🔊</button>
                 <button onclick="openSettingsModal()" id="settings-btn" class="bg-slate-800 hover:bg-slate-700 p-2 sm:p-2.5 rounded-xl border border-slate-700 text-base sm:text-lg btn-bounce">⚙️</button>
-                <div class="flex items-center gap-2 sm:gap-3 bg-slate-900/80 px-2 sm:px-3 py-1.5 rounded-xl border border-slate-800 text-[10px] sm:text-xs">
+                <div id="header-stats" class="flex items-center gap-2 sm:gap-3 bg-slate-900/80 px-2 sm:px-3 py-1.5 rounded-xl border border-slate-800 text-[10px] sm:text-xs">
                     <div class="text-center">
                         <div id="lbl-stat-guests" class="text-slate-400 text-[9px] sm:text-[10px] uppercase font-bold">Гостей</div>
                         <div id="stats-collection-count" class="font-bold text-emerald-400">0/0</div>
@@ -517,6 +599,12 @@
                         <p id="theme-desc-temple" class="text-[10px] text-slate-400 my-2">Сине-белый храм-павильон с золотым куполом. Очень атмосферно.</p>
                         <button onclick="buyTheme('temple', 25000, 5)" id="theme-btn-temple" class="w-full py-2 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 text-white font-black text-xs uppercase rounded-xl btn-bounce shadow-lg">Купить (25,000 🪙 + 5 ✈️)</button>
                     </div>
+                    <div class="bg-slate-900 border-2 border-cyan-500/60 rounded-2xl p-4 flex flex-col justify-between items-center text-center">
+                        <div class="text-4xl mb-2">🏢</div>
+                        <h4 id="theme-name-office" class="font-bold text-sm text-cyan-300">Офис</h4>
+                        <p id="theme-desc-office" class="text-[10px] text-slate-400 my-2">Рабочий кабинет острова. Строгая деловая атмосфера.</p>
+                        <button onclick="buyTheme('office', 45000)" id="theme-btn-office" class="w-full py-2 bg-gradient-to-r from-cyan-600 to-sky-700 hover:from-cyan-500 hover:to-sky-600 text-white font-black text-xs uppercase rounded-xl btn-bounce shadow-lg">Купить (45,000 🪙)</button>
+                    </div>
                 </div>
             </div>
 
@@ -529,6 +617,12 @@
                         <h4 id="theme-name-video_bg" class="font-bold text-sm text-pink-300">Видео-фон</h4>
                         <p id="theme-desc-video_bg" class="text-[10px] text-slate-400 my-2">Динамичный видео-фон. <span class="text-red-400 font-bold">Не рекомендуется для мобильных устройств!</span></p>
                         <button onclick="buyVideoBg()" id="theme-btn-video_bg" class="w-full py-2 bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-400 hover:to-rose-500 text-white font-black text-xs uppercase rounded-xl btn-bounce shadow-lg">Купить (50,000 🪙 + 50 ✈️)</button>
+                    </div>
+                    <div class="bg-slate-900 border-2 border-fuchsia-500/70 rounded-2xl p-4 flex flex-col justify-between items-center text-center glow-legendary">
+                        <div class="text-4xl mb-2">📽️</div>
+                        <h4 id="theme-name-video_bg2" class="font-bold text-sm text-fuchsia-300">Видео-фон 2</h4>
+                        <p id="theme-desc-video_bg2" class="text-[10px] text-slate-400 my-2">Второй динамичный видео-фон. ⚠️ Не рекомендуется для слабых устройств и мобильных устройств!</p>
+                        <button onclick="buyVideoBg2()" id="theme-btn-video_bg2" class="w-full py-2 bg-gradient-to-r from-fuchsia-500 to-pink-600 hover:from-fuchsia-400 hover:to-pink-500 text-white font-black text-xs uppercase rounded-xl btn-bounce shadow-lg">Купить (100,000 🪙 + 10 ✈️)</button>
                     </div>
                 </div>
             </div>
@@ -644,7 +738,7 @@
                 <p id="lbl-archives-subtitle" class="text-slate-400 text-xs sm:text-sm mt-1">Изучай карту острова и собирай секретные материалы.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 max-w-6xl mx-auto items-stretch">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto items-stretch">
                 <div class="card-bg-pattern border-2 border-emerald-500/50 rounded-2xl p-5 flex flex-col items-center justify-between text-center relative overflow-hidden shadow-xl h-full">
                     <div class="bg-emerald-500/20 text-emerald-300 text-[10px] font-black px-3 py-1 rounded-full uppercase border border-emerald-500/30">Раздел 1</div>
                     <div class="text-6xl my-3">🗺️</div>
@@ -681,6 +775,24 @@
                     <h3 class="text-lg font-black mb-1 text-rose-400">Тайные Видео</h3>
                     <p class="text-xs text-slate-300 mb-4 flex-grow">Собери 10 секретных видеозаписей. Выпадают из Архива Острова и Частного Боинга.</p>
                     <button onclick="openSecretVideosModal()" class="w-full py-3 bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 rounded-xl font-black text-xs uppercase tracking-wider btn-bounce shadow-md text-white mt-auto">Открыть Видеоархив</button>
+                </div>
+
+                <div id="secret-videos-2-card" class="card-bg-pattern border-2 border-slate-600/60 rounded-2xl p-5 flex flex-col items-center justify-between text-center relative overflow-hidden shadow-xl h-full grayscale opacity-60" aria-disabled="true">
+                    <div id="videos2-soon-badge" class="absolute top-3 right-3 rotate-6 bg-slate-200 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded shadow uppercase">Скоро</div>
+                    <div id="videos2-section-badge" class="bg-slate-500/20 text-slate-300 text-[10px] font-black px-3 py-1 rounded-full uppercase border border-slate-500/30">Раздел 6</div>
+                    <div class="text-6xl my-3">🎞️</div>
+                    <h3 id="videos2-title" class="text-lg font-black mb-1 text-slate-300">Тайные Видео 2</h3>
+                    <p id="videos2-desc" class="text-xs text-slate-400 mb-4 flex-grow">Новые видеоматериалы по делу Эпштейна выйдут в декабре/январе.</p>
+                    <button id="btn-open-secret-videos-2" onclick="openSecretVideos2Teaser()" aria-disabled="true" class="w-full py-3 bg-slate-700 text-slate-400 rounded-xl font-black text-xs uppercase tracking-wider mt-auto cursor-not-allowed">Скоро 🔒</button>
+                </div>
+
+                <div id="secret-doc-card" class="card-bg-pattern border-2 border-amber-500/60 rounded-2xl p-5 flex flex-col items-center justify-between text-center relative overflow-hidden shadow-xl h-full opacity-50">
+                    <div id="doc-card-badge" class="bg-amber-500/20 text-amber-300 text-[10px] font-black px-3 py-1 rounded-full uppercase border border-amber-500/30">Раздел 7</div>
+                    <div class="text-6xl my-3">📄</div>
+                    <h3 id="doc-card-title" class="text-lg font-black mb-1 text-amber-400">Тайный Документ</h3>
+                    <p id="doc-card-desc" class="text-xs text-slate-300 mb-3 flex-grow">Журнал полётов и гостевых пропусков. Найди 5 фрагментов в «Архиве Острова» и «Частном Боинге», чтобы снять цензуру.</p>
+                    <div id="doc-card-status" class="text-[10px] font-bold text-amber-300 bg-amber-500/10 border border-amber-500/30 rounded-lg px-2 py-1 mb-3"></div>
+                    <button id="btn-open-secret-doc" onclick="openSecretDocModal()" class="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 rounded-xl font-black text-xs uppercase tracking-wider btn-bounce shadow-md text-slate-950 mt-auto">Открыть Документ</button>
                 </div>
             </div>
         </section>
@@ -946,6 +1058,22 @@
         </div>
     </div>
 
+    <div id="secret-doc-modal" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex items-start sm:items-center justify-center p-3 hidden overflow-y-auto">
+        <div class="bg-slate-900 border-4 border-amber-500 w-full max-w-2xl rounded-3xl p-4 sm:p-6 flex flex-col items-center relative shadow-2xl my-auto">
+            <button onclick="closeSecretDocModal()" class="absolute top-3 right-3 text-slate-400 hover:text-white text-2xl font-bold p-2 z-10">✕</button>
+            <h3 id="doc-modal-title" class="text-xl sm:text-2xl font-black text-amber-400 mb-1 uppercase text-center pr-8">📄 Тайный Документ</h3>
+            <p id="doc-modal-desc" class="text-xs text-slate-400 mb-3 text-center">Открывай фрагменты в кейсах, чтобы снять чёрную цензуру.</p>
+            <div id="doc-fragment-chips" class="flex flex-wrap justify-center gap-1.5 mb-4"></div>
+            <div id="doc-sheet-wrap" class="w-full"></div>
+            <div class="w-full text-center bg-slate-950 border border-amber-500/40 rounded-2xl p-3 mt-4">
+                <p id="doc-progress-text" class="text-sm font-bold text-slate-300">Фрагментов: 0 / 5</p>
+                <p id="doc-reward-desc" class="text-xs text-slate-400 mt-1">Награда за все 5 фрагментов: 30,000 🪙 + 15 ✈️</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-box"></div>
+
     <div id="lolita-game-modal" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex items-center justify-center p-3 hidden">
         <div class="bg-slate-900 border-4 border-sky-400 w-full max-w-2xl rounded-3xl p-4 flex flex-col items-center relative shadow-2xl my-auto">
             <button onclick="closeLolitaGameModal()" class="absolute top-3 right-3 text-slate-400 hover:text-white text-2xl font-bold p-2 z-50">✕</button>
@@ -953,6 +1081,7 @@
                 <div>
                     <h3 id="lbl-lolita-game-title" class="text-lg font-black text-sky-400">✈️ Лолита Экспресс</h3>
                     <p id="lbl-lolita-game-desc" class="text-[10px] text-slate-400">Уворачивайся и собирай монеты! 2 минуты.</p>
+                    <p id="lbl-lolita-pu-hint" class="text-[9px] text-emerald-300/80 mt-0.5">🧲 Магнит · 🛡️ Щит · ⚡ Турбо — светящиеся круги это бонусы, а не преграды!</p>
                 </div>
                 <div class="text-right">
                     <div id="lolita-game-timer" class="text-xl font-pixel text-yellow-400">02:00</div>
@@ -962,14 +1091,14 @@
             <div class="relative w-full bg-slate-950 rounded-2xl border-2 border-slate-700 overflow-hidden" style="aspect-ratio: 4/3;">
                 <canvas id="lolita-canvas" class="w-full h-full block"></canvas>
                 
-                <div id="mobile-controls" class="absolute bottom-4 left-0 right-0 flex justify-between px-4 pointer-events-none z-20 hidden">
-                    <div class="grid grid-cols-3 gap-1 pointer-events-auto">
+                <div id="mobile-controls" class="absolute bottom-2 left-2 pointer-events-none z-20 hidden">
+                    <div class="grid grid-cols-3 gap-1 pointer-events-auto" oncontextmenu="return false;">
                         <div></div>
-                        <button class="w-12 h-12 bg-slate-800/80 rounded-lg text-white font-bold flex items-center justify-center text-xl active:bg-slate-700" onpointerdown="handleMobileMove('ArrowUp', true)" onpointerup="handleMobileMove('ArrowUp', false)" onpointerleave="handleMobileMove('ArrowUp', false)">▲</button>
+                        <button class="dpad-btn" onpointerdown="handleMobileMove('ArrowUp', true)" onpointerup="handleMobileMove('ArrowUp', false)" onpointerleave="handleMobileMove('ArrowUp', false)" onpointercancel="handleMobileMove('ArrowUp', false)">▲</button>
                         <div></div>
-                        <button class="w-12 h-12 bg-slate-800/80 rounded-lg text-white font-bold flex items-center justify-center text-xl active:bg-slate-700" onpointerdown="handleMobileMove('ArrowLeft', true)" onpointerup="handleMobileMove('ArrowLeft', false)" onpointerleave="handleMobileMove('ArrowLeft', false)">◀</button>
-                        <button class="w-12 h-12 bg-slate-800/80 rounded-lg text-white font-bold flex items-center justify-center text-xl active:bg-slate-700" onpointerdown="handleMobileMove('ArrowDown', true)" onpointerup="handleMobileMove('ArrowDown', false)" onpointerleave="handleMobileMove('ArrowDown', false)">▼</button>
-                        <button class="w-12 h-12 bg-slate-800/80 rounded-lg text-white font-bold flex items-center justify-center text-xl active:bg-slate-700" onpointerdown="handleMobileMove('ArrowRight', true)" onpointerup="handleMobileMove('ArrowRight', false)" onpointerleave="handleMobileMove('ArrowRight', false)">▶</button>
+                        <button class="dpad-btn" onpointerdown="handleMobileMove('ArrowLeft', true)" onpointerup="handleMobileMove('ArrowLeft', false)" onpointerleave="handleMobileMove('ArrowLeft', false)" onpointercancel="handleMobileMove('ArrowLeft', false)">◀</button>
+                        <button class="dpad-btn" onpointerdown="handleMobileMove('ArrowDown', true)" onpointerup="handleMobileMove('ArrowDown', false)" onpointerleave="handleMobileMove('ArrowDown', false)" onpointercancel="handleMobileMove('ArrowDown', false)">▼</button>
+                        <button class="dpad-btn" onpointerdown="handleMobileMove('ArrowRight', true)" onpointerup="handleMobileMove('ArrowRight', false)" onpointerleave="handleMobileMove('ArrowRight', false)" onpointercancel="handleMobileMove('ArrowRight', false)">▶</button>
                     </div>
                 </div>
 
@@ -1348,6 +1477,65 @@
             secretVideo: { ruName: '🎥 Тайное Видео', enName: '🎥 Secret Video', color: 'border-rose-500 bg-rose-600/30 text-rose-300', glow: 'glow-legendary' }
         };
 
+        RARITIES.docFragment = { ruName: '📄 Фрагмент документа', enName: '📄 Doc Fragment', color: 'border-amber-500 bg-amber-600/20 text-amber-300', glow: 'glow-doc' };
+
+        Object.assign(TRANSLATIONS.ru, {
+            themeOfficeName: 'Офис', themeOfficeDesc: 'Рабочий кабинет острова. Строгая деловая атмосфера.',
+            themeVideo2Name: 'Видео-фон 2', themeVideo2Desc: 'Второй динамичный видео-фон. ⚠️ Не рекомендуется для слабых устройств и мобильных устройств!',
+            navVideos2Title: 'Тайные Видео 2', navVideos2Desc: 'Новые видеоматериалы по делу Эпштейна выйдут в декабре/январе.',
+            navVideos2Btn: 'Скоро 🔒', navVideos2Soon: 'Скоро', navVideos2Toast: '🔒 Раздел «Тайные Видео 2» откроется в декабре. Следи за обновлениями!',
+            sectionWord: 'Раздел',
+            navDocTitle: 'Тайный Документ', navDocDesc: 'Журнал полётов и гостевых пропусков. Найди 5 фрагментов в «Архиве Острова» и «Частном Боинге», чтобы снять цензуру.',
+            navDocBtn: 'Открыть Документ', navDocNeed: '🔒 Нужно минимум 15 гостей в коллекции', navDocProgress: 'Фрагментов:', navDocLockedToast: '🔒 Раздел откроется, когда в коллекции будет минимум 15 гостей.',
+            docModalTitle: '📄 Тайный Документ', docModalDesc: 'Открывай фрагменты в кейсах «Архив Острова» и «Частный Боинг» — чёрные блоки будут исчезать.',
+            docProgress: 'Фрагментов:', docRewardDesc: 'Награда за все 5 фрагментов: 30,000 🪙 + 15 ✈️', docRewardDone: 'Награда получена ✅ (+30,000 🪙, +15 ✈️)',
+            docFragName: 'Фрагмент документа', docFragRole: 'Вы нашли фрагмент секретного документа!', docFragRevealed: 'Раскрыто:', docFragLeft: 'Осталось найти:',
+            docRewardAlert: 'ПОЗДРАВЛЯЕМ! Все 5 фрагментов документа открыты! Награда: +30,000 🪙 и +15 ✈️!',
+            docRateNote: '📄 Фрагмент документа выпадает только после 15 гостей в коллекции; уже открытые фрагменты не выпадают.',
+            docFragNames: ['Маршрут', 'Бортовой номер', 'Имя фигуранта', 'Зона острова', 'Итоговая пометка'],
+            docSheetHeader: 'ЖУРНАЛ ПОЛЁТОВ И ГОСТЕВЫХ ПРОПУСКОВ', docSheetSector: 'Сектор Литл-Сент-Джеймс', docSheetStamp: 'ДЛЯ СЛУЖЕБНОГО ПОЛЬЗОВАНИЯ',
+            docSheetLines: [
+                'Лист № 7 · Запись от 12 марта · 11:40 по местному времени.',
+                'Маршрут рейса: {1}. Рейс выполнен без отклонений от плана.',
+                'Бортовой номер: {2}. Экипаж: два пилота и один бортпроводник.',
+                'Пассажир по списку: {3}. Гостевой пропуск выдан на трое суток.',
+                'Зона размещения на острове: {4}. После 22:00 вход ограничен.',
+                'Примечание дежурного: гости перемещаются по острову только в сопровождении охраны.',
+                'Итоговая пометка: {5}.'
+            ],
+            docSheetSign: 'Подпись дежурного диспетчера · Печать № 0457',
+            puHint: '🧲 Магнит · 🛡️ Щит · ⚡ Турбо — светящиеся круги это бонусы, а не преграды!',
+            eggReward: '+{n} ✈️'
+        });
+        Object.assign(TRANSLATIONS.en, {
+            themeOfficeName: 'Office', themeOfficeDesc: 'The island work office. Strict business atmosphere.',
+            themeVideo2Name: 'Video Background 2', themeVideo2Desc: 'Second dynamic video background. ⚠️ Not recommended for weak devices and mobile devices!',
+            navVideos2Title: 'Secret Videos 2', navVideos2Desc: 'New Epstein case videos coming in December/January.',
+            navVideos2Btn: 'Soon 🔒', navVideos2Soon: 'Soon', navVideos2Toast: '🔒 "Secret Videos 2" will unlock in December. Stay tuned!',
+            sectionWord: 'Section',
+            navDocTitle: 'Secret Document', navDocDesc: 'Flight and guest pass log. Find 5 fragments in Island Archives and Private Boeing to lift the censorship.',
+            navDocBtn: 'Open Document', navDocNeed: '🔒 Requires at least 15 guests in collection', navDocProgress: 'Fragments:', navDocLockedToast: '🔒 This section unlocks once you have at least 15 guests in your collection.',
+            docModalTitle: '📄 Secret Document', docModalDesc: 'Open fragments in Island Archives and Private Boeing cases — the black blocks will disappear.',
+            docProgress: 'Fragments:', docRewardDesc: 'Reward for all 5 fragments: 30,000 🪙 + 15 ✈️', docRewardDone: 'Reward claimed ✅ (+30,000 🪙, +15 ✈️)',
+            docFragName: 'Doc Fragment', docFragRole: 'You found a fragment of a secret document!', docFragRevealed: 'Revealed:', docFragLeft: 'Left to find:',
+            docRewardAlert: 'CONGRATULATIONS! All 5 document fragments are open! Reward: +30,000 🪙 and +15 ✈️!',
+            docRateNote: '📄 Doc Fragment drops only after you have 15 guests in your collection; already opened fragments do not drop.',
+            docFragNames: ['Route', 'Tail number', 'Subject name', 'Island zone', 'Final note'],
+            docSheetHeader: 'FLIGHT AND GUEST PASS LOG', docSheetSector: 'Little St. James Sector', docSheetStamp: 'FOR OFFICIAL USE ONLY',
+            docSheetLines: [
+                'Sheet No. 7 · Entry of March 12 · 11:40 local time.',
+                'Flight route: {1}. Flight completed with no deviations from plan.',
+                'Tail number: {2}. Crew: two pilots and one flight attendant.',
+                'Passenger on the list: {3}. Guest pass issued for three days.',
+                'Island accommodation zone: {4}. Entry restricted after 22:00.',
+                'Duty officer note: guests move around the island only escorted by security.',
+                'Final note: {5}.'
+            ],
+            docSheetSign: 'Signed by duty dispatcher · Seal No. 0457',
+            puHint: '🧲 Magnet · 🛡️ Shield · ⚡ Turbo — glowing circles are bonuses, not obstacles!',
+            eggReward: '+{n} ✈️'
+        });
+
         const ISLAND_PARTS = [
             { id: 'part_mansion', ruName: 'Особняк', enName: 'Mansion', zoneId: 'zone-mansion', avatar: '🏛️' },
             { id: 'part_beach', ruName: 'Пляжная зона', enName: 'Beach Zone', zoneId: 'zone-beach', avatar: '🏖️' },
@@ -1408,6 +1596,20 @@
             { id: 'v9', ruName: 'Видео #9', enName: 'Video #9', video: 'videos/secret_video_9.mp4', desc: 'Секретная видеозапись.' },
             { id: 'v10', ruName: 'Видео #10', enName: 'Video #10', video: 'videos/secret_video_10.mp4', desc: 'Секретная видеозапись.' }
         ];
+
+
+        // === ТАЙНЫЙ ДОКУМЕНТ (5 фрагментов) ===
+        const DOC_FRAGMENTS = [
+            { id: 'd1', ruWord: 'Тетерборо → Сент-Томас', enWord: 'Teterboro → St. Thomas' },
+            { id: 'd2', ruWord: 'N727XX', enWord: 'N727XX' },
+            { id: 'd3', ruWord: 'Д. ДОУ', enWord: 'J. DOE' },
+            { id: 'd4', ruWord: 'Храм-павильон', enWord: 'Temple Pavilion' },
+            { id: 'd5', ruWord: 'ДЕЛО ЗАКРЫТО', enWord: 'CASE CLOSED' }
+        ];
+        const DOC_MIN_GUESTS = 15;
+        const DOC_CHANCE = { legendary: 2.0, boeing: 3.5 };
+        const DOC_REWARD_COINS = 30000;
+        const DOC_REWARD_LOLITA = 15;
 
         const ITEMS_DB = [
             { id: 'empty_slot', isEmpty: true, ruName: 'Ничего', enName: 'Nothing', rarity: 'empty', avatar: '💨', ruDesc: 'В этот раз чемодан оказался абсолютно пустым!', enDesc: 'This briefcase turned out to be completely empty!' },
@@ -1501,7 +1703,12 @@
                 videoBgUnlocked: false,
                 courtWinStreak: 0,
                 pressWinCount: 0,
-                easterEggsSeen: []
+                easterEggsSeen: [],
+                foundSecretVideos2: [],
+                secretVideos2RewardClaimed: false,
+                foundDocFragments: [],
+                secretDocRewardClaimed: false,
+                videoBg2Unlocked: false
             };
         }
 
@@ -2112,6 +2319,11 @@
             if (gameState.pressGameUnlocked === undefined) gameState.pressGameUnlocked = false;
             if (gameState.easterEggsSeen === undefined) gameState.easterEggsSeen = [];
             if (gameState.videoBgUnlocked === undefined) gameState.videoBgUnlocked = false;
+            if (!Array.isArray(gameState.foundSecretVideos2)) gameState.foundSecretVideos2 = [];
+            if (gameState.secretVideos2RewardClaimed === undefined) gameState.secretVideos2RewardClaimed = false;
+            if (!Array.isArray(gameState.foundDocFragments)) gameState.foundDocFragments = [];
+            if (gameState.secretDocRewardClaimed === undefined) gameState.secretDocRewardClaimed = false;
+            if (gameState.videoBg2Unlocked === undefined) gameState.videoBg2Unlocked = false;
             
             gameState = JSON.parse(JSON.stringify(gameState));
             
@@ -2228,188 +2440,189 @@
 
         function applyLanguageUI() {
             const t = TRANSLATIONS[currentLang];
-            document.getElementById('lbl-balance').innerText = t.balance;
-            document.getElementById('lbl-lolita').innerText = t.lolita;
-            document.getElementById('lbl-stat-guests').innerText = t.guests;
-            document.getElementById('lbl-stat-archive').innerText = t.archive;
-            document.getElementById('lbl-slots-btn').innerText = t.slotsBtn;
-            document.getElementById('lbl-cases-title').innerText = t.casesTitle;
-            document.getElementById('lbl-cases-subtitle').innerText = t.casesSub;
-            document.getElementById('case1-badge').innerText = t.case1Badge;
-            document.getElementById('case1-title').innerText = t.case1Title;
-            document.getElementById('case1-desc').innerText = t.case1Desc;
-            document.getElementById('case2-badge').innerText = t.case2Badge;
-            document.getElementById('case2-title').innerText = t.case2Title;
-            document.getElementById('case2-desc').innerText = t.case2Desc;
-            document.getElementById('case3-badge').innerText = t.case3Badge;
-            document.getElementById('case3-title').innerText = t.case3Title;
-            document.getElementById('case3-desc').innerText = t.case3Desc;
-            document.getElementById('case4-badge').innerText = t.case4Badge;
-            document.getElementById('case4-title').innerText = t.case4Title;
-            document.getElementById('case4-desc').innerText = t.case4Desc;
+            applyNewFeaturesLanguageUI();
+            try { const _e = document.getElementById('lbl-balance'); if (_e) _e.innerText = t.balance; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-lolita'); if (_e) _e.innerText = t.lolita; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-stat-guests'); if (_e) _e.innerText = t.guests; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-stat-archive'); if (_e) _e.innerText = t.archive; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-slots-btn'); if (_e) _e.innerText = t.slotsBtn; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-cases-title'); if (_e) _e.innerText = t.casesTitle; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-cases-subtitle'); if (_e) _e.innerText = t.casesSub; } catch (_x) {}
+            try { const _e = document.getElementById('case1-badge'); if (_e) _e.innerText = t.case1Badge; } catch (_x) {}
+            try { const _e = document.getElementById('case1-title'); if (_e) _e.innerText = t.case1Title; } catch (_x) {}
+            try { const _e = document.getElementById('case1-desc'); if (_e) _e.innerText = t.case1Desc; } catch (_x) {}
+            try { const _e = document.getElementById('case2-badge'); if (_e) _e.innerText = t.case2Badge; } catch (_x) {}
+            try { const _e = document.getElementById('case2-title'); if (_e) _e.innerText = t.case2Title; } catch (_x) {}
+            try { const _e = document.getElementById('case2-desc'); if (_e) _e.innerText = t.case2Desc; } catch (_x) {}
+            try { const _e = document.getElementById('case3-badge'); if (_e) _e.innerText = t.case3Badge; } catch (_x) {}
+            try { const _e = document.getElementById('case3-title'); if (_e) _e.innerText = t.case3Title; } catch (_x) {}
+            try { const _e = document.getElementById('case3-desc'); if (_e) _e.innerText = t.case3Desc; } catch (_x) {}
+            try { const _e = document.getElementById('case4-badge'); if (_e) _e.innerText = t.case4Badge; } catch (_x) {}
+            try { const _e = document.getElementById('case4-title'); if (_e) _e.innerText = t.case4Title; } catch (_x) {}
+            try { const _e = document.getElementById('case4-desc'); if (_e) _e.innerText = t.case4Desc; } catch (_x) {}
             document.querySelectorAll('.btn-open-txt').forEach(el => el.innerText = t.open);
-            document.getElementById('lbl-fast-title').innerText = t.fastTitle;
-            document.getElementById('lbl-fast-desc').innerText = t.fastDesc;
-            document.getElementById('lbl-unlock-btn').innerText = t.unlock;
-            document.getElementById('lbl-fast-pcs').innerText = t.fastPcs;
-            document.getElementById('lbl-fast-btn-basic').innerText = t.fastBasic;
-            document.getElementById('lbl-fast-btn-safe').innerText = t.fastSafe;
-            document.getElementById('lbl-cooldown-txt').innerText = t.cooldownTxt;
-            document.getElementById('lbl-clicker-title').innerText = t.clickerTitle;
-            document.getElementById('lbl-clicker-subtitle').innerText = t.clickerSub;
-            document.getElementById('lbl-tap-btn').innerText = t.tapBtn;
-            document.getElementById('lbl-click-power-title').innerText = t.clickPower;
-            document.getElementById('lbl-click-upg-btn').innerText = t.upgrade;
-            document.getElementById('lbl-auto-title').innerText = t.autoTitle;
-            document.getElementById('lbl-auto-upg-btn').innerText = t.buy;
-            document.getElementById('lbl-collection-title').innerText = t.collectionTitle;
-            document.getElementById('lbl-collection-subtitle').innerText = t.collectionSub;
-            document.getElementById('flt-all').innerText = t.fltAll;
-            document.getElementById('flt-rare').innerText = t.fltRare;
-            document.getElementById('flt-superrare').innerText = t.fltSuperrare;
-            document.getElementById('flt-epic').innerText = t.fltEpic;
-            document.getElementById('flt-mythic').innerText = t.fltMythic;
-            document.getElementById('flt-legendary').innerText = t.fltLegendary;
+            try { const _e = document.getElementById('lbl-fast-title'); if (_e) _e.innerText = t.fastTitle; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-fast-desc'); if (_e) _e.innerText = t.fastDesc; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-unlock-btn'); if (_e) _e.innerText = t.unlock; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-fast-pcs'); if (_e) _e.innerText = t.fastPcs; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-fast-btn-basic'); if (_e) _e.innerText = t.fastBasic; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-fast-btn-safe'); if (_e) _e.innerText = t.fastSafe; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-cooldown-txt'); if (_e) _e.innerText = t.cooldownTxt; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-clicker-title'); if (_e) _e.innerText = t.clickerTitle; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-clicker-subtitle'); if (_e) _e.innerText = t.clickerSub; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-tap-btn'); if (_e) _e.innerText = t.tapBtn; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-click-power-title'); if (_e) _e.innerText = t.clickPower; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-click-upg-btn'); if (_e) _e.innerText = t.upgrade; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-auto-title'); if (_e) _e.innerText = t.autoTitle; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-auto-upg-btn'); if (_e) _e.innerText = t.buy; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-collection-title'); if (_e) _e.innerText = t.collectionTitle; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-collection-subtitle'); if (_e) _e.innerText = t.collectionSub; } catch (_x) {}
+            try { const _e = document.getElementById('flt-all'); if (_e) _e.innerText = t.fltAll; } catch (_x) {}
+            try { const _e = document.getElementById('flt-rare'); if (_e) _e.innerText = t.fltRare; } catch (_x) {}
+            try { const _e = document.getElementById('flt-superrare'); if (_e) _e.innerText = t.fltSuperrare; } catch (_x) {}
+            try { const _e = document.getElementById('flt-epic'); if (_e) _e.innerText = t.fltEpic; } catch (_x) {}
+            try { const _e = document.getElementById('flt-mythic'); if (_e) _e.innerText = t.fltMythic; } catch (_x) {}
+            try { const _e = document.getElementById('flt-legendary'); if (_e) _e.innerText = t.fltLegendary; } catch (_x) {}
             
-            document.getElementById('theme-name-default').innerText = t.themeDefaultName;
-            document.getElementById('theme-desc-default').innerText = t.themeDefaultDesc;
-            document.getElementById('theme-name-simple').innerText = t.themeSimpleName;
-            document.getElementById('theme-desc-simple').innerText = t.themeSimpleDesc;
-            document.getElementById('theme-name-cool').innerText = t.themeCoolName;
-            document.getElementById('theme-desc-cool').innerText = t.themeCoolDesc;
-            document.getElementById('theme-name-night').innerText = t.themeNightName;
-            document.getElementById('theme-desc-night').innerText = t.themeNightDesc;
-            document.getElementById('theme-name-epstein').innerText = t.themeEpsteinName;
-            document.getElementById('theme-desc-epstein').innerText = t.themeEpsteinDesc;
-            document.getElementById('theme-name-supergold').innerText = t.themeSupergoldName;
-            document.getElementById('theme-desc-supergold').innerText = t.themeSupergoldDesc;
-            document.getElementById('theme-name-twotigers').innerText = t.themeTwotigersName;
-            document.getElementById('theme-desc-twotigers').innerText = t.themeTwotigersDesc;
-            document.getElementById('theme-name-temple').innerText = t.themeTempleName;
-            document.getElementById('theme-desc-temple').innerText = t.themeTempleDesc;
+            try { const _e = document.getElementById('theme-name-default'); if (_e) _e.innerText = t.themeDefaultName; } catch (_x) {}
+            try { const _e = document.getElementById('theme-desc-default'); if (_e) _e.innerText = t.themeDefaultDesc; } catch (_x) {}
+            try { const _e = document.getElementById('theme-name-simple'); if (_e) _e.innerText = t.themeSimpleName; } catch (_x) {}
+            try { const _e = document.getElementById('theme-desc-simple'); if (_e) _e.innerText = t.themeSimpleDesc; } catch (_x) {}
+            try { const _e = document.getElementById('theme-name-cool'); if (_e) _e.innerText = t.themeCoolName; } catch (_x) {}
+            try { const _e = document.getElementById('theme-desc-cool'); if (_e) _e.innerText = t.themeCoolDesc; } catch (_x) {}
+            try { const _e = document.getElementById('theme-name-night'); if (_e) _e.innerText = t.themeNightName; } catch (_x) {}
+            try { const _e = document.getElementById('theme-desc-night'); if (_e) _e.innerText = t.themeNightDesc; } catch (_x) {}
+            try { const _e = document.getElementById('theme-name-epstein'); if (_e) _e.innerText = t.themeEpsteinName; } catch (_x) {}
+            try { const _e = document.getElementById('theme-desc-epstein'); if (_e) _e.innerText = t.themeEpsteinDesc; } catch (_x) {}
+            try { const _e = document.getElementById('theme-name-supergold'); if (_e) _e.innerText = t.themeSupergoldName; } catch (_x) {}
+            try { const _e = document.getElementById('theme-desc-supergold'); if (_e) _e.innerText = t.themeSupergoldDesc; } catch (_x) {}
+            try { const _e = document.getElementById('theme-name-twotigers'); if (_e) _e.innerText = t.themeTwotigersName; } catch (_x) {}
+            try { const _e = document.getElementById('theme-desc-twotigers'); if (_e) _e.innerText = t.themeTwotigersDesc; } catch (_x) {}
+            try { const _e = document.getElementById('theme-name-temple'); if (_e) _e.innerText = t.themeTempleName; } catch (_x) {}
+            try { const _e = document.getElementById('theme-desc-temple'); if (_e) _e.innerText = t.themeTempleDesc; } catch (_x) {}
             
-            document.getElementById('theme-name-video_bg').innerText = t.themeVideoName;
-            document.getElementById('theme-desc-video_bg').innerText = t.themeVideoDesc;
+            try { const _e = document.getElementById('theme-name-video_bg'); if (_e) _e.innerText = t.themeVideoName; } catch (_x) {}
+            try { const _e = document.getElementById('theme-desc-video_bg'); if (_e) _e.innerText = t.themeVideoDesc; } catch (_x) {}
             
             const standardBtn = document.getElementById('theme-btn-clicker-standard');
             const goldenBtn = document.getElementById('theme-btn-clicker-golden');
             if(standardBtn) standardBtn.innerText = t.themeClickerName + " (Стандарт)";
             
-            document.getElementById('lbl-investigations-title').innerText = t.investigationsTitle;
-            document.getElementById('lbl-investigations-subtitle').innerText = t.investigationsSub;
-            document.getElementById('lbl-minigames-title').innerText = t.minigamesTitle;
-            document.getElementById('lbl-minigames-subtitle').innerText = t.minigamesSub;
-            document.getElementById('lbl-game1-title').innerText = t.game1Title;
-            document.getElementById('lbl-game1-desc').innerText = t.game1Desc;
-            document.getElementById('lbl-game2-title').innerText = t.game2Title;
-            document.getElementById('lbl-game2-desc').innerText = t.game2Desc;
-            document.getElementById('lbl-game3-title').innerText = t.game3Title;
-            document.getElementById('lbl-game3-desc').innerText = t.game3Desc;
-            document.getElementById('lbl-game4-title').innerText = t.game4Title;
-            document.getElementById('lbl-game4-desc').innerText = t.game4Desc;
-            document.getElementById('lbl-shop-title').innerText = t.shopTitle;
-            document.getElementById('lbl-shop-subtitle').innerText = t.shopSub;
-            document.getElementById('lbl-cat-themes').innerText = t.catThemes;
-            document.getElementById('lbl-cat-exchange').innerText = t.catExchange;
-            document.getElementById('lbl-cat-exchange-reverse').innerText = t.catExchangeReverse;
-            document.getElementById('lbl-promo-title').innerText = t.promoTitle;
-            document.getElementById('promo-input').placeholder = t.promoPlaceholder;
+            try { const _e = document.getElementById('lbl-investigations-title'); if (_e) _e.innerText = t.investigationsTitle; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-investigations-subtitle'); if (_e) _e.innerText = t.investigationsSub; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-minigames-title'); if (_e) _e.innerText = t.minigamesTitle; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-minigames-subtitle'); if (_e) _e.innerText = t.minigamesSub; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-game1-title'); if (_e) _e.innerText = t.game1Title; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-game1-desc'); if (_e) _e.innerText = t.game1Desc; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-game2-title'); if (_e) _e.innerText = t.game2Title; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-game2-desc'); if (_e) _e.innerText = t.game2Desc; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-game3-title'); if (_e) _e.innerText = t.game3Title; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-game3-desc'); if (_e) _e.innerText = t.game3Desc; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-game4-title'); if (_e) _e.innerText = t.game4Title; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-game4-desc'); if (_e) _e.innerText = t.game4Desc; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-shop-title'); if (_e) _e.innerText = t.shopTitle; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-shop-subtitle'); if (_e) _e.innerText = t.shopSub; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-cat-themes'); if (_e) _e.innerText = t.catThemes; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-cat-exchange'); if (_e) _e.innerText = t.catExchange; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-cat-exchange-reverse'); if (_e) _e.innerText = t.catExchangeReverse; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-promo-title'); if (_e) _e.innerText = t.promoTitle; } catch (_x) {}
+            try { const _e = document.getElementById('promo-input'); if (_e) _e.placeholder = t.promoPlaceholder; } catch (_x) {}
             
-            document.getElementById('nav-cases-lbl').innerText = t.navCases;
-            document.getElementById('nav-clicker-lbl').innerText = t.navClicker;
-            document.getElementById('nav-collection-lbl').innerText = t.navCollection;
-            document.getElementById('nav-investigations-lbl').innerText = t.navInvestigations;
-            document.getElementById('nav-minigames-lbl').innerText = t.navMinigames;
-            document.getElementById('nav-shop-lbl').innerText = t.navShop;
-            document.getElementById('nav-archives-lbl').innerText = t.navArchives;
+            try { const _e = document.getElementById('nav-cases-lbl'); if (_e) _e.innerText = t.navCases; } catch (_x) {}
+            try { const _e = document.getElementById('nav-clicker-lbl'); if (_e) _e.innerText = t.navClicker; } catch (_x) {}
+            try { const _e = document.getElementById('nav-collection-lbl'); if (_e) _e.innerText = t.navCollection; } catch (_x) {}
+            try { const _e = document.getElementById('nav-investigations-lbl'); if (_e) _e.innerText = t.navInvestigations; } catch (_x) {}
+            try { const _e = document.getElementById('nav-minigames-lbl'); if (_e) _e.innerText = t.navMinigames; } catch (_x) {}
+            try { const _e = document.getElementById('nav-shop-lbl'); if (_e) _e.innerText = t.navShop; } catch (_x) {}
+            try { const _e = document.getElementById('nav-archives-lbl'); if (_e) _e.innerText = t.navArchives; } catch (_x) {}
             
-            document.getElementById('lbl-archives-title').innerText = t.archivesTitle;
-            document.getElementById('lbl-archives-subtitle').innerText = t.archivesSub;
+            try { const _e = document.getElementById('lbl-archives-title'); if (_e) _e.innerText = t.archivesTitle; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-archives-subtitle'); if (_e) _e.innerText = t.archivesSub; } catch (_x) {}
             
-            document.getElementById('settings-modal-title').innerText = t.settingsTitle;
-            document.getElementById('btn-pause-toggle').innerText = t.pauseBtn;
-            document.getElementById('lbl-pause-title').innerText = t.pauseTitle;
-            document.getElementById('lbl-pause-desc').innerText = t.pauseDesc;
-            document.getElementById('btn-unpause').innerText = t.unpauseBtn;
-            document.getElementById('lbl-lang-setting').innerText = t.langLabel;
-            document.getElementById('lang-btn').innerText = t.langBtn;
-            document.getElementById('lbl-reset-setting').innerText = t.resetLabel;
-            document.getElementById('reset-btn').innerText = t.resetBtn;
-            document.getElementById('btn-settings-close').innerText = t.close;
+            try { const _e = document.getElementById('settings-modal-title'); if (_e) _e.innerText = t.settingsTitle; } catch (_x) {}
+            try { const _e = document.getElementById('btn-pause-toggle'); if (_e) _e.innerText = t.pauseBtn; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-pause-title'); if (_e) _e.innerText = t.pauseTitle; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-pause-desc'); if (_e) _e.innerText = t.pauseDesc; } catch (_x) {}
+            try { const _e = document.getElementById('btn-unpause'); if (_e) _e.innerText = t.unpauseBtn; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-lang-setting'); if (_e) _e.innerText = t.langLabel; } catch (_x) {}
+            try { const _e = document.getElementById('lang-btn'); if (_e) _e.innerText = t.langBtn; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-reset-setting'); if (_e) _e.innerText = t.resetLabel; } catch (_x) {}
+            try { const _e = document.getElementById('reset-btn'); if (_e) _e.innerText = t.resetBtn; } catch (_x) {}
+            try { const _e = document.getElementById('btn-settings-close'); if (_e) _e.innerText = t.close; } catch (_x) {}
             
-            document.getElementById('lbl-mobile-setting').innerText = t.mobileOptLabel;
+            try { const _e = document.getElementById('lbl-mobile-setting'); if (_e) _e.innerText = t.mobileOptLabel; } catch (_x) {}
             updateMobileUI();
 
-            document.getElementById('saves-modal-title').innerText = t.savesTitle;
-            document.getElementById('saves-modal-desc').innerText = t.savesDesc;
-            document.getElementById('btn-create-slot').innerText = t.createSlot;
-            document.getElementById('btn-saves-close').innerText = t.close;
-            document.getElementById('lbl-fgmodal-title').innerText = t.fgTitle;
-            document.getElementById('find-game-desc').innerText = t.fgDesc;
-            document.getElementById('lbl-fgmodal-timer').innerText = t.fgTimeLeft;
-            document.getElementById('lbl-fgmodal-found').innerText = t.fgFound;
-            document.getElementById('lbl-fgmodal-sub').innerText = t.fgSub;
-            document.getElementById('btn-fgmodal-claim').innerText = t.claim;
-            document.getElementById('court-modal-title').innerText = t.courtTitle;
-            document.getElementById('court-modal-subtitle').innerText = t.courtSub;
-            document.getElementById('lbl-court-input-prompt').innerText = t.courtPrompt;
-            document.getElementById('spin-court-btn').innerText = t.courtSpinBtn;
-            document.getElementById('sec-sensational').innerText = t.secSensational;
-            document.getElementById('sec-acquitted').innerText = t.secAcquitted;
-            document.getElementById('sec-bribe').innerText = t.secBribe;
-            document.getElementById('sec-jail').innerText = t.secJail;
-            document.getElementById('lbl-fast-res-title').innerText = t.fastResTitle;
-            document.getElementById('lbl-fast-res-sub').innerText = t.fastResSub;
-            document.getElementById('btn-fast-res-claim').innerText = t.fastResClaim;
-            document.getElementById('lbl-island-title').innerText = t.islandTitle;
-            document.getElementById('lbl-island-subtitle').innerText = t.islandSub;
-            document.getElementById('island-reward-desc').innerText = t.islandRewardDesc;
-            document.getElementById('btn-claim-island-reward').innerText = t.islandClaimBtn;
-            document.getElementById('lbl-lolita-game-title').innerText = t.lolitaGameTitle;
-            document.getElementById('lbl-lolita-game-desc').innerText = t.lolitaGameDesc;
-            document.getElementById('lolita-end-claim').innerText = t.claim;
-            document.getElementById('spin-btn').innerText = t.spin;
-            document.getElementById('btn-reward-claim').innerText = t.claim;
-            document.getElementById('btn-detail-close').innerText = t.closeDoc;
+            try { const _e = document.getElementById('saves-modal-title'); if (_e) _e.innerText = t.savesTitle; } catch (_x) {}
+            try { const _e = document.getElementById('saves-modal-desc'); if (_e) _e.innerText = t.savesDesc; } catch (_x) {}
+            try { const _e = document.getElementById('btn-create-slot'); if (_e) _e.innerText = t.createSlot; } catch (_x) {}
+            try { const _e = document.getElementById('btn-saves-close'); if (_e) _e.innerText = t.close; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-fgmodal-title'); if (_e) _e.innerText = t.fgTitle; } catch (_x) {}
+            try { const _e = document.getElementById('find-game-desc'); if (_e) _e.innerText = t.fgDesc; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-fgmodal-timer'); if (_e) _e.innerText = t.fgTimeLeft; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-fgmodal-found'); if (_e) _e.innerText = t.fgFound; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-fgmodal-sub'); if (_e) _e.innerText = t.fgSub; } catch (_x) {}
+            try { const _e = document.getElementById('btn-fgmodal-claim'); if (_e) _e.innerText = t.claim; } catch (_x) {}
+            try { const _e = document.getElementById('court-modal-title'); if (_e) _e.innerText = t.courtTitle; } catch (_x) {}
+            try { const _e = document.getElementById('court-modal-subtitle'); if (_e) _e.innerText = t.courtSub; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-court-input-prompt'); if (_e) _e.innerText = t.courtPrompt; } catch (_x) {}
+            try { const _e = document.getElementById('spin-court-btn'); if (_e) _e.innerText = t.courtSpinBtn; } catch (_x) {}
+            try { const _e = document.getElementById('sec-sensational'); if (_e) _e.innerText = t.secSensational; } catch (_x) {}
+            try { const _e = document.getElementById('sec-acquitted'); if (_e) _e.innerText = t.secAcquitted; } catch (_x) {}
+            try { const _e = document.getElementById('sec-bribe'); if (_e) _e.innerText = t.secBribe; } catch (_x) {}
+            try { const _e = document.getElementById('sec-jail'); if (_e) _e.innerText = t.secJail; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-fast-res-title'); if (_e) _e.innerText = t.fastResTitle; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-fast-res-sub'); if (_e) _e.innerText = t.fastResSub; } catch (_x) {}
+            try { const _e = document.getElementById('btn-fast-res-claim'); if (_e) _e.innerText = t.fastResClaim; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-island-title'); if (_e) _e.innerText = t.islandTitle; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-island-subtitle'); if (_e) _e.innerText = t.islandSub; } catch (_x) {}
+            try { const _e = document.getElementById('island-reward-desc'); if (_e) _e.innerText = t.islandRewardDesc; } catch (_x) {}
+            try { const _e = document.getElementById('btn-claim-island-reward'); if (_e) _e.innerText = t.islandClaimBtn; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-lolita-game-title'); if (_e) _e.innerText = t.lolitaGameTitle; } catch (_x) {}
+            try { const _e = document.getElementById('lbl-lolita-game-desc'); if (_e) _e.innerText = t.lolitaGameDesc; } catch (_x) {}
+            try { const _e = document.getElementById('lolita-end-claim'); if (_e) _e.innerText = t.claim; } catch (_x) {}
+            try { const _e = document.getElementById('spin-btn'); if (_e) _e.innerText = t.spin; } catch (_x) {}
+            try { const _e = document.getElementById('btn-reward-claim'); if (_e) _e.innerText = t.claim; } catch (_x) {}
+            try { const _e = document.getElementById('btn-detail-close'); if (_e) _e.innerText = t.closeDoc; } catch (_x) {}
             
-            document.querySelector('#tab-archives h3.text-emerald-400').innerText = t.navIslandTitle;
-            document.querySelector('#tab-archives p.text-slate-300').innerText = t.navIslandDesc;
-            document.querySelector('#tab-archives button[onclick="openIslandMapModal()"]').innerText = t.navIslandBtn;
-            document.querySelector('#tab-archives h3.text-purple-400').innerText = t.navPhotosTitle;
-            document.querySelector('#tab-archives p.text-purple-500').innerText = t.navPhotosDesc;
-            document.querySelector('#tab-archives button[onclick="openSecretPhotosModal()"]').innerText = t.navPhotosBtn;
+            try { const _e = document.querySelector('#tab-archives h3.text-emerald-400'); if (_e) _e.innerText = t.navIslandTitle; } catch (_x) {}
+            try { const _e = document.querySelector('#tab-archives p.text-slate-300'); if (_e) _e.innerText = t.navIslandDesc; } catch (_x) {}
+            try { const _e = document.querySelector('#tab-archives button[onclick="openIslandMapModal()"]'); if (_e) _e.innerText = t.navIslandBtn; } catch (_x) {}
+            try { const _e = document.querySelector('#tab-archives h3.text-purple-400'); if (_e) _e.innerText = t.navPhotosTitle; } catch (_x) {}
+            try { const _e = document.querySelector('#tab-archives p.text-purple-500'); if (_e) _e.innerText = t.navPhotosDesc; } catch (_x) {}
+            try { const _e = document.querySelector('#tab-archives button[onclick="openSecretPhotosModal()"]'); if (_e) _e.innerText = t.navPhotosBtn; } catch (_x) {}
             
-            document.querySelector('#tab-archives h3.text-indigo-400').innerText = t.navPhotos2Title;
-            document.querySelector('#tab-archives p.text-indigo-500').innerText = t.navPhotos2Desc;
-            document.querySelector('#tab-archives button[onclick="openSecretPhotos2Modal()"]').innerText = t.navPhotos2Btn;
+            try { const _e = document.querySelector('#tab-archives h3.text-indigo-400'); if (_e) _e.innerText = t.navPhotos2Title; } catch (_x) {}
+            try { const _e = document.querySelector('#tab-archives p.text-indigo-500'); if (_e) _e.innerText = t.navPhotos2Desc; } catch (_x) {}
+            try { const _e = document.querySelector('#tab-archives button[onclick="openSecretPhotos2Modal()"]'); if (_e) _e.innerText = t.navPhotos2Btn; } catch (_x) {}
 
-            document.querySelector('#tab-archives h3.text-pink-400').innerText = t.navPhotos3Title;
-            document.querySelector('#tab-archives p.text-pink-500').innerText = t.navPhotos3Desc;
-            document.querySelector('#tab-archives button[onclick="openSecretPhotos3Modal()"]').innerText = t.navPhotos3Btn;
+            try { const _e = document.querySelector('#tab-archives h3.text-pink-400'); if (_e) _e.innerText = t.navPhotos3Title; } catch (_x) {}
+            try { const _e = document.querySelector('#tab-archives p.text-pink-500'); if (_e) _e.innerText = t.navPhotos3Desc; } catch (_x) {}
+            try { const _e = document.querySelector('#tab-archives button[onclick="openSecretPhotos3Modal()"]'); if (_e) _e.innerText = t.navPhotos3Btn; } catch (_x) {}
 
-            document.querySelector('#tab-archives h3.text-rose-400').innerText = t.navVideosTitle;
-            document.querySelector('#tab-archives p.text-rose-500').innerText = t.navVideosDesc;
-            document.querySelector('#tab-archives button[onclick="openSecretVideosModal()"]').innerText = t.navVideosBtn;
+            try { const _e = document.querySelector('#tab-archives h3.text-rose-400'); if (_e) _e.innerText = t.navVideosTitle; } catch (_x) {}
+            try { const _e = document.querySelector('#tab-archives p.text-rose-500'); if (_e) _e.innerText = t.navVideosDesc; } catch (_x) {}
+            try { const _e = document.querySelector('#tab-archives button[onclick="openSecretVideosModal()"]'); if (_e) _e.innerText = t.navVideosBtn; } catch (_x) {}
             
-            document.querySelector('#secret-photos-modal h3').innerText = t.secretPhotosTitle;
-            document.querySelector('#secret-photos-modal p.text-slate-400').innerText = t.secretPhotosDesc;
-            document.querySelector('#secret-photos-modal .text-slate-300').innerText = t.secretPhotosProgress + ' ' + document.getElementById('secret-photos-count').innerText;
-            document.querySelector('#secret-photos-modal .text-slate-400.mt-1').innerText = t.secretPhotosRewardDesc;
+            try { const _e = document.querySelector('#secret-photos-modal h3'); if (_e) _e.innerText = t.secretPhotosTitle; } catch (_x) {}
+            try { const _e = document.querySelector('#secret-photos-modal p.text-slate-400'); if (_e) _e.innerText = t.secretPhotosDesc; } catch (_x) {}
+            try { const _e = document.querySelector('#secret-photos-modal .text-slate-300'); if (_e) _e.innerText = t.secretPhotosProgress + ' ' + document.getElementById('secret-photos-count').innerText; } catch (_x) {}
+            try { const _e = document.querySelector('#secret-photos-modal .text-slate-400.mt-1'); if (_e) _e.innerText = t.secretPhotosRewardDesc; } catch (_x) {}
 
-            document.querySelector('#secret-photos-2-modal h3').innerText = t.secretPhotos2Title;
-            document.querySelector('#secret-photos-2-modal p.text-slate-400').innerText = t.secretPhotos2Desc;
-            document.querySelector('#secret-photos-2-modal .text-slate-300').innerText = t.secretPhotos2Progress + ' ' + document.getElementById('secret-photos-2-count').innerText;
-            document.querySelector('#secret-photos-2-modal .text-slate-400.mt-1').innerText = t.secretPhotos2RewardDesc;
+            try { const _e = document.querySelector('#secret-photos-2-modal h3'); if (_e) _e.innerText = t.secretPhotos2Title; } catch (_x) {}
+            try { const _e = document.querySelector('#secret-photos-2-modal p.text-slate-400'); if (_e) _e.innerText = t.secretPhotos2Desc; } catch (_x) {}
+            try { const _e = document.querySelector('#secret-photos-2-modal .text-slate-300'); if (_e) _e.innerText = t.secretPhotos2Progress + ' ' + document.getElementById('secret-photos-2-count').innerText; } catch (_x) {}
+            try { const _e = document.querySelector('#secret-photos-2-modal .text-slate-400.mt-1'); if (_e) _e.innerText = t.secretPhotos2RewardDesc; } catch (_x) {}
 
-            document.querySelector('#secret-photos-3-modal h3').innerText = t.secretPhotos3Title;
-            document.querySelector('#secret-photos-3-modal p.text-slate-400').innerText = t.secretPhotos3Desc;
-            document.querySelector('#secret-photos-3-modal .text-slate-300').innerText = t.secretPhotos3Progress + ' ' + document.getElementById('secret-photos-3-count').innerText;
-            document.querySelector('#secret-photos-3-modal .text-slate-400.mt-1').innerText = t.secretPhotos3RewardDesc;
+            try { const _e = document.querySelector('#secret-photos-3-modal h3'); if (_e) _e.innerText = t.secretPhotos3Title; } catch (_x) {}
+            try { const _e = document.querySelector('#secret-photos-3-modal p.text-slate-400'); if (_e) _e.innerText = t.secretPhotos3Desc; } catch (_x) {}
+            try { const _e = document.querySelector('#secret-photos-3-modal .text-slate-300'); if (_e) _e.innerText = t.secretPhotos3Progress + ' ' + document.getElementById('secret-photos-3-count').innerText; } catch (_x) {}
+            try { const _e = document.querySelector('#secret-photos-3-modal .text-slate-400.mt-1'); if (_e) _e.innerText = t.secretPhotos3RewardDesc; } catch (_x) {}
 
-            document.querySelector('#secret-videos-modal h3').innerText = t.secretVideosTitle;
-            document.querySelector('#secret-videos-modal p.text-slate-400').innerText = t.secretVideosDesc;
-            document.querySelector('#secret-videos-modal .text-slate-300').innerText = t.secretVideosProgress + ' ' + document.getElementById('secret-videos-count').innerText;
-            document.querySelector('#secret-videos-modal .text-slate-400.mt-1').innerText = t.secretVideosRewardDesc;
+            try { const _e = document.querySelector('#secret-videos-modal h3'); if (_e) _e.innerText = t.secretVideosTitle; } catch (_x) {}
+            try { const _e = document.querySelector('#secret-videos-modal p.text-slate-400'); if (_e) _e.innerText = t.secretVideosDesc; } catch (_x) {}
+            try { const _e = document.querySelector('#secret-videos-modal .text-slate-300'); if (_e) _e.innerText = t.secretVideosProgress + ' ' + document.getElementById('secret-videos-count').innerText; } catch (_x) {}
+            try { const _e = document.querySelector('#secret-videos-modal .text-slate-400.mt-1'); if (_e) _e.innerText = t.secretVideosRewardDesc; } catch (_x) {}
 
             const t2Btn = document.getElementById('btn-buy-track2');
             if (t2Btn) {
@@ -2647,12 +2860,15 @@
             checkQuestAlertBadge();
             updateIslandMapUI();
             checkAchievements();
+            updateDocUI();
         }
 
         function applyTheme(themeKey) {
             document.body.className = "text-white flex flex-col justify-between min-h-screen relative";
             if (themeKey !== 'default') document.body.classList.add(`theme-${themeKey}`);
             if (gameState.mobileOptimized) document.body.classList.add('mobile-optimized');
+            syncVideoBackgrounds();
+            updateModalScrollLock();
         }
         function selectTheme(themeKey) { playSound('click'); gameState.currentTheme = themeKey; applyTheme(themeKey); saveGame(); updateShopThemeButtons(); }
         
@@ -2682,13 +2898,15 @@
                 { id: 'supergold', cost: 50000 },
                 { id: 'twotigers', cost: 100000 },
                 { id: 'temple', cost: 25000, lolitaCost: 5 },
-                { id: 'video_bg', cost: 50000, lolitaCost: 50 }
+                { id: 'video_bg', cost: 50000, lolitaCost: 50 },
+                { id: 'office', cost: 45000 },
+                { id: 'video_bg2', cost: 100000, lolitaCost: 10 }
             ];
             themes.forEach(item => {
                 const btn = document.getElementById(`theme-btn-${item.id}`);
                 if (!btn) return;
-                const isOwned = item.id === 'video_bg' ? gameState.videoBgUnlocked : gameState.ownedThemes.includes(item.id);
-                const isCurrent = gameState.currentTheme === (item.id === 'video_bg' ? 'video-bg' : item.id);
+                const isOwned = item.id === 'video_bg' ? gameState.videoBgUnlocked : (item.id === 'video_bg2' ? gameState.videoBg2Unlocked : gameState.ownedThemes.includes(item.id));
+                const isCurrent = gameState.currentTheme === (item.id === 'video_bg' ? 'video-bg' : (item.id === 'video_bg2' ? 'video-bg-2' : item.id));
                 
                 if (isCurrent) { btn.innerText = currentLang === 'en' ? 'Equipped ✅' : 'Одет ✅'; btn.className = 'w-full py-2 bg-emerald-600 text-white font-bold text-xs uppercase rounded-xl border border-emerald-400'; }
                 else if (isOwned) { btn.innerText = currentLang === 'en' ? 'Equip' : 'Надеть'; btn.className = 'w-full py-2 bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs uppercase rounded-xl border border-slate-600 btn-bounce'; }
@@ -2906,7 +3124,7 @@
                 }
             });
             if (tabName === 'investigations') renderInvestigationsTab();
-            if (tabName === 'archives') { renderSecretPhotos(); renderSecretPhotos2(); renderSecretPhotos3(); renderSecretVideos(); }
+            if (tabName === 'archives') { renderSecretPhotos(); renderSecretPhotos2(); renderSecretPhotos3(); renderSecretVideos(); updateDocUI(); }
             if (tabName === 'collection') renderCollection();
         }
 
@@ -2987,6 +3205,16 @@
             const rand = Math.random() * 100;
             let targetId = null; let rarity = 'coin';
             const isArch = caseType === 'legendary' || caseType === 'boeing';
+
+            // Фрагменты секретного документа: только «Архив Острова» и «Частный Боинг», только после 15 гостей
+            if (isArch && isDocSectionUnlocked()) {
+                const foundDocs = gameState.foundDocFragments || [];
+                const leftDocs = DOC_FRAGMENTS.filter(f => !foundDocs.includes(f.id));
+                if (leftDocs.length > 0 && Math.random() * 100 < DOC_CHANCE[caseType]) {
+                    const frag = leftDocs[Math.floor(Math.random() * leftDocs.length)];
+                    return { id: frag.id, isDocFragment: true, ruName: 'Фрагмент документа', enName: 'Doc Fragment', rarity: 'docFragment', avatar: '📄', ruDesc: 'Фрагмент секретного документа.', enDesc: 'A fragment of a secret document.' };
+                }
+            }
 
             const videoRoll = Math.random() * 100;
             if (caseType === 'legendary' && videoRoll < 0.092) {
@@ -3160,6 +3388,9 @@
             
             let photoCount = 0;
             let videoCount = 0;
+            const winnerItem = getRandomReward(gameState.activeCaseType);
+            let docCount = winnerItem.isDocFragment ? 1 : 0;
+            const docFillerAllowed = (gameState.activeCaseType === 'boeing' || gameState.activeCaseType === 'legendary') && isDocSectionUnlocked() && DOC_FRAGMENTS.some(f => !(gameState.foundDocFragments || []).includes(f.id));
             const foundPhotos = gameState.foundSecretPhotos || [];
             const foundPhotos2 = gameState.foundSecretPhotos2 || [];
             const foundPhotos3 = gameState.foundSecretPhotos3 || [];
@@ -3168,9 +3399,13 @@
             for (let i = 0; i < 45; i++) {
                 let item;
                 if (i === winningIndex) {
-                    item = getRandomReward(gameState.activeCaseType);
+                    item = winnerItem;
                 } else {
-                    if ((gameState.activeCaseType === 'boeing' || gameState.activeCaseType === 'legendary') && videoCount < 1 && Math.random() < 0.05) {
+                    if (docFillerAllowed && docCount < 1 && Math.random() < 0.03) {
+                        item = { id: 'placeholder_doc', isDocFragment: true, ruName: 'Фрагмент документа', enName: 'Doc Fragment', rarity: 'docFragment', avatar: '📄', ruDesc: 'Неизвестный фрагмент...', enDesc: 'Unknown fragment...' };
+                        docCount++;
+                    }
+                    else if ((gameState.activeCaseType === 'boeing' || gameState.activeCaseType === 'legendary') && videoCount < 1 && Math.random() < 0.05) {
                         if (SECRET_VIDEOS.length > foundVideos.length) {
                             item = { id: 'placeholder_video', isSecretVideo: true, ruName: 'Тайное Видео', enName: 'Secret Video', rarity: 'secretVideo', avatar: '🎥', ruDesc: 'Неизвестное видео...', enDesc: 'Unknown video...' };
                             videoCount++;
@@ -3209,6 +3444,7 @@
         }
 
         function createRouletteCardElement(item) {
+            if (item.isDocFragment) return createDocRouletteCard(item);
             const rarityInfo = RARITIES[item.rarity];
             const div = document.createElement('div');
             let glowClass = '';
@@ -3282,6 +3518,7 @@
         }
 
         function showRewardModal(item, isNewGuest = false) {
+            if (item.isDocFragment) { showDocFragmentRewardModal(item); return; }
             const t = TRANSLATIONS[currentLang];
             const modal = document.getElementById('reward-modal');
             const container = document.getElementById('reward-card-container');
@@ -3562,6 +3799,7 @@
                 let isNew = false;
                 if (item.isCoin) gameState.balance += item.amount;
                 else if (item.isLolita) gameState.lolitaBalance += item.amount;
+                else if (item.isDocFragment) { isNew = applyDocFragmentDrop(item); }
                 else if (item.isIslandPart) {
                     if (!gameState.islandParts.includes(item.id)) {
                         gameState.islandParts.push(item.id); isNew = true; updateQuestProgress('island_parts', 1);
@@ -3646,6 +3884,13 @@
             list.innerHTML = '';
             results.forEach((entry, index) => {
                 const item = entry.item; const isNew = entry.isNew;
+                if (item.isDocFragment) {
+                    const dDiv = document.createElement('div');
+                    dDiv.className = 'bg-slate-950 p-2.5 rounded-xl border border-amber-500 glow-doc flex items-center justify-between text-left shadow relative overflow-hidden';
+                    dDiv.innerHTML = `<div class="flex items-center gap-3"><span class="text-2xl">📄</span><div><div class="flex items-center gap-2"><span class="text-xs font-bold text-white">${TRANSLATIONS[currentLang].docFragName}</span>${isNew ? `<span class="bg-amber-500/30 text-amber-200 border border-amber-400/50 text-[8px] font-black px-1.5 py-0.5 rounded animate-pulse">${TRANSLATIONS[currentLang].newGuestBadge}</span>` : ''}</div><div class="text-[9px] text-amber-400 font-bold">${getRarityName('docFragment')}</div></div></div><span class="text-[10px] font-mono text-slate-500">#${index + 1}</span>`;
+                    list.appendChild(dDiv);
+                    return;
+                }
                 const rarityInfo = RARITIES[item.rarity];
                 const div = document.createElement('div');
                 div.className = `bg-slate-950 p-2.5 rounded-xl border ${rarityInfo.color} flex items-center justify-between text-left shadow relative overflow-hidden`;
@@ -3697,7 +3942,8 @@
                 secretPhoto: currentLang === 'en' ? 'Secret Photo 1' : 'Тайное Фото 1',
                 secretPhoto2: currentLang === 'en' ? 'Secret Photo 2' : 'Тайное Фото 2',
                 secretPhoto3: currentLang === 'en' ? 'Secret Photo 3' : 'Тайное Фото 3',
-                secretVideo: currentLang === 'en' ? 'Secret Video' : 'Тайное Видео'
+                secretVideo: currentLang === 'en' ? 'Secret Video' : 'Тайное Видео',
+                docFragment: currentLang === 'en' ? 'Doc Fragment 📄' : 'Фрагмент документа 📄'
             };
 
             let html = '';
@@ -3738,6 +3984,7 @@
                 addRow('text-indigo-500', 'secretPhoto2', '0.552%'); 
                 addRow('text-pink-500', 'secretPhoto3', '0.510%'); 
                 addRow('text-rose-400', 'secretVideo', '0.080%'); 
+                addRow('text-amber-400', 'docFragment', '2.000%');
             } else if (caseType === 'boeing') {
                 addRow('text-slate-400', 'empty', '9.000%');
                 addRow('text-orange-400', 'coin', '~56.88%');
@@ -3751,8 +3998,10 @@
                 addRow('text-indigo-500', 'secretPhoto2', '1.049%'); 
                 addRow('text-pink-500', 'secretPhoto3', '1.000%'); 
                 addRow('text-rose-400', 'secretVideo', '0.720%'); 
+                addRow('text-amber-400', 'docFragment', '3.500%');
             }
             
+            if (caseType === 'legendary' || caseType === 'boeing') html += `<div class="text-[10px] text-amber-300/80 p-2">${t.docRateNote}</div>`;
             content.innerHTML = html;
             modal.classList.remove('hidden');
         }
@@ -3851,9 +4100,18 @@
                     
                     mini.onclick = () => {
                         mini.classList.add('hidden');
-                        const reward = Math.floor(Math.random() * 4900) + 100;
-                        gameState.balance += reward;
+                        const reward = Math.floor(Math.random() * 10) + 1; // 1..10 ✈️ (Лолита Э.)
+                        gameState.lolitaBalance = (gameState.lolitaBalance || 0) + reward;
                         playSound('cash');
+                        try {
+                            const rect = mini.getBoundingClientRect();
+                            const pop = document.createElement('div');
+                            pop.className = 'coin-pop';
+                            pop.style.cssText = `position:fixed; left:${rect.left + rect.width / 2 - 20}px; top:${rect.top}px; z-index:10000; color:#38bdf8; font-size:20px;`;
+                            pop.innerText = TRANSLATIONS[currentLang].eggReward.replace('{n}', reward);
+                            document.body.appendChild(pop);
+                            setTimeout(() => pop.remove(), 900);
+                        } catch (e) {}
                         updateUI(); saveGame();
                     };
                     setTimeout(() => mini.classList.add('hidden'), 2000);
@@ -3933,6 +4191,8 @@
 
             let obstacles = [];
             let coins = [];
+            let powerups = [];
+            let popups = [];
             let score = 0;
             let lives = 3;
             let timeLeft = 120;
@@ -3942,6 +4202,19 @@
             let gameOver = false;
             let speedMultiplier = 1;
             lolitaGameActive = true;
+
+            // --- Бонусы в полёте: 2 редких подбора за катку ---
+            const PU_COLORS = { magnet: '#a78bfa', shield: '#22d3ee', turbo: '#fbbf24' };
+            const PU_ICONS = { magnet: '🧲', shield: '🛡️', turbo: '⚡' };
+            const MAGNET_MS = 8000;
+            const TURBO_MS = 5000;
+            const fx = { magnet: 0, turbo: 0, shield: false };
+            const puPool = ['magnet', 'shield', 'turbo'].sort(() => Math.random() - 0.5);
+            const puPlan = [
+                { at: 12 + Math.random() * 40, type: puPool[0], done: false },
+                { at: 62 + Math.random() * 45, type: puPool[1], done: false }
+            ];
+            let lastTs = performance.now();
 
             const useEpsteinBg = Math.random() < 0.01;
             let isBgLoaded = false;
@@ -3968,10 +4241,35 @@
                 if (timeLeft <= 0) { endLolitaGame(true); }
             }, 1000);
 
-            window.onkeydown = null;
-            window.onkeyup = null;
-            window.addEventListener('keydown', e => { keys[e.key] = true; });
-            window.addEventListener('keyup', e => { keys[e.key] = false; });
+            // Клавиатура (старые обработчики снимаем, чтобы они не копились между играми)
+            if (window._lolitaKD) window.removeEventListener('keydown', window._lolitaKD);
+            if (window._lolitaKU) window.removeEventListener('keyup', window._lolitaKU);
+            window._lolitaKD = e => {
+                keys[e.key] = true;
+                if (lolitaGameActive && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) e.preventDefault();
+            };
+            window._lolitaKU = e => { keys[e.key] = false; };
+            window.addEventListener('keydown', window._lolitaKD);
+            window.addEventListener('keyup', window._lolitaKU);
+
+            // Управление пальцем: тянем самолёт по полю (на телефоне)
+            let dragging = false;
+            const dragMove = e => {
+                const r = canvas.getBoundingClientRect();
+                const x = (e.clientX - r.left) * canvas.width / r.width;
+                const y = (e.clientY - r.top) * canvas.height / r.height - 45;
+                plane.x = Math.max(plane.w / 2, Math.min(canvas.width - plane.w / 2, x));
+                plane.y = Math.max(plane.h / 2, Math.min(canvas.height - plane.h / 2, y));
+            };
+            canvas.onpointerdown = e => {
+                if (e.pointerType === 'mouse') return;
+                dragging = true;
+                try { canvas.setPointerCapture(e.pointerId); } catch (err) {}
+                dragMove(e);
+                e.preventDefault();
+            };
+            canvas.onpointermove = e => { if (dragging) { dragMove(e); e.preventDefault(); } };
+            canvas.onpointerup = canvas.onpointercancel = () => { dragging = false; };
 
             function endLolitaGame(won) {
                 gameOver = true; lolitaGameActive = false;
@@ -3989,25 +4287,34 @@
                 document.getElementById('lolita-end-score').innerText = `${t.lolitaGameScore} ${score.toLocaleString()} 🪙`;
             }
 
-            function update() {
+            function spawnObstacle() {
+                const types = ['storm', 'balloon', 'fbi'];
+                const type = types[Math.floor(Math.random() * types.length)];
+                obstacles.push({ x: Math.random() * canvas.width, y: -30, r: 20 + Math.random() * 10, type, speed: 2 + Math.random() * 2 });
+            }
+
+            function update(dt) {
                 if (!lolitaGameActive || isPaused) return;
 
-                if (keys['ArrowLeft'] || keys['a'] || keys['A']) plane.x -= plane.speed;
-                if (keys['ArrowRight'] || keys['d'] || keys['D']) plane.x += plane.speed;
-                if (keys['ArrowUp'] || keys['w'] || keys['W']) plane.y -= plane.speed;
-                if (keys['ArrowDown'] || keys['s'] || keys['S']) plane.y += plane.speed;
+                const turboOn = fx.turbo > 0;
+                const moveSpeed = plane.speed * (turboOn ? 1.6 : 1);
+                if (keys['ArrowLeft'] || keys['a'] || keys['A']) plane.x -= moveSpeed;
+                if (keys['ArrowRight'] || keys['d'] || keys['D']) plane.x += moveSpeed;
+                if (keys['ArrowUp'] || keys['w'] || keys['W']) plane.y -= moveSpeed;
+                if (keys['ArrowDown'] || keys['s'] || keys['S']) plane.y += moveSpeed;
 
                 plane.x = Math.max(plane.w/2, Math.min(canvas.width - plane.w/2, plane.x));
                 plane.y = Math.max(plane.h/2, Math.min(canvas.height - plane.h/2, plane.y));
 
-                if (frame - lastSpawn > 80) {
-                    const types = ['storm', 'balloon', 'fbi'];
-                    const type = types[Math.floor(Math.random() * types.length)];
-                    obstacles.push({ x: Math.random() * canvas.width, y: -30, r: 20 + Math.random() * 10, type, speed: 2 + Math.random() * 2 });
+                // Препятствий чуть больше: чаще спавн + иногда сразу два
+                if (frame - lastSpawn > 72) {
+                    spawnObstacle();
+                    if (Math.random() < 0.15) spawnObstacle();
                     lastSpawn = frame;
                 }
 
-                if (frame - lastCoinTime > 550) {
+                // Монеты (во время турбо — «окно монет», они летят чаще)
+                if (frame - lastCoinTime > (turboOn ? 110 : 550)) {
                     let amount;
                     if (Math.random() < 0.05) {
                         amount = [1000, 2000, 5000][Math.floor(Math.random() * 3)];
@@ -4018,11 +4325,25 @@
                     lastCoinTime = frame;
                 }
 
+                // Выпуск бонусов по плану (2 за игру)
+                const elapsed = 120 - timeLeft;
+                puPlan.forEach(p => {
+                    if (!p.done && elapsed >= p.at) {
+                        p.done = true;
+                        powerups.push({ x: 60 + Math.random() * (canvas.width - 120), y: -30, r: 18, type: p.type, speed: 2.2 });
+                    }
+                });
+
                 obstacles.forEach(o => o.y += o.speed * speedMultiplier);
                 obstacles = obstacles.filter(o => {
                     if (o.y > canvas.height + 50) return false;
                     const dx = plane.x - o.x, dy = plane.y - o.y;
                     if (Math.sqrt(dx*dx + dy*dy) < plane.w/2 + o.r) {
+                        if (fx.shield) {
+                            fx.shield = false; playSound('click');
+                            popups.push({ text: '🛡️', x: plane.x, y: plane.y - 30, life: 40 });
+                            return false;
+                        }
                         lives--; playSound('trap');
                         document.getElementById('lolita-game-lives').innerText = '❤️'.repeat(Math.max(0, lives)) + '🖤'.repeat(3 - Math.max(0, lives));
                         if (lives <= 0) endLolitaGame(false);
@@ -4031,17 +4352,49 @@
                     return true;
                 });
 
+                // Магнит притягивает монеты
+                if (fx.magnet > 0) {
+                    coins.forEach(c => {
+                        const dx = plane.x - c.x, dy = plane.y - c.y;
+                        const d = Math.sqrt(dx*dx + dy*dy);
+                        if (d < 360 && d > 1) { const pull = 9; c.x += (dx / d) * pull; c.y += (dy / d) * pull; }
+                    });
+                }
+
                 coins.forEach(c => c.y += c.speed * speedMultiplier);
                 coins = coins.filter(c => {
                     if (c.y > canvas.height + 50) return false;
                     const dx = plane.x - c.x, dy = plane.y - c.y;
                     if (Math.sqrt(dx*dx + dy*dy) < plane.w/2 + c.r) {
-                        score += c.amount; playSound('cash');
+                        const gain = c.amount * (turboOn ? 2 : 1);
+                        score += gain; playSound('cash');
+                        if (turboOn) popups.push({ text: `x2 +${gain}`, x: c.x, y: c.y - 10, life: 35 });
                         updateQuestProgress('clicks', 0);
                         return false;
                     }
                     return true;
                 });
+
+                // Подбор бонусов
+                powerups.forEach(p => p.y += p.speed * Math.max(1, speedMultiplier * 0.8));
+                powerups = powerups.filter(p => {
+                    if (p.y > canvas.height + 50) return false;
+                    const dx = plane.x - p.x, dy = plane.y - p.y;
+                    if (Math.sqrt(dx*dx + dy*dy) < plane.w/2 + p.r + 4) {
+                        if (p.type === 'magnet') fx.magnet = MAGNET_MS;
+                        else if (p.type === 'turbo') fx.turbo = TURBO_MS;
+                        else fx.shield = true;
+                        playSound('win');
+                        popups.push({ text: PU_ICONS[p.type], x: p.x, y: p.y - 20, life: 50 });
+                        return false;
+                    }
+                    return true;
+                });
+
+                if (fx.magnet > 0) fx.magnet = Math.max(0, fx.magnet - dt);
+                if (fx.turbo > 0) fx.turbo = Math.max(0, fx.turbo - dt);
+                popups.forEach(p => { p.y -= 0.8; p.life--; });
+                popups = popups.filter(p => p.life > 0);
 
                 frame++;
             }
@@ -4060,7 +4413,32 @@
                     for (let i=0; i<40; i++) { const sx = (i*197)%canvas.width; const sy = (i*131)%canvas.height; ctx.fillRect(sx, sy, 2, 2); }
                 }
 
+                // Полосы скорости при турбо
+                if (fx.turbo > 0) {
+                    ctx.strokeStyle = 'rgba(251,191,36,0.35)'; ctx.lineWidth = 2;
+                    for (let i = 0; i < 14; i++) {
+                        const lx = (i * 61 + frame * 3) % canvas.width; const ly = (i * 97 + frame * 22) % canvas.height;
+                        ctx.beginPath(); ctx.moveTo(lx, ly); ctx.lineTo(lx, ly + 36); ctx.stroke();
+                    }
+                }
+
                 ctx.save(); ctx.translate(plane.x, plane.y);
+
+                // Ауры бонусов вокруг самолёта
+                const pulse = 0.5 + 0.5 * Math.sin(frame / 7);
+                if (fx.magnet > 0) {
+                    ctx.strokeStyle = 'rgba(167,139,250,0.55)'; ctx.lineWidth = 2; ctx.setLineDash([5, 6]);
+                    ctx.beginPath(); ctx.arc(0, 0, 52 + pulse * 8, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
+                }
+                if (fx.turbo > 0) {
+                    ctx.fillStyle = 'rgba(251,191,36,0.75)';
+                    ctx.beginPath(); ctx.moveTo(-8, 18); ctx.lineTo(0, 40 + pulse * 14); ctx.lineTo(8, 18); ctx.closePath(); ctx.fill();
+                }
+                if (fx.shield) {
+                    ctx.fillStyle = 'rgba(34,211,238,0.14)'; ctx.strokeStyle = 'rgba(34,211,238,0.85)'; ctx.lineWidth = 3;
+                    ctx.beginPath(); ctx.arc(0, 0, 34 + pulse * 3, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+                }
+
                 ctx.fillStyle = gameState.lolitaGoldPlane ? '#facc15' : '#38bdf8'; 
                 ctx.shadowColor = gameState.lolitaGoldPlane ? '#facc15' : '#38bdf8'; 
                 ctx.shadowBlur = 15;
@@ -4105,13 +4483,50 @@
                     ctx.restore();
                 });
 
-                ctx.fillStyle = '#fff'; ctx.font = 'bold 16px sans-serif';
+                // Бонусы: светящееся кольцо + пунктир + иконка (не похожи на преграды)
+                powerups.forEach(p => {
+                    const col = PU_COLORS[p.type];
+                    const pl = 0.5 + 0.5 * Math.sin(frame / 8 + p.x);
+                    ctx.save(); ctx.translate(p.x, p.y);
+                    const halo = ctx.createRadialGradient(0, 0, 4, 0, 0, p.r + 22);
+                    halo.addColorStop(0, col + 'aa'); halo.addColorStop(1, col + '00');
+                    ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(0, 0, p.r + 22, 0, Math.PI * 2); ctx.fill();
+                    ctx.shadowColor = col; ctx.shadowBlur = 14 + 10 * pl;
+                    ctx.strokeStyle = col; ctx.lineWidth = 3; ctx.setLineDash([6, 4]);
+                    ctx.beginPath(); ctx.arc(0, 0, p.r + 7 + 3 * pl, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
+                    ctx.fillStyle = 'rgba(255,255,255,0.92)'; ctx.beginPath(); ctx.arc(0, 0, p.r, 0, Math.PI * 2); ctx.fill();
+                    ctx.lineWidth = 2; ctx.stroke();
+                    ctx.shadowBlur = 0;
+                    ctx.font = '20px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                    ctx.fillText(PU_ICONS[p.type], 0, 1);
+                    ctx.restore();
+                });
+
+                popups.forEach(p => {
+                    ctx.save(); ctx.globalAlpha = Math.min(1, p.life / 20);
+                    ctx.font = 'bold 18px sans-serif'; ctx.textAlign = 'center'; ctx.fillStyle = '#fff';
+                    ctx.fillText(p.text, p.x, p.y); ctx.restore();
+                });
+
+                ctx.fillStyle = '#fff'; ctx.font = 'bold 16px sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
                 ctx.fillText(`💰 ${score}`, 20, 30);
+
+                // Статус активных бонусов
+                let sy = 30; ctx.textAlign = 'right';
+                const status = [];
+                if (fx.magnet > 0) status.push({ t: `🧲 ${(fx.magnet / 1000).toFixed(1)}s`, c: PU_COLORS.magnet });
+                if (fx.turbo > 0) status.push({ t: `⚡ x2 ${(fx.turbo / 1000).toFixed(1)}s`, c: PU_COLORS.turbo });
+                if (fx.shield) status.push({ t: '🛡️', c: PU_COLORS.shield });
+                status.forEach(s => { ctx.fillStyle = s.c; ctx.font = 'bold 16px sans-serif'; ctx.fillText(s.t, canvas.width - 20, sy); sy += 22; });
+                ctx.textAlign = 'left';
             }
 
             function loop() {
                 if (gameOver) return;
-                if (!isPaused) { update(); draw(); }
+                const now = performance.now();
+                const dt = Math.min(50, now - lastTs);
+                lastTs = now;
+                if (!isPaused) { update(dt); draw(); }
                 if (!gameOver) lolitaGameAnimId = requestAnimationFrame(loop);
             }
             loop();
@@ -4119,6 +4534,9 @@
 
         function closeLolitaGameModal() {
             lolitaGameActive = false;
+            if (window._lolitaKD) { window.removeEventListener('keydown', window._lolitaKD); window._lolitaKD = null; }
+            if (window._lolitaKU) { window.removeEventListener('keyup', window._lolitaKU); window._lolitaKU = null; }
+            if (window.gameKeys) Object.keys(window.gameKeys).forEach(k => window.gameKeys[k] = false);
             if (lolitaTimerInterval) clearInterval(lolitaTimerInterval);
             if (lolitaGameAnimId) cancelAnimationFrame(lolitaGameAnimId);
             document.getElementById('lolita-game-modal').classList.add('hidden');
@@ -4387,6 +4805,224 @@
                 alert(TRANSLATIONS[currentLang].promoWrong);
             }
             input.value = '';
+        }
+
+        // ==========================================
+        // --- НОВОЕ: уведомления, документ, фоны, мобильная адаптация ---
+        // ==========================================
+        function showToast(msg, ms = 2800) {
+            const box = document.getElementById('toast-box');
+            if (!box) return;
+            const el = document.createElement('div');
+            el.className = 'toast-item';
+            el.innerText = msg;
+            box.appendChild(el);
+            while (box.children.length > 3) box.removeChild(box.firstChild);
+            setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, ms);
+        }
+
+        function updateModalScrollLock() {
+            const anyOpen = Array.from(document.querySelectorAll('[id$="-modal"]')).some(m => !m.classList.contains('hidden'));
+            document.body.classList.toggle('modal-open', anyOpen);
+        }
+        (function initModalScrollLock() {
+            const start = () => {
+                const obs = new MutationObserver(updateModalScrollLock);
+                document.querySelectorAll('[id$="-modal"]').forEach(m => obs.observe(m, { attributes: true, attributeFilter: ['class'] }));
+                updateModalScrollLock();
+            };
+            if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+        })();
+
+        function syncVideoBackgrounds() {
+            const cur = gameState.currentTheme;
+            [['video-bg-element', 'video-bg'], ['video-bg-element-2', 'video-bg-2']].forEach(([id, key]) => {
+                const v = document.getElementById(id);
+                if (!v) return;
+                if (cur === key) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+                else { try { v.pause(); } catch (e) {} }
+            });
+        }
+
+        function buyVideoBg2() {
+            playSound('click');
+            const t = TRANSLATIONS[currentLang];
+            if (gameState.videoBg2Unlocked) { selectTheme('video-bg-2'); return; }
+            if (gameState.balance < 100000 || (gameState.lolitaBalance || 0) < 10) { alert(t.notEnough); return; }
+            gameState.balance -= 100000;
+            gameState.lolitaBalance -= 10;
+            gameState.videoBg2Unlocked = true;
+            gameState.currentTheme = 'video-bg-2';
+            playSound('win');
+            applyTheme('video-bg-2');
+            saveGame();
+            updateUI();
+            alert(currentLang === 'en' ? 'Video background 2 purchased!' : 'Видео-фон 2 куплен!');
+        }
+
+        // --- Тайный документ ---
+        function getCollectedGuestCount() {
+            return ITEMS_DB.filter(i => !i.isCoin && !i.isEmpty && !i.isLolita && (gameState.inventory[i.id] || 0) > 0).length;
+        }
+        function isDocSectionUnlocked() { return getCollectedGuestCount() >= DOC_MIN_GUESTS; }
+        function getFoundDocCount() { return (gameState.foundDocFragments || []).length; }
+
+        function updateDocUI() {
+            const card = document.getElementById('secret-doc-card');
+            if (!card) return;
+            const t = TRANSLATIONS[currentLang];
+            const unlocked = isDocSectionUnlocked();
+            const guests = getCollectedGuestCount();
+            card.classList.toggle('opacity-50', !unlocked);
+            const status = document.getElementById('doc-card-status');
+            if (status) {
+                status.innerText = unlocked
+                    ? `${t.navDocProgress} ${getFoundDocCount()} / ${DOC_FRAGMENTS.length}`
+                    : `${t.navDocNeed} (${Math.min(guests, DOC_MIN_GUESTS)}/${DOC_MIN_GUESTS})`;
+            }
+        }
+
+        function openSecretDocModal() {
+            playSound('click');
+            if (!isDocSectionUnlocked()) { showToast(TRANSLATIONS[currentLang].navDocLockedToast); return; }
+            document.getElementById('secret-doc-modal').classList.remove('hidden');
+            renderSecretDoc(true);
+        }
+        function closeSecretDocModal() { playSound('click'); document.getElementById('secret-doc-modal').classList.add('hidden'); }
+
+        function renderSecretDoc(animate = false) {
+            const t = TRANSLATIONS[currentLang];
+            const wrap = document.getElementById('doc-sheet-wrap');
+            if (!wrap) return;
+            const found = gameState.foundDocFragments || [];
+            const censored = (idx) => {
+                const f = DOC_FRAGMENTS[idx - 1];
+                const word = currentLang === 'en' ? f.enWord : f.ruWord;
+                const isFound = found.includes(f.id);
+                return `<span class="censor-word"><span class="censor-text">${word}</span><span class="censor-box${(isFound && !animate) ? ' revealed' : ''}" data-frag="${f.id}"></span></span>`;
+            };
+            const lines = t.docSheetLines.map(line => `<p class="doc-line">${line.replace(/\{(\d)\}/g, (m, n) => censored(parseInt(n, 10)))}</p>`).join('');
+            wrap.innerHTML = `<div class="doc-sheet">
+                <div class="doc-stamp">${t.docSheetStamp}</div>
+                <div class="doc-head">${t.docSheetHeader}<small>${t.docSheetSector}</small></div>
+                ${lines}
+                <div class="doc-sign">${t.docSheetSign}</div>
+            </div>`;
+
+            if (animate) {
+                let delay = 350;
+                DOC_FRAGMENTS.forEach(f => {
+                    if (!found.includes(f.id)) return;
+                    const box = wrap.querySelector(`.censor-box[data-frag="${f.id}"]`);
+                    if (box) { setTimeout(() => box.classList.add('revealed'), delay); delay += 220; }
+                });
+            }
+
+            const chips = document.getElementById('doc-fragment-chips');
+            if (chips) {
+                chips.innerHTML = DOC_FRAGMENTS.map((f, i) => {
+                    const ok = found.includes(f.id);
+                    return `<span class="doc-chip${ok ? ' found' : ''}">${ok ? '📄' : '⬛'} ${i + 1}. ${t.docFragNames[i]} ${ok ? '✓' : '🔒'}</span>`;
+                }).join('');
+            }
+            document.getElementById('doc-modal-title').innerText = t.docModalTitle;
+            document.getElementById('doc-modal-desc').innerText = t.docModalDesc;
+            document.getElementById('doc-progress-text').innerText = `${t.docProgress} ${found.length} / ${DOC_FRAGMENTS.length}`;
+            document.getElementById('doc-reward-desc').innerText = gameState.secretDocRewardClaimed ? t.docRewardDone : t.docRewardDesc;
+        }
+
+        // Применить выпавший фрагмент (без звуков). Возвращает true, если фрагмент новый.
+        function applyDocFragmentDrop(item) {
+            if (!gameState.foundDocFragments) gameState.foundDocFragments = [];
+            if (!item || !item.id || gameState.foundDocFragments.includes(item.id)) return false;
+            if (!DOC_FRAGMENTS.some(f => f.id === item.id)) return false;
+            gameState.foundDocFragments.push(item.id);
+            if (gameState.foundDocFragments.length >= DOC_FRAGMENTS.length && !gameState.secretDocRewardClaimed) {
+                gameState.secretDocRewardClaimed = true; // защита от повторной выдачи
+                gameState.balance += DOC_REWARD_COINS;
+                gameState.lolitaBalance = (gameState.lolitaBalance || 0) + DOC_REWARD_LOLITA;
+                setTimeout(() => { alert(TRANSLATIONS[currentLang].docRewardAlert); updateUI(); saveGame(); }, 600);
+            }
+            updateDocUI();
+            return true;
+        }
+
+        function createDocRouletteCard(item) {
+            const t = TRANSLATIONS[currentLang];
+            const div = document.createElement('div');
+            div.className = 'flex-shrink-0 w-28 h-32 rounded-xl border-2 border-amber-400 glow-doc doc-roulette-card flex flex-col items-center justify-center p-2 text-center relative overflow-hidden shadow-md';
+            div.innerHTML = `
+                <div class="text-3xl my-1">📄</div>
+                <div class="w-14"><div class="doc-bar"></div><div class="doc-bar" style="width:70%"></div></div>
+                <div class="text-[9px] font-bold line-clamp-1 leading-tight mt-1 text-amber-300">${t.docFragName}</div>
+                <div class="text-[8px] uppercase tracking-wider font-black mt-1 text-amber-400/80">${currentLang === 'en' ? 'Archive' : 'Архив'}</div>`;
+            return div;
+        }
+
+        function showDocFragmentRewardModal(item) {
+            const t = TRANSLATIONS[currentLang];
+            const modal = document.getElementById('reward-modal');
+            const container = document.getElementById('reward-card-container');
+            const badge = document.getElementById('reward-badge');
+            const title = document.getElementById('reward-title');
+            const role = document.getElementById('reward-role');
+            const desc = document.getElementById('reward-desc');
+            const avatarBox = document.getElementById('reward-avatar-box');
+            const dupInfo = document.getElementById('duplicate-info');
+            const rarityInfo = RARITIES.docFragment;
+
+            badge.innerText = getRarityName('docFragment');
+            badge.className = `px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest mb-3 border ${rarityInfo.color}`;
+            container.className = `bg-slate-900 border-4 ${rarityInfo.color} w-full max-w-md rounded-3xl p-6 flex flex-col items-center text-center relative shadow-2xl ${rarityInfo.glow}`;
+
+            const isNew = applyDocFragmentDrop(item);
+            const idx = DOC_FRAGMENTS.findIndex(f => f.id === item.id);
+            const frag = DOC_FRAGMENTS[idx];
+            const word = frag ? (currentLang === 'en' ? frag.enWord : frag.ruWord) : '';
+
+            title.innerText = `${t.docFragName} #${idx + 1}`;
+            role.innerText = t.docFragRole;
+            desc.innerText = `${t.docFragRevealed} «${word}» · ${getFoundDocCount()}/${DOC_FRAGMENTS.length}`;
+            avatarBox.innerHTML = `<div class="flex flex-col items-center justify-center gap-2 w-full h-full">
+                <span class="text-7xl">📄</span>
+                <span class="censor-word text-amber-200 text-sm"><span class="censor-text" style="color:#fde68a">${word}</span><span class="censor-box" id="reward-doc-censor" style="background:#000"></span></span>
+            </div>`;
+            setTimeout(() => { const b = document.getElementById('reward-doc-censor'); if (b) b.classList.add('revealed'); }, 700);
+            dupInfo.classList.add('hidden');
+
+            if (isNew) {
+                playSound('legendary');
+                confetti({ particleCount: 200, spread: 120, origin: { y: 0.6 }, colors: ['#f59e0b', '#fde68a', '#ffffff'] });
+            }
+            modal.classList.remove('hidden');
+            updateUI(); saveGame();
+        }
+
+        function openSecretVideos2Teaser() {
+            playSound('click');
+            showToast(TRANSLATIONS[currentLang].navVideos2Toast, 3200);
+        }
+
+        // Тексты новых элементов (RU / EN) — вызывается из applyLanguageUI()
+        function applyNewFeaturesLanguageUI() {
+            const t = TRANSLATIONS[currentLang];
+            const set = (id, txt) => { const el = document.getElementById(id); if (el && txt !== undefined) el.innerText = txt; };
+            set('theme-name-office', t.themeOfficeName);
+            set('theme-desc-office', t.themeOfficeDesc);
+            set('theme-name-video_bg2', t.themeVideo2Name);
+            set('theme-desc-video_bg2', t.themeVideo2Desc);
+            set('videos2-title', t.navVideos2Title);
+            set('videos2-desc', t.navVideos2Desc);
+            set('videos2-soon-badge', t.navVideos2Soon);
+            set('videos2-section-badge', `${t.sectionWord} 6`);
+            set('btn-open-secret-videos-2', t.navVideos2Btn);
+            set('doc-card-badge', `${t.sectionWord} 7`);
+            set('doc-card-title', t.navDocTitle);
+            set('doc-card-desc', t.navDocDesc);
+            set('btn-open-secret-doc', t.navDocBtn);
+            set('lbl-lolita-pu-hint', t.puHint);
+            updateDocUI();
+            if (!document.getElementById('secret-doc-modal').classList.contains('hidden')) renderSecretDoc(false);
         }
 
         // Инициализация при загрузке
