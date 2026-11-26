@@ -259,6 +259,14 @@
         body.mobile-optimized.theme-twotigers, body.mobile-optimized.theme-temple, body.mobile-optimized.theme-office,
         body.mobile-optimized.theme-supergold { background-attachment: scroll !important; }
         body.mobile-optimized .btn-bounce { transition: none; }
+
+        /* Золотые карточки Эпштейна и Максвелл (легендарные) */
+        .holo-card.holo-gold { background: linear-gradient(135deg, #a16207, #facc15 50%, #a16207); }
+        .holo-card.holo-gold::after { background: linear-gradient(135deg, #5c3a05 0%, #8a5a06 40%, #b8860b 75%, #8a5a06 100%); }
+        .holo-card.holo-gold .bg-slate-950 { background-color: rgba(69, 40, 3, 0.55); border-color: rgba(250, 204, 21, 0.55); }
+        .holo-card.holo-gold .text-purple-400 { color: #fef3c7; }
+        .holo-card.holo-gold .text-slate-300, .holo-card.holo-gold .text-slate-400 { color: #fde68a; }
+        .holo-card.holo-gold .text-white { color: #fffbeb; }
     </style>
 </head>
 <body class="text-white flex flex-col justify-between min-h-screen relative">
@@ -672,6 +680,26 @@
                 </div>
             </div>
 
+            <!-- Пассивный доход -->
+            <div class="space-y-3 pt-4 border-t border-slate-800">
+                <h3 id="lbl-cat-passive" class="text-base font-black text-sky-300 uppercase tracking-wider flex items-center gap-2"><span>📈 Пассивный доход (Лолита Э.)</span></h3>
+                <p id="passive-rate-info" class="text-[11px] text-slate-400">Сейчас: +0 ✈️ в минуту</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-slate-900 border-2 border-sky-400/70 rounded-2xl p-4 flex flex-col justify-between items-center text-center">
+                        <div class="text-4xl mb-2">✈️</div>
+                        <h4 id="passive1-name" class="font-bold text-sm text-sky-300">+1 ✈️ в минуту</h4>
+                        <p id="passive1-desc" class="text-[10px] text-slate-400 my-2">Лолита Э. начнут копиться сами: +1 каждую минуту.</p>
+                        <button onclick="buyPassive(1)" id="btn-passive-1" class="w-full py-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-black text-xs uppercase rounded-xl btn-bounce shadow-lg">Купить (35,000 🪙)</button>
+                    </div>
+                    <div class="bg-slate-900 border-2 border-cyan-300/80 rounded-2xl p-4 flex flex-col justify-between items-center text-center glow-legendary">
+                        <div class="text-4xl mb-2">🛫</div>
+                        <h4 id="passive5-name" class="font-bold text-sm text-cyan-200">+5 ✈️ в минуту</h4>
+                        <p id="passive5-desc" class="text-[10px] text-slate-400 my-2">Быстрый поток Лолит Э.: +5 каждую минуту.</p>
+                        <button onclick="buyPassive(5)" id="btn-passive-5" class="w-full py-2 bg-gradient-to-r from-cyan-400 to-sky-600 text-slate-950 font-black text-xs uppercase rounded-xl btn-bounce shadow-lg">Купить (100,000 🪙)</button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Обмен Валюты -->
             <div class="space-y-3 pt-4 border-t border-slate-800">
                 <h3 id="lbl-cat-exchange" class="text-base font-black text-sky-400 uppercase tracking-wider flex items-center gap-2"><span>✈️ Обмен Валюты (Лолита Экспресс)</span></h3>
@@ -793,6 +821,15 @@
                     <p id="doc-card-desc" class="text-xs text-slate-300 mb-3 flex-grow">Журнал полётов и гостевых пропусков. Найди 5 фрагментов в «Архиве Острова» и «Частном Боинге», чтобы снять цензуру.</p>
                     <div id="doc-card-status" class="text-[10px] font-bold text-amber-300 bg-amber-500/10 border border-amber-500/30 rounded-lg px-2 py-1 mb-3"></div>
                     <button id="btn-open-secret-doc" onclick="openSecretDocModal()" class="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 rounded-xl font-black text-xs uppercase tracking-wider btn-bounce shadow-md text-slate-950 mt-auto">Открыть Документ</button>
+                </div>
+
+                <div id="secret-doc2-card" class="card-bg-pattern border-2 border-red-500/60 rounded-2xl p-5 flex flex-col items-center justify-between text-center relative overflow-hidden shadow-xl h-full opacity-50">
+                    <div id="doc2-card-badge" class="bg-red-500/20 text-red-300 text-[10px] font-black px-3 py-1 rounded-full uppercase border border-red-500/30">Раздел 8</div>
+                    <div class="text-6xl my-3">🗂️</div>
+                    <h3 id="doc2-card-title" class="text-lg font-black mb-1 text-red-400">Тайный Документ 2</h3>
+                    <p id="doc2-card-desc" class="text-xs text-slate-300 mb-3 flex-grow">Протокол изъятия материалов. Нужно найти 10 фрагментов в «Архиве Острова» и «Частном Боинге».</p>
+                    <div id="doc2-card-status" class="text-[10px] font-bold text-red-300 bg-red-500/10 border border-red-500/30 rounded-lg px-2 py-1 mb-3"></div>
+                    <button id="btn-open-secret-doc2" onclick="openSecretDoc2Modal()" class="w-full py-3 bg-gradient-to-r from-red-600 to-rose-700 hover:from-red-500 hover:to-rose-600 rounded-xl font-black text-xs uppercase tracking-wider btn-bounce shadow-md text-white mt-auto">Открыть Документ 2</button>
                 </div>
             </div>
         </section>
@@ -1055,6 +1092,19 @@
                 <div id="court-result-text" class="text-xs font-bold text-slate-300">Запустите колесо фортуны!</div>
             </div>
             <button id="spin-court-btn" onclick="spinCourtWheel()" class="w-full py-3.5 bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black text-base uppercase rounded-xl shadow-lg btn-bounce">🎡 Крутить Колесо Фортуны</button>
+        </div>
+    </div>
+
+    <div id="secret-doc2-modal" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex items-start sm:items-center justify-center p-3 hidden overflow-y-auto">
+        <div class="bg-slate-900 border-4 border-red-500 w-full max-w-2xl rounded-3xl p-4 sm:p-6 flex flex-col items-center relative shadow-2xl my-auto">
+            <button onclick="closeSecretDoc2Modal()" class="absolute top-3 right-3 text-slate-400 hover:text-white text-2xl font-bold p-2 z-10">✕</button>
+            <h3 id="doc2-modal-title" class="text-xl sm:text-2xl font-black text-red-400 mb-1 uppercase text-center pr-8">🗂️ Тайный Документ 2</h3>
+            <p id="doc2-modal-desc" class="text-xs text-slate-400 mb-3 text-center">Открывай фрагменты в кейсах, чтобы снять чёрную цензуру.</p>
+            <div id="doc2-fragment-chips" class="flex flex-wrap justify-center gap-1.5 mb-4"></div>
+            <div id="doc2-sheet-wrap" class="w-full"></div>
+            <div class="w-full text-center bg-slate-950 border border-red-500/40 rounded-2xl p-3 mt-4">
+                <p id="doc2-progress-text" class="text-sm font-bold text-slate-300">Фрагментов: 0 / 10</p>
+            </div>
         </div>
     </div>
 
@@ -1536,6 +1586,65 @@
             eggReward: '+{n} ✈️'
         });
 
+        RARITIES.docFragment2 = RARITIES.docFragment;
+        Object.assign(TRANSLATIONS.ru, {
+            navDoc2Title: 'Тайный Документ 2', navDoc2Desc: 'Протокол изъятия материалов. Нужно найти 10 фрагментов в «Архиве Острова» и «Частном Боинге».',
+            navDoc2Btn: 'Открыть Документ 2', navDoc2Need: '🔒 Сначала собери все 5 фрагментов Тайного Документа',
+            navDoc2LockedToast: '🔒 Сначала собери все 5 фрагментов «Тайного Документа».',
+            doc2ModalTitle: '🗂️ Тайный Документ 2', doc2ModalDesc: 'Открывай 10 фрагментов в кейсах «Архив Острова» и «Частный Боинг» — чёрные блоки будут исчезать.',
+            docFragName2: 'Фрагмент документа 2',
+            docRateNote: '📄 Фрагмент документа выпадает только после 15 гостей в коллекции; фрагмент документа 2 — только после сбора всех 5 фрагментов документа 1. Уже открытые не выпадают.',
+            doc2FragNames: ['Кем выдан ордер', 'Объект обыска', 'Где нашли', 'Что изъято', 'Журналы', 'Финансы', 'Свидетель', 'Допрос', 'Судьба материалов', 'Итоговая пометка'],
+            doc2SheetHeader: 'ПРОТОКОЛ ИЗЪЯТИЯ МАТЕРИАЛОВ', doc2SheetSector: 'Дело № 0457-Б · Секретная часть', doc2SheetStamp: 'СОВЕРШЕННО СЕКРЕТНО',
+            doc2SheetLines: [
+                'Составлено на месте проведения обыска. Копия № 2 из 3.',
+                'Основание: ордер, выданный {1}.',
+                'Объект обыска: {2} на закрытой территории.',
+                'В {3} обнаружены носители информации и личные записи.',
+                'Изъято: {4}, копии переданы следователю.',
+                'Дополнительно изъяты {5} за последние годы.',
+                'Финансовый след: {6}, замороженные по решению суда.',
+                'Ключевое лицо: защищённый {7}, имя не разглашается.',
+                'Проведён {8} в присутствии адвоката.',
+                'Часть материалов признана {9} до начала проверки.',
+                'Итоговая пометка: {10}.'
+            ],
+            doc2SheetSign: 'Подпись старшего следователя · Печать № 0912',
+            catPassive: '📈 Пассивный доход (Лолита Э.)', passiveRate: 'Сейчас: +{n} ✈️ в минуту',
+            passive1Name: '+1 ✈️ в минуту', passive1Desc: 'Лолита Э. начнут копиться сами: +1 каждую минуту.',
+            passive5Name: '+5 ✈️ в минуту', passive5Desc: 'Быстрый поток Лолит Э.: +5 каждую минуту.',
+            passiveBuy: 'Купить ({cost} 🪙)', passiveOwned: 'Куплено ✅'
+        });
+        Object.assign(TRANSLATIONS.en, {
+            navDoc2Title: 'Secret Document 2', navDoc2Desc: 'Evidence seizure report. Find 10 fragments in Island Archives and Private Boeing.',
+            navDoc2Btn: 'Open Document 2', navDoc2Need: '🔒 First collect all 5 fragments of Secret Document',
+            navDoc2LockedToast: '🔒 First collect all 5 fragments of "Secret Document".',
+            doc2ModalTitle: '🗂️ Secret Document 2', doc2ModalDesc: 'Open 10 fragments in Island Archives and Private Boeing cases — the black blocks will disappear.',
+            docFragName2: 'Doc Fragment 2',
+            docRateNote: '📄 Doc Fragment drops only after you have 15 guests in your collection; Doc Fragment 2 only after all 5 fragments of document 1 are found. Already opened ones do not drop.',
+            doc2FragNames: ['Warrant issuer', 'Search target', 'Where found', 'What seized', 'Logs', 'Finances', 'Witness', 'Interrogation', 'Materials fate', 'Final note'],
+            doc2SheetHeader: 'EVIDENCE SEIZURE REPORT', doc2SheetSector: 'Case No. 0457-B · Classified part', doc2SheetStamp: 'TOP SECRET',
+            doc2SheetLines: [
+                'Drawn up on site during the search. Copy No. 2 of 3.',
+                'Basis: warrant issued by {1}.',
+                'Search target: {2} on restricted grounds.',
+                'Data storage devices and personal notes were found in the {3}.',
+                'Seized: {4}, copies handed to the investigator.',
+                'Additionally seized: {5} for the past years.',
+                'Financial trail: {6}, frozen by court decision.',
+                'Key person: protected {7}, name withheld.',
+                'An {8} was held in the presence of a lawyer.',
+                'Part of the materials was {9} before the review began.',
+                'Final note: {10}.'
+            ],
+            doc2SheetSign: 'Signed by senior investigator · Seal No. 0912',
+            catPassive: '📈 Passive Income (Lolita E.)', passiveRate: 'Now: +{n} ✈️ per minute',
+            passive1Name: '+1 ✈️ per minute', passive1Desc: 'Lolita E. start piling up on their own: +1 every minute.',
+            passive5Name: '+5 ✈️ per minute', passive5Desc: 'A fast flow of Lolita E.: +5 every minute.',
+            passiveBuy: 'Buy ({cost} 🪙)', passiveOwned: 'Purchased ✅'
+        });
+
+
         const ISLAND_PARTS = [
             { id: 'part_mansion', ruName: 'Особняк', enName: 'Mansion', zoneId: 'zone-mansion', avatar: '🏛️' },
             { id: 'part_beach', ruName: 'Пляжная зона', enName: 'Beach Zone', zoneId: 'zone-beach', avatar: '🏖️' },
@@ -1610,6 +1719,20 @@
         const DOC_CHANCE = { legendary: 2.0, boeing: 3.5 };
         const DOC_REWARD_COINS = 30000;
         const DOC_REWARD_LOLITA = 15;
+        // === ТАЙНЫЙ ДОКУМЕНТ 2 (10 фрагментов, открывается после полного сбора документа 1) ===
+        const DOC2_FRAGMENTS = [
+            { id: 'e1', ruWord: 'ФЕДЕРАЛЬНЫМ СУДОМ', enWord: 'FEDERAL COURT' },
+            { id: 'e2', ruWord: 'ОСОБНЯК', enWord: 'MANSION' },
+            { id: 'e3', ruWord: 'СЕЙФЕ', enWord: 'SAFE' },
+            { id: 'e4', ruWord: 'ВИДЕОЗАПИСИ', enWord: 'VIDEO RECORDINGS' },
+            { id: 'e5', ruWord: 'ЖУРНАЛЫ ПОЛЁТОВ', enWord: 'FLIGHT LOGS' },
+            { id: 'e6', ruWord: 'ОФШОРНЫЕ СЧЕТА', enWord: 'OFFSHORE ACCOUNTS' },
+            { id: 'e7', ruWord: 'СВИДЕТЕЛЬ', enWord: 'WITNESS' },
+            { id: 'e8', ruWord: 'ДОПРОС', enWord: 'INTERROGATION' },
+            { id: 'e9', ruWord: 'УНИЧТОЖЕНЫ', enWord: 'DESTROYED' },
+            { id: 'e10', ruWord: 'ДЕЛО ЗАСЕКРЕЧЕНО', enWord: 'CASE CLASSIFIED' }
+        ];
+        const DOC2_CHANCE = { legendary: 1.0, boeing: 2.5 };
 
         const ITEMS_DB = [
             { id: 'empty_slot', isEmpty: true, ruName: 'Ничего', enName: 'Nothing', rarity: 'empty', avatar: '💨', ruDesc: 'В этот раз чемодан оказался абсолютно пустым!', enDesc: 'This briefcase turned out to be completely empty!' },
@@ -1708,7 +1831,11 @@
                 secretVideos2RewardClaimed: false,
                 foundDocFragments: [],
                 secretDocRewardClaimed: false,
-                videoBg2Unlocked: false
+                videoBg2Unlocked: false,
+                foundDocFragments2: [],
+                passive1Bought: false,
+                passive5Bought: false,
+                passiveSeconds: 0
             };
         }
 
@@ -2324,6 +2451,10 @@
             if (!Array.isArray(gameState.foundDocFragments)) gameState.foundDocFragments = [];
             if (gameState.secretDocRewardClaimed === undefined) gameState.secretDocRewardClaimed = false;
             if (gameState.videoBg2Unlocked === undefined) gameState.videoBg2Unlocked = false;
+            if (!Array.isArray(gameState.foundDocFragments2)) gameState.foundDocFragments2 = [];
+            if (gameState.passive1Bought === undefined) gameState.passive1Bought = false;
+            if (gameState.passive5Bought === undefined) gameState.passive5Bought = false;
+            if (typeof gameState.passiveSeconds !== 'number') gameState.passiveSeconds = 0;
             
             gameState = JSON.parse(JSON.stringify(gameState));
             
@@ -3216,6 +3347,16 @@
                 }
             }
 
+            // Фрагменты документа 2: только после полного сбора документа 1
+            if (isArch && isDoc2Unlocked()) {
+                const foundDocs2 = gameState.foundDocFragments2 || [];
+                const leftDocs2 = DOC2_FRAGMENTS.filter(f => !foundDocs2.includes(f.id));
+                if (leftDocs2.length > 0 && Math.random() * 100 < DOC2_CHANCE[caseType]) {
+                    const frag2 = leftDocs2[Math.floor(Math.random() * leftDocs2.length)];
+                    return { id: frag2.id, docSet: 2, isDocFragment: true, ruName: 'Фрагмент документа 2', enName: 'Doc Fragment 2', rarity: 'docFragment', avatar: '📄', ruDesc: 'Фрагмент секретного документа 2.', enDesc: 'A fragment of secret document 2.' };
+                }
+            }
+
             const videoRoll = Math.random() * 100;
             if (caseType === 'legendary' && videoRoll < 0.092) {
                 const found = gameState.foundSecretVideos || [];
@@ -3390,7 +3531,10 @@
             let videoCount = 0;
             const winnerItem = getRandomReward(gameState.activeCaseType);
             let docCount = winnerItem.isDocFragment ? 1 : 0;
-            const docFillerAllowed = (gameState.activeCaseType === 'boeing' || gameState.activeCaseType === 'legendary') && isDocSectionUnlocked() && DOC_FRAGMENTS.some(f => !(gameState.foundDocFragments || []).includes(f.id));
+            const _isArchCase = (gameState.activeCaseType === 'boeing' || gameState.activeCaseType === 'legendary');
+            const docFillerSet = !_isArchCase ? 0 : ((isDocSectionUnlocked() && DOC_FRAGMENTS.some(f => !(gameState.foundDocFragments || []).includes(f.id))) ? 1 : ((isDoc2Unlocked() && DOC2_FRAGMENTS.some(f => !(gameState.foundDocFragments2 || []).includes(f.id))) ? 2 : 0));
+            const docFillerMax = docFillerSet === 2 ? 2 : 1;
+            const docFillerAllowed = docFillerSet !== 0;
             const foundPhotos = gameState.foundSecretPhotos || [];
             const foundPhotos2 = gameState.foundSecretPhotos2 || [];
             const foundPhotos3 = gameState.foundSecretPhotos3 || [];
@@ -3401,8 +3545,8 @@
                 if (i === winningIndex) {
                     item = winnerItem;
                 } else {
-                    if (docFillerAllowed && docCount < 1 && Math.random() < 0.03) {
-                        item = { id: 'placeholder_doc', isDocFragment: true, ruName: 'Фрагмент документа', enName: 'Doc Fragment', rarity: 'docFragment', avatar: '📄', ruDesc: 'Неизвестный фрагмент...', enDesc: 'Unknown fragment...' };
+                    if (docFillerAllowed && docCount < docFillerMax && Math.random() < 0.03) {
+                        item = { id: 'placeholder_doc', isDocFragment: true, docSet: docFillerSet, ruName: 'Фрагмент документа', enName: 'Doc Fragment', rarity: 'docFragment', avatar: '📄', ruDesc: 'Неизвестный фрагмент...', enDesc: 'Unknown fragment...' };
                         docCount++;
                     }
                     else if ((gameState.activeCaseType === 'boeing' || gameState.activeCaseType === 'legendary') && videoCount < 1 && Math.random() < 0.05) {
@@ -3534,6 +3678,7 @@
             badge.className = `px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest mb-3 border ${rarityInfo.color}`;
             container.className = `bg-slate-900 border-4 ${rarityInfo.color} w-full max-w-md rounded-3xl p-6 flex flex-col items-center text-center relative shadow-2xl ${rarityInfo.glow}`;
             if (item.isIslandPart) container.classList.add('holo-card');
+            else if (item.rarity === 'legendary') container.classList.add('holo-card', 'holo-gold');
 
             title.innerText = item.isIslandPart ? (currentLang === 'en' ? 'Island Part' : 'Часть Острова') : (item.isSecretPhoto ? (item.ruName.includes('3') ? 'Тайное Фото 3' : (item.ruName.includes('2') ? 'Тайное Фото 2' : 'Тайное Фото')) : (item.isSecretVideo ? (currentLang === 'en' ? 'Secret Video' : 'Тайное Видео') : getItemName(item)));
 
@@ -3718,7 +3863,7 @@
             badge.innerText = getRarityName(item.rarity);
             badge.className = `px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest mb-3 border ${rarityInfo.color}`;
             container.className = `bg-slate-900 border-4 ${rarityInfo.color} w-full max-w-md rounded-3xl p-6 flex flex-col items-center text-center relative shadow-2xl ${rarityInfo.glow}`;
-            if (item.rarity === 'legendary') container.classList.add('holo-card');
+            if (item.rarity === 'legendary') container.classList.add('holo-card', 'holo-gold');
             title.innerText = getItemName(item);
             role.innerText = getItemRole(item);
             desc.innerText = getItemDesc(item);
@@ -3755,7 +3900,7 @@
                 const isUnlocked = count > 0;
                 const rarityInfo = RARITIES[item.rarity];
                 const card = document.createElement('div');
-                card.className = `card-bg-pattern border-2 ${isUnlocked ? rarityInfo.color + ' cursor-pointer hover:scale-105' : 'border-slate-800 bg-slate-950/60 opacity-50'} rounded-2xl p-3 flex flex-col items-center text-center relative overflow-hidden shadow-lg transition ${isUnlocked && item.rarity === 'legendary' ? 'glow-legendary holo-card' : ''}`;
+                card.className = `card-bg-pattern border-2 ${isUnlocked ? rarityInfo.color + ' cursor-pointer hover:scale-105' : 'border-slate-800 bg-slate-950/60 opacity-50'} rounded-2xl p-3 flex flex-col items-center text-center relative overflow-hidden shadow-lg transition ${isUnlocked && item.rarity === 'legendary' ? 'glow-legendary holo-card holo-gold' : ''}`;
                 if (isUnlocked) card.onclick = () => openDetailModal(item);
                 
                 let avatarHtml;
@@ -3887,7 +4032,7 @@
                 if (item.isDocFragment) {
                     const dDiv = document.createElement('div');
                     dDiv.className = 'bg-slate-950 p-2.5 rounded-xl border border-amber-500 glow-doc flex items-center justify-between text-left shadow relative overflow-hidden';
-                    dDiv.innerHTML = `<div class="flex items-center gap-3"><span class="text-2xl">📄</span><div><div class="flex items-center gap-2"><span class="text-xs font-bold text-white">${TRANSLATIONS[currentLang].docFragName}</span>${isNew ? `<span class="bg-amber-500/30 text-amber-200 border border-amber-400/50 text-[8px] font-black px-1.5 py-0.5 rounded animate-pulse">${TRANSLATIONS[currentLang].newGuestBadge}</span>` : ''}</div><div class="text-[9px] text-amber-400 font-bold">${getRarityName('docFragment')}</div></div></div><span class="text-[10px] font-mono text-slate-500">#${index + 1}</span>`;
+                    dDiv.innerHTML = `<div class="flex items-center gap-3"><span class="text-2xl">📄</span><div><div class="flex items-center gap-2"><span class="text-xs font-bold text-white">${item.docSet === 2 ? TRANSLATIONS[currentLang].docFragName2 : TRANSLATIONS[currentLang].docFragName}</span>${isNew ? `<span class="bg-amber-500/30 text-amber-200 border border-amber-400/50 text-[8px] font-black px-1.5 py-0.5 rounded animate-pulse">${TRANSLATIONS[currentLang].newGuestBadge}</span>` : ''}</div><div class="text-[9px] text-amber-400 font-bold">${getRarityName('docFragment')}</div></div></div><span class="text-[10px] font-mono text-slate-500">#${index + 1}</span>`;
                     list.appendChild(dDiv);
                     return;
                 }
@@ -3943,7 +4088,8 @@
                 secretPhoto2: currentLang === 'en' ? 'Secret Photo 2' : 'Тайное Фото 2',
                 secretPhoto3: currentLang === 'en' ? 'Secret Photo 3' : 'Тайное Фото 3',
                 secretVideo: currentLang === 'en' ? 'Secret Video' : 'Тайное Видео',
-                docFragment: currentLang === 'en' ? 'Doc Fragment 📄' : 'Фрагмент документа 📄'
+                docFragment: currentLang === 'en' ? 'Doc Fragment 📄' : 'Фрагмент документа 📄',
+                docFragment2: currentLang === 'en' ? 'Doc Fragment 2 🗂️' : 'Фрагмент документа 2 🗂️'
             };
 
             let html = '';
@@ -3985,6 +4131,7 @@
                 addRow('text-pink-500', 'secretPhoto3', '0.510%'); 
                 addRow('text-rose-400', 'secretVideo', '0.080%'); 
                 addRow('text-amber-400', 'docFragment', '2.000%');
+                addRow('text-red-400', 'docFragment2', '1.000%');
             } else if (caseType === 'boeing') {
                 addRow('text-slate-400', 'empty', '9.000%');
                 addRow('text-orange-400', 'coin', '~56.88%');
@@ -3999,6 +4146,7 @@
                 addRow('text-pink-500', 'secretPhoto3', '1.000%'); 
                 addRow('text-rose-400', 'secretVideo', '0.720%'); 
                 addRow('text-amber-400', 'docFragment', '3.500%');
+                addRow('text-red-400', 'docFragment2', '2.500%');
             }
             
             if (caseType === 'legendary' || caseType === 'boeing') html += `<div class="text-[10px] text-amber-300/80 p-2">${t.docRateNote}</div>`;
@@ -4868,6 +5016,7 @@
         function getFoundDocCount() { return (gameState.foundDocFragments || []).length; }
 
         function updateDocUI() {
+            updateDoc2UI(); updatePassiveUI();
             const card = document.getElementById('secret-doc-card');
             if (!card) return;
             const t = TRANSLATIONS[currentLang];
@@ -4933,6 +5082,13 @@
 
         // Применить выпавший фрагмент (без звуков). Возвращает true, если фрагмент новый.
         function applyDocFragmentDrop(item) {
+            if (item && item.docSet === 2) {
+                if (!gameState.foundDocFragments2) gameState.foundDocFragments2 = [];
+                if (!item.id || gameState.foundDocFragments2.includes(item.id) || !DOC2_FRAGMENTS.some(f => f.id === item.id)) return false;
+                gameState.foundDocFragments2.push(item.id);
+                updateDocUI();
+                return true;
+            }
             if (!gameState.foundDocFragments) gameState.foundDocFragments = [];
             if (!item || !item.id || gameState.foundDocFragments.includes(item.id)) return false;
             if (!DOC_FRAGMENTS.some(f => f.id === item.id)) return false;
@@ -4954,7 +5110,7 @@
             div.innerHTML = `
                 <div class="text-3xl my-1">📄</div>
                 <div class="w-14"><div class="doc-bar"></div><div class="doc-bar" style="width:70%"></div></div>
-                <div class="text-[9px] font-bold line-clamp-1 leading-tight mt-1 text-amber-300">${t.docFragName}</div>
+                <div class="text-[9px] font-bold line-clamp-1 leading-tight mt-1 text-amber-300">${item.docSet === 2 ? t.docFragName2 : t.docFragName}</div>
                 <div class="text-[8px] uppercase tracking-wider font-black mt-1 text-amber-400/80">${currentLang === 'en' ? 'Archive' : 'Архив'}</div>`;
             return div;
         }
@@ -4976,13 +5132,14 @@
             container.className = `bg-slate-900 border-4 ${rarityInfo.color} w-full max-w-md rounded-3xl p-6 flex flex-col items-center text-center relative shadow-2xl ${rarityInfo.glow}`;
 
             const isNew = applyDocFragmentDrop(item);
-            const idx = DOC_FRAGMENTS.findIndex(f => f.id === item.id);
-            const frag = DOC_FRAGMENTS[idx];
+            const docList = item.docSet === 2 ? DOC2_FRAGMENTS : DOC_FRAGMENTS;
+            const idx = docList.findIndex(f => f.id === item.id);
+            const frag = docList[idx];
             const word = frag ? (currentLang === 'en' ? frag.enWord : frag.ruWord) : '';
 
-            title.innerText = `${t.docFragName} #${idx + 1}`;
+            title.innerText = `${item.docSet === 2 ? t.docFragName2 : t.docFragName} #${idx + 1}`;
             role.innerText = t.docFragRole;
-            desc.innerText = `${t.docFragRevealed} «${word}» · ${getFoundDocCount()}/${DOC_FRAGMENTS.length}`;
+            desc.innerText = `${t.docFragRevealed} «${word}» · ${item.docSet === 2 ? getFoundDoc2Count() : getFoundDocCount()}/${docList.length}`;
             avatarBox.innerHTML = `<div class="flex flex-col items-center justify-center gap-2 w-full h-full">
                 <span class="text-7xl">📄</span>
                 <span class="censor-word text-amber-200 text-sm"><span class="censor-text" style="color:#fde68a">${word}</span><span class="censor-box" id="reward-doc-censor" style="background:#000"></span></span>
@@ -5004,6 +5161,136 @@
         }
 
         // Тексты новых элементов (RU / EN) — вызывается из applyLanguageUI()
+        // --- Тайный документ 2 ---
+        function isDoc1Complete() {
+            const f = gameState.foundDocFragments || [];
+            return DOC_FRAGMENTS.every(x => f.includes(x.id));
+        }
+        function isDoc2Unlocked() { return isDoc1Complete(); }
+        function getFoundDoc2Count() { return (gameState.foundDocFragments2 || []).length; }
+
+        function updateDoc2UI() {
+            const card = document.getElementById('secret-doc2-card');
+            if (!card) return;
+            const t = TRANSLATIONS[currentLang];
+            const unlocked = isDoc2Unlocked();
+            card.classList.toggle('opacity-50', !unlocked);
+            const status = document.getElementById('doc2-card-status');
+            if (status) {
+                status.innerText = unlocked
+                    ? `${t.docProgress} ${getFoundDoc2Count()} / ${DOC2_FRAGMENTS.length}`
+                    : `${t.navDoc2Need} (${(gameState.foundDocFragments || []).length}/${DOC_FRAGMENTS.length})`;
+            }
+        }
+
+        function openSecretDoc2Modal() {
+            playSound('click');
+            if (!isDoc2Unlocked()) { showToast(TRANSLATIONS[currentLang].navDoc2LockedToast); return; }
+            document.getElementById('secret-doc2-modal').classList.remove('hidden');
+            renderSecretDoc2(true);
+        }
+        function closeSecretDoc2Modal() { playSound('click'); document.getElementById('secret-doc2-modal').classList.add('hidden'); }
+
+        function renderSecretDoc2(animate = false) {
+            const t = TRANSLATIONS[currentLang];
+            const wrap = document.getElementById('doc2-sheet-wrap');
+            if (!wrap) return;
+            const found = gameState.foundDocFragments2 || [];
+            const censored = (idx) => {
+                const f = DOC2_FRAGMENTS[idx - 1];
+                const word = currentLang === 'en' ? f.enWord : f.ruWord;
+                const isFound = found.includes(f.id);
+                return `<span class="censor-word"><span class="censor-text">${word}</span><span class="censor-box${(isFound && !animate) ? ' revealed' : ''}" data-frag="${f.id}"></span></span>`;
+            };
+            const lines = t.doc2SheetLines.map(line => `<p class="doc-line">${line.replace(/\{(\d+)\}/g, (m, n) => censored(parseInt(n, 10)))}</p>`).join('');
+            wrap.innerHTML = `<div class="doc-sheet">
+                <div class="doc-stamp">${t.doc2SheetStamp}</div>
+                <div class="doc-head">${t.doc2SheetHeader}<small>${t.doc2SheetSector}</small></div>
+                ${lines}
+                <div class="doc-sign">${t.doc2SheetSign}</div>
+            </div>`;
+            if (animate) {
+                let delay = 350;
+                DOC2_FRAGMENTS.forEach(f => {
+                    if (!found.includes(f.id)) return;
+                    const box = wrap.querySelector(`.censor-box[data-frag="${f.id}"]`);
+                    if (box) { setTimeout(() => box.classList.add('revealed'), delay); delay += 180; }
+                });
+            }
+            const chips = document.getElementById('doc2-fragment-chips');
+            if (chips) {
+                chips.innerHTML = DOC2_FRAGMENTS.map((f, i) => {
+                    const ok = found.includes(f.id);
+                    return `<span class="doc-chip${ok ? ' found' : ''}">${ok ? '📄' : '⬛'} ${i + 1}. ${t.doc2FragNames[i]} ${ok ? '✓' : '🔒'}</span>`;
+                }).join('');
+            }
+            document.getElementById('doc2-modal-title').innerText = t.doc2ModalTitle;
+            document.getElementById('doc2-modal-desc').innerText = t.doc2ModalDesc;
+            document.getElementById('doc2-progress-text').innerText = `${t.docProgress} ${found.length} / ${DOC2_FRAGMENTS.length}`;
+        }
+
+        // --- Пассивный доход Лолит Э. ---
+        function getPassiveRate() { return (gameState.passive1Bought ? 1 : 0) + (gameState.passive5Bought ? 5 : 0); }
+
+        function updatePassiveUI() {
+            const info = document.getElementById('passive-rate-info');
+            if (!info) return;
+            const t = TRANSLATIONS[currentLang];
+            info.innerText = t.passiveRate.replace('{n}', getPassiveRate());
+            [[1, 'passive1Bought', 35000], [5, 'passive5Bought', 100000]].forEach(([n, key, cost]) => {
+                const btn = document.getElementById('btn-passive-' + n);
+                if (!btn) return;
+                if (gameState[key]) {
+                    btn.innerText = t.passiveOwned;
+                    btn.disabled = true;
+                    btn.classList.add('opacity-60', 'cursor-not-allowed');
+                } else {
+                    btn.innerText = t.passiveBuy.replace('{cost}', cost.toLocaleString('en-US'));
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-60', 'cursor-not-allowed');
+                }
+            });
+        }
+
+        function buyPassive(n) {
+            playSound('click');
+            const t = TRANSLATIONS[currentLang];
+            const cfg = n === 1 ? { key: 'passive1Bought', cost: 35000 } : { key: 'passive5Bought', cost: 100000 };
+            if (gameState[cfg.key]) return;
+            if (gameState.balance < cfg.cost) { alert(t.notEnough); return; }
+            gameState.balance -= cfg.cost;
+            gameState[cfg.key] = true;
+            playSound('win');
+            updateUI(); saveGame();
+        }
+
+        setInterval(() => {
+            if (isPaused) return;
+            const rate = getPassiveRate();
+            if (rate <= 0) return;
+            gameState.passiveSeconds = (gameState.passiveSeconds || 0) + 1;
+            if (gameState.passiveSeconds >= 60) {
+                gameState.passiveSeconds -= 60;
+                gameState.lolitaBalance = (gameState.lolitaBalance || 0) + rate;
+                updateUI(); saveGame();
+            }
+        }, 1000);
+
+        function applyDoc2PassiveLanguage() {
+            const t = TRANSLATIONS[currentLang];
+            const set = (id, txt) => { const el = document.getElementById(id); if (el && txt !== undefined) el.innerText = txt; };
+            set('doc2-card-badge', `${t.sectionWord} 8`);
+            set('doc2-card-title', t.navDoc2Title);
+            set('doc2-card-desc', t.navDoc2Desc);
+            set('btn-open-secret-doc2', t.navDoc2Btn);
+            set('lbl-cat-passive', t.catPassive);
+            set('passive1-name', t.passive1Name); set('passive1-desc', t.passive1Desc);
+            set('passive5-name', t.passive5Name); set('passive5-desc', t.passive5Desc);
+            updateDoc2UI(); updatePassiveUI();
+            const m = document.getElementById('secret-doc2-modal');
+            if (m && !m.classList.contains('hidden')) renderSecretDoc2(false);
+        }
+
         function applyNewFeaturesLanguageUI() {
             const t = TRANSLATIONS[currentLang];
             const set = (id, txt) => { const el = document.getElementById(id); if (el && txt !== undefined) el.innerText = txt; };
@@ -5023,6 +5310,7 @@
             set('lbl-lolita-pu-hint', t.puHint);
             updateDocUI();
             if (!document.getElementById('secret-doc-modal').classList.contains('hidden')) renderSecretDoc(false);
+            applyDoc2PassiveLanguage();
         }
 
         // Инициализация при загрузке
