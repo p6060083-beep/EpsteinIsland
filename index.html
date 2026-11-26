@@ -267,6 +267,11 @@
         .holo-card.holo-gold .text-purple-400 { color: #fef3c7; }
         .holo-card.holo-gold .text-slate-300, .holo-card.holo-gold .text-slate-400 { color: #fde68a; }
         .holo-card.holo-gold .text-white { color: #fffbeb; }
+
+        /* Видео-награда за Тайный документ 2 */
+        .reward-video-frame { animation: rv-in 0.9s ease-out; box-shadow: 0 0 60px rgba(245,158,11,0.55), 0 0 140px rgba(244,63,94,0.25); border: 3px solid #f59e0b; border-radius: 18px; background: #000; }
+        @keyframes rv-in { from { opacity: 0; transform: scale(0.92); filter: blur(6px); } to { opacity: 1; transform: scale(1); filter: blur(0); } }
+        body.mobile-optimized .reward-video-frame { animation: none; }
     </style>
 </head>
 <body class="text-white flex flex-col justify-between min-h-screen relative">
@@ -1104,8 +1109,17 @@
             <div id="doc2-sheet-wrap" class="w-full"></div>
             <div class="w-full text-center bg-slate-950 border border-red-500/40 rounded-2xl p-3 mt-4">
                 <p id="doc2-progress-text" class="text-sm font-bold text-slate-300">Фрагментов: 0 / 10</p>
+                <p id="doc2-reward-desc" class="text-xs text-slate-400 mt-1">Награда за все 10 фрагментов: 53,000 🪙 + 19 ✈️ + тайное видео</p>
+                <button id="btn-doc2-claim" onclick="claimDoc2Reward()" class="hidden mt-3 w-full py-3 bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 rounded-xl font-black text-xs uppercase tracking-wider btn-bounce shadow-lg text-slate-950">🎁 Забрать награду</button>
             </div>
         </div>
+    </div>
+
+    <div id="doc2-video-modal" class="fixed inset-0 z-[70] bg-black flex flex-col items-center justify-center p-3 hidden">
+        <p id="doc2-video-title" class="text-amber-300 font-black uppercase tracking-widest text-xs sm:text-sm mb-3 text-center">🎁 Награда: тайное видео</p>
+        <video id="doc2-reward-video" playsinline preload="auto" class="reward-video-frame max-w-full max-h-[78vh]"></video>
+        <p id="doc2-video-caption" class="text-slate-300 text-xs mt-3 text-center">+53,000 🪙 · +19 ✈️</p>
+        <button id="btn-doc2-video-close" onclick="closeDoc2RewardVideo()" class="hidden mt-4 px-8 py-3 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl font-black text-xs uppercase text-white btn-bounce">Закрыть</button>
     </div>
 
     <div id="secret-doc-modal" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex items-start sm:items-center justify-center p-3 hidden overflow-y-auto">
@@ -1645,6 +1659,19 @@
         });
 
 
+        Object.assign(TRANSLATIONS.ru, {
+            doc2RewardDesc: 'Награда за все 10 фрагментов: 53,000 🪙 + 19 ✈️ + тайное видео', doc2RewardDone: 'Награда получена ✅ (+53,000 🪙, +19 ✈️, тайное видео)',
+            doc2RewardClaim: '🎁 Забрать награду', doc2RewardWatch: '▶ Смотреть видео-награду', doc2RewardReady: '🎁 Награда готова — забери её в документе',
+            doc2VideoTitle: '🎁 Награда: тайное видео', doc2VideoCaption: '+53,000 🪙 · +19 ✈️', doc2VideoClose: 'Закрыть',
+            doc2VideoMissing: 'Видео не найдено: положи файл videos/doc2_reward.mp4'
+        });
+        Object.assign(TRANSLATIONS.en, {
+            doc2RewardDesc: 'Reward for all 10 fragments: 53,000 🪙 + 19 ✈️ + a secret video', doc2RewardDone: 'Reward claimed ✅ (+53,000 🪙, +19 ✈️, secret video)',
+            doc2RewardClaim: '🎁 Claim reward', doc2RewardWatch: '▶ Watch reward video', doc2RewardReady: '🎁 Reward ready — claim it in the document',
+            doc2VideoTitle: '🎁 Reward: secret video', doc2VideoCaption: '+53,000 🪙 · +19 ✈️', doc2VideoClose: 'Close',
+            doc2VideoMissing: 'Video not found: put the file at videos/doc2_reward.mp4'
+        });
+
         const ISLAND_PARTS = [
             { id: 'part_mansion', ruName: 'Особняк', enName: 'Mansion', zoneId: 'zone-mansion', avatar: '🏛️' },
             { id: 'part_beach', ruName: 'Пляжная зона', enName: 'Beach Zone', zoneId: 'zone-beach', avatar: '🏖️' },
@@ -1736,8 +1763,8 @@
 
         const ITEMS_DB = [
             { id: 'empty_slot', isEmpty: true, ruName: 'Ничего', enName: 'Nothing', rarity: 'empty', avatar: '💨', ruDesc: 'В этот раз чемодан оказался абсолютно пустым!', enDesc: 'This briefcase turned out to be completely empty!' },
-            { id: 'coin_50', isCoin: true, amount: 50, ruName: '+50 Джеффриков', enName: '+50 Jeffreys', rarity: 'coin', avatar: '🪙', ruDesc: 'Малый конверт с наличными.', enDesc: 'Small cash envelope.' },
-            { id: 'coin_100', isCoin: true, amount: 100, ruName: '+100 Джеффриков', enName: '+100 Jeffreys', rarity: 'coin', avatar: '🪙', ruDesc: 'Средний конверт с наличными.', enDesc: 'Medium cash envelope.' },
+            { id: 'coin_50', isCoin: true, amount: 50, ruName: '+50 Джеффриков', enName: '+50 Jeffreys', rarity: 'coin', avatar: '💴', ruDesc: 'Малый конверт с наличными.', enDesc: 'Small cash envelope.' },
+            { id: 'coin_100', isCoin: true, amount: 100, ruName: '+100 Джеффриков', enName: '+100 Jeffreys', rarity: 'coin', avatar: '💶', ruDesc: 'Средний конверт с наличными.', enDesc: 'Medium cash envelope.' },
             { id: 'coin_200', isCoin: true, amount: 200, ruName: '+200 Джеффриков', enName: '+200 Jeffreys', rarity: 'coin', avatar: '💵', ruDesc: 'Хорошая пачка наличных.', enDesc: 'Good stack of cash.' },
             { id: 'coin_300', isCoin: true, amount: 300, ruName: '+300 Джеффриков', enName: '+300 Jeffreys', rarity: 'coin', avatar: '💵', ruDesc: 'Чемодан наличных денег.', enDesc: 'Briefcase full of cash.' },
             { id: 'coin_500', isCoin: true, amount: 500, ruName: '+500 Джеффриков', enName: '+500 Jeffreys', rarity: 'coin', avatar: '💰', ruDesc: 'Крупный куш наличными.', enDesc: 'Large cash haul.' },
@@ -1835,7 +1862,8 @@
                 foundDocFragments2: [],
                 passive1Bought: false,
                 passive5Bought: false,
-                passiveSeconds: 0
+                passiveSeconds: 0,
+                secretDoc2RewardClaimed: false
             };
         }
 
@@ -2455,6 +2483,7 @@
             if (gameState.passive1Bought === undefined) gameState.passive1Bought = false;
             if (gameState.passive5Bought === undefined) gameState.passive5Bought = false;
             if (typeof gameState.passiveSeconds !== 'number') gameState.passiveSeconds = 0;
+            if (gameState.secretDoc2RewardClaimed === undefined) gameState.secretDoc2RewardClaimed = false;
             
             gameState = JSON.parse(JSON.stringify(gameState));
             
@@ -2737,22 +2766,22 @@
             
             try { const _e = document.querySelector('#secret-photos-modal h3'); if (_e) _e.innerText = t.secretPhotosTitle; } catch (_x) {}
             try { const _e = document.querySelector('#secret-photos-modal p.text-slate-400'); if (_e) _e.innerText = t.secretPhotosDesc; } catch (_x) {}
-            try { const _e = document.querySelector('#secret-photos-modal .text-slate-300'); if (_e) _e.innerText = t.secretPhotosProgress + ' ' + document.getElementById('secret-photos-count').innerText; } catch (_x) {}
+            try { const _e = document.querySelector('#secret-photos-modal .text-slate-300'); if (_e && _e.firstChild && _e.firstChild.nodeType === 3) _e.firstChild.nodeValue = t.secretPhotosProgress + ' '; } catch (_x) {}
             try { const _e = document.querySelector('#secret-photos-modal .text-slate-400.mt-1'); if (_e) _e.innerText = t.secretPhotosRewardDesc; } catch (_x) {}
 
             try { const _e = document.querySelector('#secret-photos-2-modal h3'); if (_e) _e.innerText = t.secretPhotos2Title; } catch (_x) {}
             try { const _e = document.querySelector('#secret-photos-2-modal p.text-slate-400'); if (_e) _e.innerText = t.secretPhotos2Desc; } catch (_x) {}
-            try { const _e = document.querySelector('#secret-photos-2-modal .text-slate-300'); if (_e) _e.innerText = t.secretPhotos2Progress + ' ' + document.getElementById('secret-photos-2-count').innerText; } catch (_x) {}
+            try { const _e = document.querySelector('#secret-photos-2-modal .text-slate-300'); if (_e && _e.firstChild && _e.firstChild.nodeType === 3) _e.firstChild.nodeValue = t.secretPhotos2Progress + ' '; } catch (_x) {}
             try { const _e = document.querySelector('#secret-photos-2-modal .text-slate-400.mt-1'); if (_e) _e.innerText = t.secretPhotos2RewardDesc; } catch (_x) {}
 
             try { const _e = document.querySelector('#secret-photos-3-modal h3'); if (_e) _e.innerText = t.secretPhotos3Title; } catch (_x) {}
             try { const _e = document.querySelector('#secret-photos-3-modal p.text-slate-400'); if (_e) _e.innerText = t.secretPhotos3Desc; } catch (_x) {}
-            try { const _e = document.querySelector('#secret-photos-3-modal .text-slate-300'); if (_e) _e.innerText = t.secretPhotos3Progress + ' ' + document.getElementById('secret-photos-3-count').innerText; } catch (_x) {}
+            try { const _e = document.querySelector('#secret-photos-3-modal .text-slate-300'); if (_e && _e.firstChild && _e.firstChild.nodeType === 3) _e.firstChild.nodeValue = t.secretPhotos3Progress + ' '; } catch (_x) {}
             try { const _e = document.querySelector('#secret-photos-3-modal .text-slate-400.mt-1'); if (_e) _e.innerText = t.secretPhotos3RewardDesc; } catch (_x) {}
 
             try { const _e = document.querySelector('#secret-videos-modal h3'); if (_e) _e.innerText = t.secretVideosTitle; } catch (_x) {}
             try { const _e = document.querySelector('#secret-videos-modal p.text-slate-400'); if (_e) _e.innerText = t.secretVideosDesc; } catch (_x) {}
-            try { const _e = document.querySelector('#secret-videos-modal .text-slate-300'); if (_e) _e.innerText = t.secretVideosProgress + ' ' + document.getElementById('secret-videos-count').innerText; } catch (_x) {}
+            try { const _e = document.querySelector('#secret-videos-modal .text-slate-300'); if (_e && _e.firstChild && _e.firstChild.nodeType === 3) _e.firstChild.nodeValue = t.secretVideosProgress + ' '; } catch (_x) {}
             try { const _e = document.querySelector('#secret-videos-modal .text-slate-400.mt-1'); if (_e) _e.innerText = t.secretVideosRewardDesc; } catch (_x) {}
 
             const t2Btn = document.getElementById('btn-buy-track2');
@@ -5178,7 +5207,7 @@
             const status = document.getElementById('doc2-card-status');
             if (status) {
                 status.innerText = unlocked
-                    ? `${t.docProgress} ${getFoundDoc2Count()} / ${DOC2_FRAGMENTS.length}`
+                    ? ((getFoundDoc2Count() >= DOC2_FRAGMENTS.length && !gameState.secretDoc2RewardClaimed) ? t.doc2RewardReady : `${t.docProgress} ${getFoundDoc2Count()} / ${DOC2_FRAGMENTS.length}`)
                     : `${t.navDoc2Need} (${(gameState.foundDocFragments || []).length}/${DOC_FRAGMENTS.length})`;
             }
         }
@@ -5227,6 +5256,7 @@
             document.getElementById('doc2-modal-title').innerText = t.doc2ModalTitle;
             document.getElementById('doc2-modal-desc').innerText = t.doc2ModalDesc;
             document.getElementById('doc2-progress-text').innerText = `${t.docProgress} ${found.length} / ${DOC2_FRAGMENTS.length}`;
+            updateDoc2RewardUI();
         }
 
         // --- Пассивный доход Лолит Э. ---
@@ -5289,6 +5319,81 @@
             updateDoc2UI(); updatePassiveUI();
             const m = document.getElementById('secret-doc2-modal');
             if (m && !m.classList.contains('hidden')) renderSecretDoc2(false);
+        }
+
+        // --- Награда за Тайный документ 2 ---
+        const DOC2_VIDEO_SRC = 'videos/doc2_reward.mp4';
+        const DOC2_REWARD_COINS = 53000;
+        const DOC2_REWARD_LOLITA = 19;
+        let doc2VideoSaved = null;
+
+        function updateDoc2RewardUI() {
+            const t = TRANSLATIONS[currentLang];
+            const done = getFoundDoc2Count() >= DOC2_FRAGMENTS.length;
+            const claimed = !!gameState.secretDoc2RewardClaimed;
+            const desc = document.getElementById('doc2-reward-desc');
+            if (desc) desc.innerText = claimed ? t.doc2RewardDone : t.doc2RewardDesc;
+            const btn = document.getElementById('btn-doc2-claim');
+            if (btn) {
+                btn.classList.toggle('hidden', !done);
+                btn.innerText = claimed ? t.doc2RewardWatch : t.doc2RewardClaim;
+            }
+        }
+
+        function claimDoc2Reward() {
+            playSound('click');
+            if (getFoundDoc2Count() < DOC2_FRAGMENTS.length) return;
+            if (!gameState.secretDoc2RewardClaimed) {
+                gameState.secretDoc2RewardClaimed = true; // защита от повторной выдачи
+                gameState.balance += DOC2_REWARD_COINS;
+                gameState.lolitaBalance = (gameState.lolitaBalance || 0) + DOC2_REWARD_LOLITA;
+                saveGame(); updateUI();
+                updateDoc2RewardUI();
+            }
+            playDoc2RewardVideo();
+        }
+
+        function playDoc2RewardVideo() {
+            const t = TRANSLATIONS[currentLang];
+            const modal = document.getElementById('doc2-video-modal');
+            const v = document.getElementById('doc2-reward-video');
+            const closeBtn = document.getElementById('btn-doc2-video-close');
+            if (!modal || !v) return;
+            if (!doc2VideoSaved) {
+                // глушим все посторонние звуки до конца видео
+                doc2VideoSaved = { sound: soundEnabled, audios: Array.from(document.querySelectorAll('audio')).map(a => ({ a, muted: a.muted })), ctx: false };
+                soundEnabled = false;
+                doc2VideoSaved.audios.forEach(o => { o.a.muted = true; });
+                try { if (audioCtx && audioCtx.state === 'running') { audioCtx.suspend(); doc2VideoSaved.ctx = true; } } catch (e) {}
+            }
+            document.getElementById('doc2-video-title').innerText = t.doc2VideoTitle;
+            document.getElementById('doc2-video-caption').innerText = t.doc2VideoCaption;
+            closeBtn.innerText = t.doc2VideoClose;
+            closeBtn.classList.add('hidden');
+            modal.classList.remove('hidden');
+            v.onended = () => { restoreDoc2VideoSounds(); closeBtn.classList.remove('hidden'); };
+            v.onerror = () => { restoreDoc2VideoSounds(); closeBtn.classList.remove('hidden'); showToast(t.doc2VideoMissing, 4500); };
+            v.muted = false; v.volume = 1;
+            v.src = DOC2_VIDEO_SRC;
+            v.currentTime = 0;
+            const p = v.play();
+            if (p && p.catch) p.catch(() => { restoreDoc2VideoSounds(); closeBtn.classList.remove('hidden'); showToast(t.doc2VideoMissing, 4500); });
+        }
+
+        function restoreDoc2VideoSounds() {
+            if (!doc2VideoSaved) return;
+            soundEnabled = doc2VideoSaved.sound;
+            doc2VideoSaved.audios.forEach(o => { o.a.muted = o.muted; });
+            try { if (doc2VideoSaved.ctx && audioCtx) audioCtx.resume(); } catch (e) {}
+            doc2VideoSaved = null;
+        }
+
+        function closeDoc2RewardVideo() {
+            const v = document.getElementById('doc2-reward-video');
+            if (v) { v.onended = null; v.onerror = null; try { v.pause(); } catch (e) {} v.removeAttribute('src'); v.load(); }
+            restoreDoc2VideoSounds();
+            document.getElementById('doc2-video-modal').classList.add('hidden');
+            playSound('click');
         }
 
         function applyNewFeaturesLanguageUI() {
